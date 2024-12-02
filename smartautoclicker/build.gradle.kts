@@ -26,7 +26,7 @@ android {
     buildFeatures.viewBinding = true
 
     defaultConfig {
-        applicationId = "com.NoobLol.something"
+        applicationId = "com.NoobLol.smartnoob"
 
         versionCode = 57
         versionName = "3.1.0"
