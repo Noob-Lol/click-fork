@@ -52,10 +52,10 @@ android {
 
     signingConfigs {
         create("release") {
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
-            storeFile = file(System.getProperty("user.home") + "/.android/debug.keystore")
-            storePassword = "android"
+            storeFile = file("./smartautoclicker.jks")
+            storePassword = buildParameters["signingStorePassword"].asString()
+            keyAlias = buildParameters["signingKeyAlias"].asString()
+            keyPassword = buildParameters["signingKeyPassword"].asString()
         }
     }
 }
