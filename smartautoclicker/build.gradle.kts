@@ -22,11 +22,11 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker"
+    namespace = "com.NoobLol.something"
     buildFeatures.viewBinding = true
 
     defaultConfig {
-        applicationId = "com.buzbuz.smartautoclicker"
+        applicationId = "com.NoobLol.something"
 
         versionCode = 57
         versionName = "3.1.0"
