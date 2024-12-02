@@ -52,10 +52,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("./smartautoclicker.jks")
-            storePassword = buildParameters["signingStorePassword"].asString()
-            keyAlias = buildParameters["signingKeyAlias"].asString()
-            keyPassword = buildParameters["signingKeyPassword"].asString()
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+            storeFile = file(System.getProperty("user.home") + "/.android/debug.keystore")
+            storePassword = "android"
         }
     }
 }
@@ -99,7 +99,7 @@ dependencies {
     implementation(project(":feature:backup"))
     implementation(project(":feature:notifications"))
     implementation(project(":core:common:permissions"))
-    // implementation(project(":feature:quick-settings-tile"))
+    implementation(project(":feature:quick-settings-tile"))
     implementation(project(":feature:revenue"))
     implementation(project(":feature:smart-config"))
     implementation(project(":feature:smart-debugging"))
