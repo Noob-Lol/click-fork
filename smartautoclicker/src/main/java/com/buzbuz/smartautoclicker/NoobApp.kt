@@ -21,7 +21,7 @@ import com.google.android.material.color.DynamicColors
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class SmartAutoClickerApplication : Application() {
+class NoobApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
