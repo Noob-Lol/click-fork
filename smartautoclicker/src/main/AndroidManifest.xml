@@ -46,7 +46,7 @@
         </activity>
 
         <service
-            android:name=".SmartAutoClickerService"
+            android:name=".NoobService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:foregroundServiceType="mediaProjection"
             android:exported="true">

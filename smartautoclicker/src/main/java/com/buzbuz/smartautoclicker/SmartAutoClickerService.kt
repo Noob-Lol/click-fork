@@ -25,8 +25,8 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 
-import com.buzbuz.smartautoclicker.SmartAutoClickerService.Companion.LOCAL_SERVICE_INSTANCE
-import com.buzbuz.smartautoclicker.SmartAutoClickerService.Companion.getLocalService
+import com.buzbuz.smartautoclicker.NoobService.Companion.LOCAL_SERVICE_INSTANCE
+import com.buzbuz.smartautoclicker.NoobService.Companion.getLocalService
 import com.buzbuz.smartautoclicker.core.base.Dumpable
 import com.buzbuz.smartautoclicker.core.base.extensions.requestFilterKeyEvents
 import com.buzbuz.smartautoclicker.core.base.extensions.startForegroundMediaProjectionServiceCompat
@@ -73,7 +73,7 @@ import kotlin.coroutines.suspendCoroutine
  * been detected.
  */
 @AndroidEntryPoint
-class SmartAutoClickerService : AccessibilityService(), SmartActionExecutor {
+class NoobService : AccessibilityService(), SmartActionExecutor {
 
     companion object {
 
@@ -234,7 +234,7 @@ class SmartAutoClickerService : AccessibilityService(), SmartActionExecutor {
     override fun dump(fd: FileDescriptor?, writer: PrintWriter?, args: Array<out String>?) {
         if (writer == null) return
 
-        writer.append("* SmartAutoClickerService:").println()
+        writer.append("* NoobService:").println()
         writer.append(Dumpable.DUMP_DISPLAY_TAB)
             .append("- isStarted=").append("${(LOCAL_SERVICE_INSTANCE as? LocalService)?.isStarted ?: false}; ")
             .println()
@@ -254,4 +254,4 @@ class SmartAutoClickerService : AccessibilityService(), SmartActionExecutor {
 }
 
 /** Tag for the logs. */
-private const val TAG = "SmartAutoClickerService"
+private const val TAG = "NoobService"

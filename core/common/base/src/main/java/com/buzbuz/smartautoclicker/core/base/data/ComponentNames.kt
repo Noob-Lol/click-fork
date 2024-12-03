@@ -21,7 +21,7 @@ import android.content.ComponentName
 val klickrServiceComponentName: ComponentName
     get() = ComponentName(
         "com.buzbuz.smartautoclicker",
-        "com.buzbuz.smartautoclicker.SmartAutoClickerService",
+        "com.buzbuz.smartautoclicker.NoobService",
     )
 
 val tutorialActivityComponentName: ComponentName

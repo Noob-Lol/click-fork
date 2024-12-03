@@ -30,7 +30,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
-import com.buzbuz.smartautoclicker.SmartAutoClickerService
+import com.buzbuz.smartautoclicker.NoobService
 import com.buzbuz.smartautoclicker.core.common.quality.domain.QualityRepository
 import com.buzbuz.smartautoclicker.core.domain.model.scenario.Scenario
 import com.buzbuz.smartautoclicker.core.dumb.domain.model.DumbScenario
@@ -75,7 +75,7 @@ class ScenarioViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Eagerly, UserConsentState.UNKNOWN)
 
     init {
-        SmartAutoClickerService.getLocalService(serviceConnection)
+        NoobService.getLocalService(serviceConnection)
 
         notificationManager =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
@@ -84,7 +84,7 @@ class ScenarioViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        SmartAutoClickerService.getLocalService(null)
+        NoobService.getLocalService(null)
         super.onCleared()
     }
 
@@ -103,8 +103,8 @@ class ScenarioViewModel @Inject constructor(
             permissions = listOf(
                 PermissionOverlay(),
                 PermissionAccessibilityService(
-                    componentName = ComponentName(activity, SmartAutoClickerService::class.java),
-                    isServiceRunning = { SmartAutoClickerService.isServiceStarted() },
+                    componentName = ComponentName(activity, NoobService::class.java),
+                    isServiceRunning = { NoobService.isServiceStarted() },
                 ),
                 PermissionPostNotification(optional = true),
             ),
