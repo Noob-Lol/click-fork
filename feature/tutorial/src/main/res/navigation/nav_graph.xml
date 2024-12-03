@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/fragment_tutorial_list"
-        android:name="com.buzbuz.smartautoclicker.feature.tutorial.ui.list.TutorialListFragment"
+        android:name="com.NoobLol.smartnoob.feature.tutorial.ui.list.TutorialListFragment"
         android:label="fragment_two"
         tools:layout="@layout/fragment_tutorial_list">
 
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/fragment_game"
-        android:name="com.buzbuz.smartautoclicker.feature.tutorial.ui.game.TutorialGameFragment"
+        android:name="com.NoobLol.smartnoob.feature.tutorial.ui.game.TutorialGameFragment"
         android:label="fragment_two"
         tools:layout="@layout/fragment_tutorial_game">
 

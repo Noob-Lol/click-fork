@@ -1,0 +1,62 @@
+/*
+ * Copyright (C) 2024 Kevin Buzeau
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.NoobLol.smartnoob.feature.smart.config.ui.common.dialogs.counter
+
+import androidx.lifecycle.ViewModel
+
+import com.NoobLol.smartnoob.core.domain.model.action.Action
+import com.NoobLol.smartnoob.core.domain.model.action.ChangeCounter
+import com.NoobLol.smartnoob.core.domain.model.action.Notification
+import com.NoobLol.smartnoob.core.domain.model.condition.TriggerCondition
+import com.NoobLol.smartnoob.feature.smart.config.domain.EditionRepository
+
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import javax.inject.Inject
+
+class CounterNameSelectionViewModel @Inject constructor(
+    editionRepository: EditionRepository,
+) : ViewModel() {
+
+    val counterNames: Flow<Set<String>> = editionRepository.editionState.allEditedEvents
+        .combine(editionRepository.editionState.editedEventActionsState) { allEditedEvents, currentActions ->
+            buildSet {
+                allEditedEvents.forEach { event ->
+                    event.conditions.forEach { condition ->
+                        if (condition is TriggerCondition.OnCounterCountReached) add(condition.counterName)
+                    }
+                    event.actions.forEach { action ->
+                        action.getContainedCounterName()?.let(::add)
+                    }
+                }
+
+                currentActions.value?.forEach { action ->
+                    action.getContainedCounterName()?.let(::add)
+                }
+            }
+        }
+
+
+    private fun Action.getContainedCounterName(): String? =
+        when (this) {
+            is ChangeCounter -> counterName
+            is Notification ->
+                if (messageType == Notification.MessageType.COUNTER_VALUE) messageCounterName
+                else null
+            else -> null
+        }
+}

@@ -23,7 +23,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.core.database"
+    namespace = "com.NoobLol.smartnoob.core.database"
 
     sourceSets {
         getByName("test") {

@@ -1,3 +1,6 @@
+# Fork info
+
+Everything detectable was renamed to "Noob", no changes in functionality. apk in releases
 <p align="center">
   <img src="https://github.com/Nain57/SmartAutoClicker/blob/master/smartautoclicker/src/main/ic_smart_auto_clicker-playstore.png?raw=true" height="64">
   <h3 align="center">Klick'r - Smart AutoClicker</h3>

@@ -22,7 +22,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.feature.tutorial"
+    namespace = "com.NoobLol.smartnoob.feature.tutorial"
     buildFeatures.viewBinding = true
 }
 

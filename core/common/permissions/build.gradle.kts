@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.core.common.permissions"
+    namespace = "com.NoobLol.smartnoob.core.common.permissions"
     buildFeatures.viewBinding = true
 }
 
