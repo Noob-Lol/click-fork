@@ -23,7 +23,7 @@ import android.content.Intent
 import android.media.projection.MediaProjectionManager
 import android.view.KeyEvent
 
-import com.buzbuz.smartautoclicker.activity.ScenarioActivity
+import com.buzbuz.smartautoclicker.activity.NoobAct
 import com.buzbuz.smartautoclicker.core.bitmaps.IBitmapManager
 import com.buzbuz.smartautoclicker.core.common.overlays.manager.OverlayManager
 import com.buzbuz.smartautoclicker.core.display.config.DisplayConfigManager
@@ -82,7 +82,7 @@ class LocalService(
             activityPendingIntent = PendingIntent.getActivity(
                 context,
                 0,
-                Intent(context, ScenarioActivity::class.java),
+                Intent(context, NoobAct::class.java),
                 PendingIntent.FLAG_IMMUTABLE,
             ),
             listener = object : ServiceNotificationListener {

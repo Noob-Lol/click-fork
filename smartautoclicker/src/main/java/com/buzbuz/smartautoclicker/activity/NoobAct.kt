@@ -49,7 +49,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * available scenarios, if any.
  */
 @AndroidEntryPoint
-class ScenarioActivity : AppCompatActivity(), ScenarioListFragment.Listener {
+class NoobAct : AppCompatActivity(), ScenarioListFragment.Listener {
 
     /** ViewModel providing the click scenarios data to the UI. */
     private val scenarioViewModel: ScenarioViewModel by viewModels()
