@@ -22,7 +22,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.core.processing"
+    namespace = "com.NoobLol.smartnoob.core.processing"
 }
 
 dependencies {

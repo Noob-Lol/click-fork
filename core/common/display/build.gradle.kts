@@ -22,7 +22,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.core.capture"
+    namespace = "com.NoobLol.smartnoob.core.capture"
 }
 
 dependencies {

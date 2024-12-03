@@ -8,10 +8,10 @@
 <br>
 
 <p align="center">
-  <a href='https://play.google.com/store/apps/details?id=com.buzbuz.smartautoclicker&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+  <a href='https://play.google.com/store/apps/details?id=com.NoobLol.smartnoob&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
     <img alt='Get it on Google Play' height='80' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/>
   </a>
-  <a href='https://f-droid.org/packages/com.buzbuz.smartautoclicker/'>
+  <a href='https://f-droid.org/packages/com.NoobLol.smartnoob/'>
     <img alt='Get it on F-Droid' height='80' src='https://fdroid.gitlab.io/artwork/badge/get-it-on.png'/>
   </a>
 </p>
