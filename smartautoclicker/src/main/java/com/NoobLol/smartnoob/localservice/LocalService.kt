@@ -23,7 +23,7 @@ import android.content.Intent
 import android.media.projection.MediaProjectionManager
 import android.view.KeyEvent
 
-import com.NoobLol.smartnoob.activity.NoobAct
+import com.NoobLol.smartnoob.activity.ScenarioActivity
 import com.NoobLol.smartnoob.core.bitmaps.IBitmapManager
 import com.NoobLol.smartnoob.core.common.overlays.manager.OverlayManager
 import com.NoobLol.smartnoob.core.display.config.DisplayConfigManager
@@ -82,7 +82,7 @@ class LocalService(
             activityPendingIntent = PendingIntent.getActivity(
                 context,
                 0,
-                Intent(context, NoobAct::class.java),
+                Intent(context, ScenarioActivity::class.java),
                 PendingIntent.FLAG_IMMUTABLE,
             ),
             listener = object : ServiceNotificationListener {

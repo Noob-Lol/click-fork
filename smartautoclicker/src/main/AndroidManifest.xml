@@ -36,7 +36,7 @@
         tools:ignore="DataExtractionRules">
 
         <activity
-            android:name="com.NoobLol.smartnoob.activity.NoobAct"
+            android:name="com.NoobLol.smartnoob.activity.ScenarioActivity"
             android:screenOrientation="locked"
             android:exported="true">
             <intent-filter>
