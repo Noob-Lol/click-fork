@@ -17,6 +17,7 @@
 package com.NoobLol.smartnoob.core.domain.model.action
 
 import com.NoobLol.smartnoob.core.base.identifier.Identifier
+import com.NoobLol.smartnoob.core.base.interfaces.areComplete
 import com.NoobLol.smartnoob.core.database.entity.EventToggleType
 import com.NoobLol.smartnoob.core.domain.model.action.toggleevent.EventToggle
 
@@ -60,7 +61,7 @@ data class ToggleEvent(
         return if (toggleAll) {
             toggleAllType != null
         } else {
-            eventToggles.isNotEmpty() && eventToggles.find { !it.isComplete() } == null
+            eventToggles.areComplete()
         }
     }
 

@@ -31,7 +31,7 @@ import com.NoobLol.smartnoob.core.domain.model.action.intent.toDomainIntentExtra
 import com.NoobLol.smartnoob.core.domain.model.action.toggleevent.toDomain
 
 internal fun Action.toEntity(): ActionEntity {
-    if (!isComplete()) throw IllegalStateException("Can't transform to entity, action is incomplete.")
+    if (!isComplete()) throw IllegalStateException("Can't transform to entity, action is incomplete: $this")
 
     return when (this) {
         is Click -> toClickEntity()

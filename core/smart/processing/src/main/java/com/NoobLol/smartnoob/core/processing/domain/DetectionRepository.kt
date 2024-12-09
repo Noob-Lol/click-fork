@@ -24,6 +24,7 @@ import com.NoobLol.smartnoob.core.base.Dumpable
 import com.NoobLol.smartnoob.core.base.addDumpTabulationLvl
 import com.NoobLol.smartnoob.core.base.di.Dispatcher
 import com.NoobLol.smartnoob.core.base.di.HiltCoroutineDispatchers.IO
+import com.NoobLol.smartnoob.core.base.di.HiltCoroutineDispatchers.Main
 import com.NoobLol.smartnoob.core.base.dumpWithTimeout
 import com.NoobLol.smartnoob.core.base.identifier.Identifier
 import com.NoobLol.smartnoob.core.domain.IRepository
@@ -65,11 +66,14 @@ import kotlin.time.Duration
 @OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
 class DetectionRepository @Inject constructor(
+    @Dispatcher(Main) mainDispatcher: CoroutineDispatcher,
     @Dispatcher(IO) ioDispatcher: CoroutineDispatcher,
     private val scenarioRepository: IRepository,
     private val detectorEngine: DetectorEngine,
 ): Dumpable {
 
+    private val coroutineScopeMain: CoroutineScope =
+        CoroutineScope(SupervisorJob() + mainDispatcher)
     private val coroutineScopeIo: CoroutineScope =
         CoroutineScope(SupervisorJob() + ioDispatcher)
 
@@ -125,7 +129,9 @@ class DetectionRepository @Inject constructor(
 
     fun startScreenRecord(context: Context, resultCode: Int, data: Intent) {
         actionExecutor?.let { executor ->
-            detectorEngine.startScreenRecord(context, resultCode, data, executor, projectionErrorHandler)
+            detectorEngine.startScreenRecord(context, resultCode, data, executor) {
+                coroutineScopeMain.launch { projectionErrorHandler?.invoke() }
+            }
         }
     }
 

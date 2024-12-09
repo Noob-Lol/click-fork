@@ -21,6 +21,7 @@ import com.NoobLol.smartnoob.core.base.identifier.Identifier
 import com.NoobLol.smartnoob.core.base.interfaces.Completable
 import com.NoobLol.smartnoob.core.base.interfaces.Identifiable
 import com.NoobLol.smartnoob.core.base.interfaces.Prioritizable
+import com.NoobLol.smartnoob.core.base.interfaces.areComplete
 import com.NoobLol.smartnoob.core.domain.model.AND
 import com.NoobLol.smartnoob.core.domain.model.action.Action
 import com.NoobLol.smartnoob.core.domain.model.condition.ImageCondition
@@ -63,7 +64,8 @@ sealed class Event: Identifiable, Completable {
 
     @CallSuper
     override fun isComplete(): Boolean =
-        name.isNotEmpty() && actions.isNotEmpty() && conditions.isNotEmpty()
+        name.isNotEmpty() && actions.isNotEmpty() && actions.areComplete() &&
+                conditions.isNotEmpty() && conditions.areComplete()
 }
 
 /**
@@ -87,12 +89,7 @@ data class ImageEvent(
     override fun isComplete(): Boolean {
         if (!super.isComplete()) return false
 
-        conditions.forEach { condition ->
-            if (!condition.isComplete()) return false
-        }
-
         actions.forEach { action ->
-            if (!action.isComplete()) return false
             if (conditionOperator == AND && action is Click && !action.isClickOnConditionValid()) return false
         }
 
@@ -113,11 +110,7 @@ data class TriggerEvent(
 
     override fun isComplete(): Boolean {
         if (!super.isComplete()) return false
-        conditions.forEach { condition ->
-            if (!condition.isComplete()) return false
-        }
 
-        if (actions.isEmpty()) return false
         actions.forEach { action ->
             if (!action.isValidForTrigger()) return false
         }
