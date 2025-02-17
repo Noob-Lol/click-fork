@@ -1,3 +1,6 @@
+# archived
+
+Because Nain57 added obfuscation plugin which make this repo almost useless
 # Fork info
 
 Everything detectable was renamed to "Noob", no changes in functionality. apk in releases
