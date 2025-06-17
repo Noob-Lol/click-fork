@@ -23,7 +23,7 @@
     <style name="AppTheme.Dialog.TopBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dialog_top_bar_height</item>
-        <item name="android:background">?attr/colorSurfaceContainerLowest</item>
+        <item name="android:background">?attr/colorSurfaceContainerLow</item>
         <item name="android:elevation">3dp</item>
     </style>
     <!-- Style for the dialog top bar title. -->
@@ -38,6 +38,10 @@
         <item name="android:textAlignment">viewStart</item>
         <item name="android:textAppearance">@style/AppTheme.TextAppearance.TopBarTitle</item>
     </style>
+    <!-- Style for the dialog background layout. -->
+    <style name="AppTheme.Dialog.BackgroundLayout">
+        <item name="android:background">?attr/colorSurfaceContainerLowest</item>
+    </style>
 
     <!-- Base style for the widgets. -->
     <style name="AppTheme.Widget" />
@@ -45,7 +49,6 @@
     <style name="AppTheme.Widget.AppBarLayout" parent="@style/Widget.Material3.AppBarLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
     <!-- Style for the toolbar. -->
     <style name="AppTheme.Widget.Toolbar" parent="@style/Widget.Material3.Toolbar">
@@ -141,6 +144,7 @@
     <style name="AppTheme.Widget.CheckableButton" parent="Widget.Material3.Button.IconButton.Outlined">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:checkable">true</item>
         <item name="backgroundTint">@color/selector_button_checkable_background</item>
         <item name="iconTint">@color/selector_button_checkable_tint</item>
     </style>
@@ -332,8 +336,15 @@
     <style name="AppTheme.TextAppearance.EmptyTextSecondary" parent="@style/TextAppearance.Material3.BodyMedium">
         <item name="android:textStyle">italic</item>
     </style>
+
     <!-- Text appearance for the overlays text. -->
-    <style name="AppTheme.TextAppearance.OverlayBig" parent="@android:style/TextAppearance.Widget.TextView">
+    <style name="AppTheme.TextAppearance.Overlay" />
+    <style name="AppTheme.TextAppearance.Overlay.Default" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:fontFamily">sans-serif-medium"</item>
+        <item name="android:textSize">@dimen/text_size_overlay_default</item>
+        <item name="android:textColor">@color/textTitle</item>
+    </style>
+    <style name="AppTheme.TextAppearance.Overlay.Big" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:paddingStart">@dimen/margin_horizontal_mini</item>
         <item name="android:paddingEnd">@dimen/margin_horizontal_mini</item>
         <item name="android:fontFamily">sans-serif-medium"</item>

@@ -21,7 +21,7 @@ plugins {
 }
 
 android {
-    namespace = "com.NoobLol.smartnoob.feature.smart.debugging"
+    namespace = "com.buzbuz.smartautoclicker.feature.smart.debugging"
     buildFeatures.viewBinding = true
 }
 

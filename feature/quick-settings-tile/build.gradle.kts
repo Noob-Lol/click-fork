@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    namespace = "com.NoobLol.smartnoob.feature.qstile"
+    namespace = "com.buzbuz.smartautoclicker.feature.qstile"
     buildFeatures.viewBinding = true
 }
 
@@ -34,6 +34,7 @@ dependencies {
 
     implementation(project(":core:common:base"))
     implementation(project(":core:common:display"))
+    implementation(project(":core:common:settings"))
     implementation(project(":core:common:ui"))
     implementation(project(":core:dumb"))
     implementation(project(":core:smart:domain"))

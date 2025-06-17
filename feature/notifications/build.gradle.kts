@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    namespace = "com.NoobLol.smartnoob.feature.notifications"
+    namespace = "com.buzbuz.smartautoclicker.feature.notifications"
     buildFeatures.viewBinding = true
 }
 
@@ -29,6 +29,7 @@ dependencies {
 
     implementation(project(":core:common:base"))
     implementation(project(":core:common:permissions"))
+    implementation(project(":core:common:settings"))
     implementation(project(":core:common:ui"))
     implementation(project(":core:smart:domain"))
 }

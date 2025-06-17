@@ -1,5 +1,7 @@
+import com.buzbuz.gradle.obfuscation.getExtraActualApplicationId
+
 /*
- * Copyright (C) 2024 Kevin Buzeau
+ * Copyright (C) 2025 Kevin Buzeau
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +19,41 @@
 
 plugins {
     alias(libs.plugins.buzbuz.androidApplication)
+    alias(libs.plugins.buzbuz.obfuscation)
     alias(libs.plugins.buzbuz.buildParameters)
     alias(libs.plugins.buzbuz.hilt)
 }
 
+obfuscationConfig {
+    obfuscatedApplication {
+        create("com.buzbuz.smartautoclicker.application.SmartAutoClickerApplication")
+    }
+    obfuscatedComponents {
+        create("com.buzbuz.smartautoclicker.scenarios.ScenarioActivity")
+        create("com.buzbuz.smartautoclicker.SmartAutoClickerService")
+    }
+
+    setup(
+        applicationId = "com.buzbuz.smartautoclicker",
+        appNameResId = "@string/app_name",
+        shouldRandomize = buildParameters["randomizeAppId"].asBoolean() &&
+                buildParameters.isBuildForVariant("fDroid"),
+    )
+}
+
 android {
-    namespace = "com.NoobLol.smartnoob"
-    buildFeatures.viewBinding = true
+    namespace = "com.buzbuz.smartautoclicker"
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 
     defaultConfig {
-        applicationId = "com.NoobLol.smartnoob"
+        applicationId = getExtraActualApplicationId()
 
-        versionCode = 58
-        versionName = "3.1.1"
+        versionCode = 72
+        versionName = "3.3.4"
     }
 
     flavorDimensions += listOf("version")
@@ -71,9 +95,10 @@ if (buildParameters.isBuildForVariant("playStoreRelease")) {
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
+    implementation(libs.androidx.appCompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.appCompat)
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.recyclerView)
     implementation(libs.androidx.fragment.ktx)
 
@@ -89,18 +114,21 @@ dependencies {
     implementation(project(":core:common:base"))
     implementation(project(":core:common:bitmaps"))
     implementation(project(":core:common:display"))
-    implementation(project(":core:common:quality"))
     implementation(project(":core:common:overlays"))
+    implementation(project(":core:common:permissions"))
+    implementation(project(":core:common:quality"))
+    implementation(project(":core:common:settings"))
     implementation(project(":core:common:ui"))
     implementation(project(":core:dumb"))
     implementation(project(":core:smart:detection"))
     implementation(project(":core:smart:domain"))
     implementation(project(":core:smart:processing"))
+
     implementation(project(":feature:backup"))
     implementation(project(":feature:notifications"))
-    implementation(project(":core:common:permissions"))
     implementation(project(":feature:quick-settings-tile"))
     implementation(project(":feature:revenue"))
+    implementation(project(":feature:review"))
     implementation(project(":feature:smart-config"))
     implementation(project(":feature:smart-debugging"))
     implementation(project(":feature:dumb-config"))

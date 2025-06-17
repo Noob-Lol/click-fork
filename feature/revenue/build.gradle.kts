@@ -22,7 +22,7 @@ plugins {
 }
 
 android {
-    namespace = "com.NoobLol.smartnoob.feature.revenue"
+    namespace = "com.buzbuz.smartautoclicker.feature.revenue"
 
     // Specifies one flavor dimension.
     flavorDimensions += "version"

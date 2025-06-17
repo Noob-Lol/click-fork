@@ -18,6 +18,7 @@
 
 plugins {
     alias(libs.plugins.buzbuz.androidLibrary)
+    alias(libs.plugins.buzbuz.androidLocalTest)
     alias(libs.plugins.buzbuz.sourceDownload)
 }
 
@@ -35,7 +36,7 @@ sourceDownload {
 }
 
 android {
-    namespace = "com.NoobLol.smartnoob.core.detection"
+    namespace = "com.buzbuz.smartautoclicker.core.detection"
 
     defaultConfig {
         externalNativeBuild {
@@ -71,7 +72,6 @@ android {
                             "-DWITH_OPENCLAMDFFT=OFF",
                             "-DWITH_OPENCLAMDBLAS=OFF",
                             "-DWITH_VA_INTEL=OFF",
-                            "-DCPU_BASELINE_DISABLE=ON",
                             "-DENABLE_SSE=OFF",
                             "-DENABLE_SSE2=OFF",
                             "-DBUILD_TESTING=OFF",
@@ -80,8 +80,6 @@ android {
                             "-DBUILD_EXAMPLES=OFF",
                             "-DBUILD_DOCS=OFF",
                             "-DBUILD_opencv_apps=OFF",
-                            "-DBUILD_SHARED_LIBS=OFF",
-                            "-DOpenCV_STATIC=ON",
                             "-DWITH_1394=OFF",
                             "-DWITH_ARITH_DEC=OFF",
                             "-DWITH_ARITH_ENC=OFF",
@@ -120,4 +118,5 @@ android {
 
 dependencies {
     implementation(libs.androidx.annotation)
+
 }

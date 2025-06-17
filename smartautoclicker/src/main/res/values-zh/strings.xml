@@ -18,7 +18,7 @@
 <resources>
 
     <!-- Application wide texts. -->
-    <string name="activity_title">场景列表</string>
+    <string name="activity_scenario_title">场景列表</string>
     <string name="notification_title">场景: %1$s</string>
     <string name="notification_message">点击停止运行</string>
     <string name="notification_button_play_and_hide">玩耍和隐藏</string>
@@ -42,11 +42,13 @@
     <string name="menu_item_title_export">导出</string>
     <string name="menu_item_title_import">导入</string>
     <string name="menu_item_title_select_all">全选</string>
-    <string name="menu_item_title_privacy">隐私设置</string>
-    <string name="menu_item_title_remove_ads">删除广告</string>
-    <string name="menu_item_title_troubleshooting">故障排除</string>
     <string name="menu_item_title_cancel">取消</string>
     <string name="menu_item_title_search">搜索</string>
+    <string name="menu_item_title_settings">设置</string>
+
+    <string name="item_scenario_filter_by_name">名称</string>
+    <string name="item_scenario_filter_by_recent">最近</string>
+    <string name="item_scenario_filter_by_favorite">最爱</string>
 
     <!--
       - Text for items in a list or vertical layout.
@@ -106,5 +108,30 @@
     <!-- Default name when creating a new scenario -->
     <string name="default_scenario_name">默认名称</string>
     <string name="message_empty_image_events_scenario_list">No image events</string>
+
+
+    <!-- Settings Activity  ======================================================================================== -->
+
+    <string name="activity_settings_title">设置</string>
+
+    <string name="field_show_scenario_filters_ui_title">显示场景筛选器</string>
+    <string name="field_show_scenario_filters_ui_desc">显示或隐藏场景列表界面中的筛选器。</string>
+
+    <string name="field_legacy_action_ui_title">传统动作用户界面</string>
+    <string name="field_legacy_action_ui_desc">通过列表更改操作显示。适用于复杂场景。</string>
+
+    <string name="field_legacy_notification_ui_title">传统通知用户界面</string>
+    <string name="field_legacy_notification_ui_desc">在通知中使用系统按钮而不是图标按钮。</string>
+
+    <string name="field_force_entire_screen_title">强制整个屏幕</string>
+    <string name="field_force_entire_screen_desc">强制屏幕截图选择器为 “整个屏幕”。根据设备不同，可能无法使用</string>
+
+    <string name="field_input_block_workaround_title">解锁触摸屏</string>
+    <string name="field_input_block_workaround_desc">在装有 Android 15 的 Pixel 设备上，使用自动点击器可能会阻挡触摸屏。此设置会尝试每 10 秒钟模拟一次。</string>
+
+
+    <string name="field_privacy">隐私设置</string>
+    <string name="field_remove_ads">删除广告</string>
+    <string name="field_troubleshooting">故障排除</string>
 
 </resources>

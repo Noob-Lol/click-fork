@@ -23,7 +23,7 @@ plugins {
 }
 
 android {
-    namespace = "com.NoobLol.smartnoob.core.extensions"
+    namespace = "com.buzbuz.smartautoclicker.core.extensions"
 }
 
 dependencies {
@@ -32,7 +32,10 @@ dependencies {
 
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.room.ktx)
+
+    implementation(libs.google.material)
 
     testImplementation(libs.kotlinx.coroutines.test)
 }

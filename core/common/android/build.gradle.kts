@@ -19,5 +19,5 @@ plugins {
 }
 
 android {
-    namespace = "com.NoobLol.smartnoob.core.android"
+    namespace = "com.buzbuz.smartautoclicker.core.android"
 }

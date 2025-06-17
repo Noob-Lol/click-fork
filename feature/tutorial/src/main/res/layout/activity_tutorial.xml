@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-* Copyright (C) 2023 Kevin Buzeau
+* Copyright (C) 2024 Kevin Buzeau
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".ui.TutorialActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -32,6 +33,7 @@
             android:id="@+id/topAppBar"
             style="@style/AppTheme.Widget.Toolbar"
             app:layout_scrollFlags="enterAlways|noScroll"
+            app:layout_scrollEffect="compress"
             app:title="@string/activity_tutorial_name" />
 
     </com.google.android.material.appbar.AppBarLayout>

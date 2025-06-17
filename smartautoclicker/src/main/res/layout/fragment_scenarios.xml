@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-* Copyright (C) 2022 Kevin Buzeau
+* Copyright (C) 2024 Kevin Buzeau
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ScenarioActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".scenarios.ScenarioActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -33,7 +34,8 @@
             android:id="@+id/topAppBar"
             style="@style/AppTheme.Widget.Toolbar"
             app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:title="@string/activity_title"
+            app:layout_scrollEffect="compress"
+            app:title="@string/activity_scenario_title"
             app:menu="@menu/menu_scenario_fragment" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -89,6 +91,7 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/margin_vertical_large"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
