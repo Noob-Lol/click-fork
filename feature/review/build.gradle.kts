@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.feature.review"
+    namespace = "com.nooblol.smartnoob.feature.review"
     buildFeatures.viewBinding = true
 
     // Specifies one flavor dimension.

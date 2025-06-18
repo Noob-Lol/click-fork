@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.feature.notifications"
+    namespace = "com.nooblol.smartnoob.feature.notifications"
     buildFeatures.viewBinding = true
 }
 

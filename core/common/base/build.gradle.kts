@@ -23,7 +23,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.core.extensions"
+    namespace = "com.nooblol.smartnoob.core.extensions"
 }
 
 dependencies {

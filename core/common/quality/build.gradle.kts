@@ -22,7 +22,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.core.common.quality"
+    namespace = "com.nooblol.smartnoob.core.common.quality"
 
     buildFeatures {
         buildConfig = true

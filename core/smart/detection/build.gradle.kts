@@ -36,7 +36,7 @@ sourceDownload {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.core.detection"
+    namespace = "com.nooblol.smartnoob.core.detection"
 
     defaultConfig {
         externalNativeBuild {

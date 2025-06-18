@@ -22,7 +22,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.core.common.overlays"
+    namespace = "com.nooblol.smartnoob.core.common.overlays"
     buildFeatures.viewBinding = true
 }
 

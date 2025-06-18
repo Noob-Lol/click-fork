@@ -27,14 +27,14 @@
 using namespace smartautoclicker;
 
 extern "C" {
-    JNIEXPORT jlong JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_newDetector(
+    JNIEXPORT jlong JNICALL Java_com_nooblol_smartnoob_core_detection_NativeDetector_newDetector(
             JNIEnv *env,
             jobject self
     ) {
         return reinterpret_cast<jlong>(new Detector());
     }
 
-    JNIEXPORT void JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_updateScreenMetrics(
+    JNIEXPORT void JNICALL Java_com_nooblol_smartnoob_core_detection_NativeDetector_updateScreenMetrics(
             JNIEnv *env,
             jobject self,
             jstring metricsTag,
@@ -51,7 +51,7 @@ extern "C" {
         env->ReleaseStringUTFChars(metricsTag, tag);
     }
 
-    JNIEXPORT void JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_setScreenImage(
+    JNIEXPORT void JNICALL Java_com_nooblol_smartnoob_core_detection_NativeDetector_setScreenImage(
             JNIEnv *env,
             jobject self,
             jobject screenBitmap
@@ -60,7 +60,7 @@ extern "C" {
                 loadMatFromRGBA8888Bitmap(env, screenBitmap));
     }
 
-    JNIEXPORT void JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_detect(
+    JNIEXPORT void JNICALL Java_com_nooblol_smartnoob_core_detection_NativeDetector_detect(
             JNIEnv *env,
             jobject self,
             jobject conditionBitmap,
@@ -71,7 +71,7 @@ extern "C" {
                 loadMatFromRGBA8888Bitmap(env, conditionBitmap), threshold));
     }
 
-    JNIEXPORT void JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_detectAt(
+    JNIEXPORT void JNICALL Java_com_nooblol_smartnoob_core_detection_NativeDetector_detectAt(
             JNIEnv *env,
             jobject self,
             jobject conditionBitmap,
@@ -86,7 +86,7 @@ extern "C" {
                 loadMatFromRGBA8888Bitmap(env, conditionBitmap), x, y, width, height, threshold));
     }
 
-    JNIEXPORT void JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_deleteDetector(
+    JNIEXPORT void JNICALL Java_com_nooblol_smartnoob_core_detection_NativeDetector_deleteDetector(
             JNIEnv *env,
             jobject self
     ) {

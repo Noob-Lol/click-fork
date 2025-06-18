@@ -45,7 +45,7 @@
         </activity>
 
         <activity
-            android:name="com.buzbuz.smartautoclicker.settings.SettingsActivity"
+            android:name="com.nooblol.smartnoob.settings.SettingsActivity"
             android:exported="false" />
 
         <service

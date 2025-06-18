@@ -23,7 +23,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.feature.backup"
+    namespace = "com.nooblol.smartnoob.feature.backup"
     buildFeatures.viewBinding = true
 }
 

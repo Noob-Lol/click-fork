@@ -26,15 +26,15 @@ plugins {
 
 obfuscationConfig {
     obfuscatedApplication {
-        create("com.buzbuz.smartautoclicker.application.SmartAutoClickerApplication")
+        create("com.nooblol.smartnoob.application.NoobApplication")
     }
     obfuscatedComponents {
-        create("com.buzbuz.smartautoclicker.scenarios.ScenarioActivity")
-        create("com.buzbuz.smartautoclicker.SmartAutoClickerService")
+        create("com.nooblol.smartnoob.scenarios.ScenarioActivity")
+        create("com.nooblol.smartnoob.SmartAutoClickerService")
     }
 
     setup(
-        applicationId = "com.buzbuz.smartautoclicker",
+        applicationId = "com.nooblol.smartnoob",
         appNameResId = "@string/app_name",
         shouldRandomize = buildParameters["randomizeAppId"].asBoolean() &&
                 buildParameters.isBuildForVariant("fDroid"),
@@ -42,7 +42,7 @@ obfuscationConfig {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker"
+    namespace = "com.nooblol.smartnoob"
 
     buildFeatures {
         viewBinding = true
