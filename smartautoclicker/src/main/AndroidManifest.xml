@@ -18,15 +18,15 @@
 <manifest xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Needed to start the SmartAutoClickerService as a foreground service -->
+    <!-- Needed to start the NoobService as a foreground service -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- Needed to use the media projection with SmartAutoClickerService. Starting with SDK 34 -->
+    <!-- Needed to use the media projection with NoobService. Starting with SDK 34 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION"/>
     <!-- Needed to display the overlay_menu over other apps -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
-        android:name="${smartAutoClickerApplication}"
+        android:name="${noobApplication}"
         android:allowBackup="false"
         android:icon="@mipmap/ic_smart_auto_clicker"
         android:label="${appName}"
@@ -49,7 +49,7 @@
             android:exported="false" />
 
         <service
-            android:name="${smartAutoClickerService}"
+            android:name="${noobService}"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:foregroundServiceType="mediaProjection"
             android:exported="true">

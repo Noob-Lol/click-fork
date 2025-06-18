@@ -59,7 +59,7 @@ class AppComponentsManager @Inject constructor() : AppComponentsProvider {
         _scenarioActivityComponentName = componentName
     }
 
-    fun registerSmartAutoClickerService(componentName: ComponentName) {
+    fun registerNoobService(componentName: ComponentName) {
         _klickrServiceComponentName = componentName
     }
 }

@@ -71,7 +71,7 @@ import javax.inject.Inject
  * been detected.
  */
 @AndroidEntryPoint
-class SmartAutoClickerService : AccessibilityService(), SmartActionExecutor {
+class NoobService : AccessibilityService(), SmartActionExecutor {
 
     private val localServiceProvider = LocalServiceProvider
 
@@ -209,7 +209,7 @@ class SmartAutoClickerService : AccessibilityService(), SmartActionExecutor {
     override fun dump(fd: FileDescriptor?, writer: PrintWriter?, args: Array<out String>?) {
         if (writer == null) return
 
-        writer.append("* SmartAutoClickerService:").println()
+        writer.append("* NoobService:").println()
         writer.append(Dumpable.DUMP_DISPLAY_TAB)
             .append("- isStarted=").append("${localService?.isStarted ?: false}; ")
             .println()
@@ -231,4 +231,4 @@ class SmartAutoClickerService : AccessibilityService(), SmartActionExecutor {
 }
 
 /** Tag for the logs. */
-private const val TAG = "SmartAutoClickerService"
+private const val TAG = "NoobService"

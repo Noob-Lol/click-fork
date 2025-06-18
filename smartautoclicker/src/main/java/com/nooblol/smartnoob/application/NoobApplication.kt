@@ -34,7 +34,7 @@ class NoobApplication : Application() {
         val componentConfig = ComponentConfig
         appComponentsManager.apply {
             registerOriginalAppId(componentConfig.ORIGINAL_APP_ID)
-            registerSmartAutoClickerService(componentConfig.smartAutoClickerService)
+            registerNoobService(componentConfig.noobService)
             registerScenarioActivity(componentConfig.scenarioActivity)
         }
 

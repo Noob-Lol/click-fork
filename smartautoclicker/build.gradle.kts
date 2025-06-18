@@ -30,7 +30,7 @@ obfuscationConfig {
     }
     obfuscatedComponents {
         create("com.nooblol.smartnoob.scenarios.ScenarioActivity")
-        create("com.nooblol.smartnoob.SmartAutoClickerService")
+        create("com.nooblol.smartnoob.NoobService")
     }
 
     setup(

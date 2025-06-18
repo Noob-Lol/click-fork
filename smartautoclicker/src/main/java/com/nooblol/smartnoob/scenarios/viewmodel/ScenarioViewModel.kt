@@ -61,13 +61,13 @@ class ScenarioViewModel @Inject constructor(
     private val appComponentsProvider: AppComponentsProvider,
 ) : ViewModel() {
 
-    /** Callback upon the availability of SmartAutoClickerService. */
+    /** Callback upon the availability of NoobService. */
     private val serviceConnection: (ILocalService?) -> Unit = { localService ->
         clickerService = localService
     }
 
     /**
-     * Reference on SmartAutoClickerService.
+     * Reference on NoobService.
      * Will be not null only if the Accessibility Service is enabled.
      */
     private var clickerService: ILocalService? = null
