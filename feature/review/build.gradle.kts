@@ -16,24 +16,13 @@
  */
 plugins {
     alias(libs.plugins.buzbuz.androidLibrary)
+    alias(libs.plugins.buzbuz.flavour)
     alias(libs.plugins.buzbuz.hilt)
 }
 
 android {
     namespace = "com.nooblol.smartnoob.feature.review"
     buildFeatures.viewBinding = true
-
-    // Specifies one flavor dimension.
-    flavorDimensions += "version"
-    productFlavors {
-        create("fDroid") {
-            dimension = "version"
-        }
-
-        create("playStore") {
-            dimension = "version"
-        }
-    }
 }
 
 dependencies {
