@@ -38,22 +38,6 @@ jobs:
         restore-keys: |
           build-output-${{ runner.os }}-
 
-    - name: Cache native .cxx folders
-      uses: actions/cache@v4
-      with:
-        path: '**/.cxx'
-        key: native-cxx-${{ runner.os }}-${{ github.ref_name }}
-        restore-keys: |
-          native-cxx-${{ runner.os }}-
-
-    - name: Cache OpenCV source and outputs
-      uses: actions/cache@v4
-      with:
-        path: '**/release/opencv'
-        key: opencv-${{ runner.os }}-${{ hashFiles('**/build.gradle.kts') }}
-        restore-keys: |
-          opencv-${{ runner.os }}-
-
     - name: Restore keystore
       run: |
         echo "${{ secrets.RELEASE_KEYSTORE }}" > smartautoclicker.jks.asc
@@ -84,5 +68,5 @@ jobs:
     - name: Upload APK as Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: smartautoclicker-release
+        name: click-fork-release
         path: release-apk/*.apk
