@@ -33,6 +33,12 @@ jobs:
           -PsigningKeyPassword="${{ secrets.SIGNING_KEY_PASSWORD }}" \
           assembleFDroidRelease bundleFDroidRelease
 
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: smartautoclicker-release
+        path: smartautoclicker/build/outputs/
+
     - name: Rename APK with tag
       run: |
         TAG_NAME="${GITHUB_REF##*/}"
