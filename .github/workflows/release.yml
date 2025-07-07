@@ -46,14 +46,6 @@ jobs:
         restore-keys: |
           native-cxx-${{ runner.os }}-
 
-    - name: Cache CMake build outputs
-      uses: actions/cache@v4
-      with:
-        path: '**/build/cmake-*'
-        key: cmake-native-${{ runner.os }}-${{ github.ref_name }}
-        restore-keys: |
-          cmake-native-${{ runner.os }}-
-
     - name: Cache OpenCV source and outputs
       uses: actions/cache@v4
       with:
