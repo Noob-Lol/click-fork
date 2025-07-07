@@ -37,7 +37,7 @@ jobs:
       run: |
         TAG_NAME="${GITHUB_REF##*/}"
         mkdir release-apk
-        cp smartautoclicker/build/outputs/apk/fdroid/release/*.apk "release-apk/click-fork-${TAG_NAME}.apk"
+        cp smartautoclicker/build/outputs/apk/fDroid/release/*.apk "release-apk/click-fork-${TAG_NAME}.apk"
 
     - name: Upload APK to GitHub Release
       uses: softprops/action-gh-release@v2
