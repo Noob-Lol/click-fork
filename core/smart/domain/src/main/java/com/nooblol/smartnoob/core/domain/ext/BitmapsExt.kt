@@ -14,11 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.processing.data.scaling
+package com.nooblol.smartnoob.core.domain.ext
 
-import android.graphics.Rect
+import android.graphics.Bitmap
+import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
+import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
 
-internal data class ImageConditionScalingInfo(
-    val imageArea: Rect,
-    val detectionArea: Rect,
+
+suspend fun BitmapRepository.getConditionBitmap(
+    condition: ImageCondition,
+    targetWidth: Int = condition.area.width(),
+    targetHeight: Int = condition.area.height(),
+): Bitmap? = getImageConditionBitmap(
+    path = condition.path,
+    width = targetWidth,
+    height = targetHeight,
 )

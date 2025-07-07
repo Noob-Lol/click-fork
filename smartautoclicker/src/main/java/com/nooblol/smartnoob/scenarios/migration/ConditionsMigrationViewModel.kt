@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.scenarios.migration
+package com.nooblol.smartnoob.scenarios.migration
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.buzbuz.smartautoclicker.R
+import com.nooblol.smartnoob.R
 
-import com.buzbuz.smartautoclicker.core.base.di.Dispatcher
-import com.buzbuz.smartautoclicker.core.base.di.HiltCoroutineDispatchers.IO
-import com.buzbuz.smartautoclicker.core.domain.IRepository
-import com.buzbuz.smartautoclicker.core.ui.bindings.buttons.LoadableButtonState
+import com.nooblol.smartnoob.core.base.di.Dispatcher
+import com.nooblol.smartnoob.core.base.di.HiltCoroutineDispatchers.IO
+import com.nooblol.smartnoob.core.domain.IRepository
+import com.nooblol.smartnoob.core.ui.bindings.buttons.LoadableButtonState
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.scenarios.migration
+package com.nooblol.smartnoob.scenarios.migration
 
 import android.app.Dialog
 import android.os.Bundle
@@ -24,10 +24,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.buzbuz.smartautoclicker.core.ui.bindings.buttons.setOnClickListener
-import com.buzbuz.smartautoclicker.core.ui.bindings.buttons.setState
+import com.nooblol.smartnoob.core.ui.bindings.buttons.setOnClickListener
+import com.nooblol.smartnoob.core.ui.bindings.buttons.setState
 
-import com.buzbuz.smartautoclicker.databinding.DialogConditionsMigrationBinding
+import com.nooblol.smartnoob.databinding.DialogConditionsMigrationBinding
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 

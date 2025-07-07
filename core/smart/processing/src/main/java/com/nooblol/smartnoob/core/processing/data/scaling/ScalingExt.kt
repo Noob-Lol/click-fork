@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.buzbuz.smartautoclicker.core.processing.data.scaling
+package com.nooblol.smartnoob.core.processing.data.scaling
 
 import android.graphics.Point
 import android.graphics.Rect

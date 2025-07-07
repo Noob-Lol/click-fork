@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.processing.data.scaling
+package com.nooblol.smartnoob.core.processing.data.scaling
 
 import android.content.Context
 import android.graphics.Point
 import android.graphics.Rect
-import com.buzbuz.smartautoclicker.core.display.config.DisplayConfigManager
-import com.buzbuz.smartautoclicker.core.domain.model.EXACT
-import com.buzbuz.smartautoclicker.core.domain.model.IN_AREA
-import com.buzbuz.smartautoclicker.core.domain.model.WHOLE_SCREEN
-import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
-import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
+import com.nooblol.smartnoob.core.display.config.DisplayConfigManager
+import com.nooblol.smartnoob.core.domain.model.EXACT
+import com.nooblol.smartnoob.core.domain.model.IN_AREA
+import com.nooblol.smartnoob.core.domain.model.WHOLE_SCREEN
+import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
+import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
 import javax.inject.Inject
 import kotlin.math.max
 
