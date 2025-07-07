@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.processing.tests.processor
+package com.nooblol.smartnoob.core.processing.tests.processor
 
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.buzbuz.smartautoclicker.core.detection.ImageDetector
-import com.buzbuz.smartautoclicker.core.domain.model.SmartActionExecutor
-import com.buzbuz.smartautoclicker.core.domain.model.action.ChangeCounter.OperationType
-import com.buzbuz.smartautoclicker.core.domain.model.action.ToggleEvent
-import com.buzbuz.smartautoclicker.core.domain.model.condition.TriggerCondition.OnCounterCountReached.ComparisonOperation.EQUALS
-import com.buzbuz.smartautoclicker.core.processing.data.processor.ScenarioProcessor
-import com.buzbuz.smartautoclicker.core.processing.data.scaling.ScalingManager
-import com.buzbuz.smartautoclicker.core.processing.domain.ScenarioProcessingListener
-import com.buzbuz.smartautoclicker.core.processing.utils.anyNotNull
+import com.nooblol.smartnoob.core.detection.ImageDetector
+import com.nooblol.smartnoob.core.domain.model.SmartActionExecutor
+import com.nooblol.smartnoob.core.domain.model.action.ChangeCounter.OperationType
+import com.nooblol.smartnoob.core.domain.model.action.ToggleEvent
+import com.nooblol.smartnoob.core.domain.model.condition.TriggerCondition.OnCounterCountReached.ComparisonOperation.EQUALS
+import com.nooblol.smartnoob.core.processing.data.processor.ScenarioProcessor
+import com.nooblol.smartnoob.core.processing.data.scaling.ScalingManager
+import com.nooblol.smartnoob.core.processing.domain.ScenarioProcessingListener
+import com.nooblol.smartnoob.core.processing.utils.anyNotNull
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers

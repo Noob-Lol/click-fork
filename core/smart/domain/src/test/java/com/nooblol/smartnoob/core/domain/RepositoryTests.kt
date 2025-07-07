@@ -14,24 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.domain
+package com.nooblol.smartnoob.core.domain
 
 import android.content.Context
 import android.os.Build
 
-import com.buzbuz.smartautoclicker.core.base.identifier.Identifier
-import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
-import com.buzbuz.smartautoclicker.core.database.ClickDatabase
-import com.buzbuz.smartautoclicker.core.database.TutorialDatabase
-import com.buzbuz.smartautoclicker.core.database.dao.ConditionDao
-import com.buzbuz.smartautoclicker.core.database.dao.EventDao
-import com.buzbuz.smartautoclicker.core.database.dao.ScenarioDao
-import com.buzbuz.smartautoclicker.core.database.entity.CompleteEventEntity
-import com.buzbuz.smartautoclicker.core.domain.data.ScenarioDataSource
-import com.buzbuz.smartautoclicker.core.domain.model.action.ActionTestsData
-import com.buzbuz.smartautoclicker.core.domain.model.condition.ConditionTestsData
-import com.buzbuz.smartautoclicker.core.domain.model.event.EventTestsData
-import com.buzbuz.smartautoclicker.core.domain.model.scenario.ScenarioTestsData
+import com.nooblol.smartnoob.core.base.identifier.Identifier
+import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
+import com.nooblol.smartnoob.core.database.ClickDatabase
+import com.nooblol.smartnoob.core.database.TutorialDatabase
+import com.nooblol.smartnoob.core.database.dao.ConditionDao
+import com.nooblol.smartnoob.core.database.dao.EventDao
+import com.nooblol.smartnoob.core.database.dao.ScenarioDao
+import com.nooblol.smartnoob.core.database.entity.CompleteEventEntity
+import com.nooblol.smartnoob.core.domain.data.ScenarioDataSource
+import com.nooblol.smartnoob.core.domain.model.action.ActionTestsData
+import com.nooblol.smartnoob.core.domain.model.condition.ConditionTestsData
+import com.nooblol.smartnoob.core.domain.model.event.EventTestsData
+import com.nooblol.smartnoob.core.domain.model.scenario.ScenarioTestsData
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first

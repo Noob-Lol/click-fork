@@ -19,7 +19,7 @@
 package com.nooblol.smartnoob.feature.smart.config.domain
 
 import android.util.Log
-import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
+import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
 
 import com.nooblol.smartnoob.core.domain.IRepository
 import com.nooblol.smartnoob.core.domain.model.action.Action

@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.feature.smart.debugging.ui.report
+package com.nooblol.smartnoob.feature.smart.debugging.ui.report
 
 import android.graphics.Bitmap
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
-import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
-import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
-import com.buzbuz.smartautoclicker.core.domain.IRepository
-import com.buzbuz.smartautoclicker.feature.smart.debugging.domain.ConditionProcessingDebugInfo
-import com.buzbuz.smartautoclicker.feature.smart.debugging.domain.DebugReport
-import com.buzbuz.smartautoclicker.feature.smart.debugging.domain.DebuggingRepository
-import com.buzbuz.smartautoclicker.feature.smart.debugging.domain.ProcessingDebugInfo
+import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
+import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
+import com.nooblol.smartnoob.core.domain.IRepository
+import com.nooblol.smartnoob.feature.smart.debugging.domain.ConditionProcessingDebugInfo
+import com.nooblol.smartnoob.feature.smart.debugging.domain.DebugReport
+import com.nooblol.smartnoob.feature.smart.debugging.domain.DebuggingRepository
+import com.nooblol.smartnoob.feature.smart.debugging.domain.ProcessingDebugInfo
 
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

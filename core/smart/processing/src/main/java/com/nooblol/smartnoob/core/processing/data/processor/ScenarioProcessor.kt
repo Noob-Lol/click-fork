@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.processing.data.processor
+package com.nooblol.smartnoob.core.processing.data.processor
 
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.annotation.VisibleForTesting
 
-import com.buzbuz.smartautoclicker.core.detection.ImageDetector
-import com.buzbuz.smartautoclicker.core.domain.model.SmartActionExecutor
-import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
-import com.buzbuz.smartautoclicker.core.domain.model.event.TriggerEvent
-import com.buzbuz.smartautoclicker.core.processing.data.processor.state.ProcessingState
-import com.buzbuz.smartautoclicker.core.processing.data.scaling.ScalingManager
-import com.buzbuz.smartautoclicker.core.processing.domain.ScenarioProcessingListener
+import com.nooblol.smartnoob.core.detection.ImageDetector
+import com.nooblol.smartnoob.core.domain.model.SmartActionExecutor
+import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
+import com.nooblol.smartnoob.core.domain.model.event.TriggerEvent
+import com.nooblol.smartnoob.core.processing.data.processor.state.ProcessingState
+import com.nooblol.smartnoob.core.processing.data.scaling.ScalingManager
+import com.nooblol.smartnoob.core.processing.domain.ScenarioProcessingListener
 
 import kotlinx.coroutines.yield
 

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.feature.smart.config.ui.condition.image
+package com.nooblol.smartnoob.feature.smart.config.ui.condition.image
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -23,16 +23,16 @@ import android.view.View
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
+import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
 
-import com.buzbuz.smartautoclicker.core.domain.ext.getConditionBitmap
-import com.buzbuz.smartautoclicker.core.domain.model.DetectionType
-import com.buzbuz.smartautoclicker.core.domain.model.IN_AREA
-import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
-import com.buzbuz.smartautoclicker.core.ui.monitoring.MonitoredViewType
-import com.buzbuz.smartautoclicker.core.ui.monitoring.MonitoredViewsManager
-import com.buzbuz.smartautoclicker.feature.smart.config.R
-import com.buzbuz.smartautoclicker.feature.smart.config.domain.EditionRepository
+import com.nooblol.smartnoob.core.domain.ext.getConditionBitmap
+import com.nooblol.smartnoob.core.domain.model.DetectionType
+import com.nooblol.smartnoob.core.domain.model.IN_AREA
+import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
+import com.nooblol.smartnoob.core.ui.monitoring.MonitoredViewType
+import com.nooblol.smartnoob.core.ui.monitoring.MonitoredViewsManager
+import com.nooblol.smartnoob.feature.smart.config.R
+import com.nooblol.smartnoob.feature.smart.config.domain.EditionRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 
 import kotlinx.coroutines.Dispatchers

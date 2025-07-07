@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.feature.smart.config.ui.action.click
+package com.nooblol.smartnoob.feature.smart.config.ui.action.click
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -24,25 +24,25 @@ import android.view.View
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
+import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
 
-import com.buzbuz.smartautoclicker.core.domain.IRepository
-import com.buzbuz.smartautoclicker.core.domain.ext.getConditionBitmap
-import com.buzbuz.smartautoclicker.core.domain.model.AND
-import com.buzbuz.smartautoclicker.core.domain.model.OR
-import com.buzbuz.smartautoclicker.core.domain.model.action.Click
-import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
-import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
-import com.buzbuz.smartautoclicker.core.domain.model.event.TriggerEvent
-import com.buzbuz.smartautoclicker.core.ui.monitoring.MonitoredViewsManager
-import com.buzbuz.smartautoclicker.core.ui.monitoring.MonitoredViewType
-import com.buzbuz.smartautoclicker.feature.smart.config.R
-import com.buzbuz.smartautoclicker.feature.smart.config.domain.EditionRepository
-import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.condition.UiImageCondition
-import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.condition.toUiImageCondition
-import com.buzbuz.smartautoclicker.feature.smart.config.utils.getEventConfigPreferences
-import com.buzbuz.smartautoclicker.feature.smart.config.utils.getImageConditionBitmap
-import com.buzbuz.smartautoclicker.feature.smart.config.utils.putClickPressDurationConfig
+import com.nooblol.smartnoob.core.domain.IRepository
+import com.nooblol.smartnoob.core.domain.ext.getConditionBitmap
+import com.nooblol.smartnoob.core.domain.model.AND
+import com.nooblol.smartnoob.core.domain.model.OR
+import com.nooblol.smartnoob.core.domain.model.action.Click
+import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
+import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
+import com.nooblol.smartnoob.core.domain.model.event.TriggerEvent
+import com.nooblol.smartnoob.core.ui.monitoring.MonitoredViewsManager
+import com.nooblol.smartnoob.core.ui.monitoring.MonitoredViewType
+import com.nooblol.smartnoob.feature.smart.config.R
+import com.nooblol.smartnoob.feature.smart.config.domain.EditionRepository
+import com.nooblol.smartnoob.feature.smart.config.ui.common.model.condition.UiImageCondition
+import com.nooblol.smartnoob.feature.smart.config.ui.common.model.condition.toUiImageCondition
+import com.nooblol.smartnoob.feature.smart.config.utils.getEventConfigPreferences
+import com.nooblol.smartnoob.feature.smart.config.utils.getImageConditionBitmap
+import com.nooblol.smartnoob.feature.smart.config.utils.putClickPressDurationConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 
 import kotlinx.coroutines.Dispatchers

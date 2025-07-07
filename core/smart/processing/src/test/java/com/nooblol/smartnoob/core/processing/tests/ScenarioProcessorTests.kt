@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.processing.tests
+package com.nooblol.smartnoob.core.processing.tests
 
 import android.accessibilityservice.GestureDescription
 import android.graphics.Bitmap
@@ -24,26 +24,26 @@ import android.os.Build
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
-import com.buzbuz.smartautoclicker.core.detection.DetectionResult
-import com.buzbuz.smartautoclicker.core.detection.ImageDetector
-import com.buzbuz.smartautoclicker.core.domain.model.AND
-import com.buzbuz.smartautoclicker.core.domain.model.DetectionType
-import com.buzbuz.smartautoclicker.core.domain.model.EXACT
-import com.buzbuz.smartautoclicker.core.base.identifier.Identifier
-import com.buzbuz.smartautoclicker.core.domain.model.OR
-import com.buzbuz.smartautoclicker.core.domain.model.SmartActionExecutor
-import com.buzbuz.smartautoclicker.core.domain.model.WHOLE_SCREEN
-import com.buzbuz.smartautoclicker.core.domain.model.action.Click
-import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
-import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
-import com.buzbuz.smartautoclicker.core.domain.model.event.TriggerEvent
-import com.buzbuz.smartautoclicker.core.processing.data.processor.ScenarioProcessor
-import com.buzbuz.smartautoclicker.core.processing.data.scaling.ImageConditionScalingInfo
-import com.buzbuz.smartautoclicker.core.processing.data.scaling.ScalingManager
-import com.buzbuz.smartautoclicker.core.processing.shadows.ShadowBitmapCreator
-import com.buzbuz.smartautoclicker.core.processing.utils.ProcessingData.newCondition
-import com.buzbuz.smartautoclicker.core.processing.utils.ProcessingData.newEvent
-import com.buzbuz.smartautoclicker.core.processing.utils.anyNotNull
+import com.nooblol.smartnoob.core.detection.DetectionResult
+import com.nooblol.smartnoob.core.detection.ImageDetector
+import com.nooblol.smartnoob.core.domain.model.AND
+import com.nooblol.smartnoob.core.domain.model.DetectionType
+import com.nooblol.smartnoob.core.domain.model.EXACT
+import com.nooblol.smartnoob.core.base.identifier.Identifier
+import com.nooblol.smartnoob.core.domain.model.OR
+import com.nooblol.smartnoob.core.domain.model.SmartActionExecutor
+import com.nooblol.smartnoob.core.domain.model.WHOLE_SCREEN
+import com.nooblol.smartnoob.core.domain.model.action.Click
+import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
+import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
+import com.nooblol.smartnoob.core.domain.model.event.TriggerEvent
+import com.nooblol.smartnoob.core.processing.data.processor.ScenarioProcessor
+import com.nooblol.smartnoob.core.processing.data.scaling.ImageConditionScalingInfo
+import com.nooblol.smartnoob.core.processing.data.scaling.ScalingManager
+import com.nooblol.smartnoob.core.processing.shadows.ShadowBitmapCreator
+import com.nooblol.smartnoob.core.processing.utils.ProcessingData.newCondition
+import com.nooblol.smartnoob.core.processing.utils.ProcessingData.newEvent
+import com.nooblol.smartnoob.core.processing.utils.anyNotNull
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

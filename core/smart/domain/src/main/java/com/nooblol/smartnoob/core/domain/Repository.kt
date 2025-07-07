@@ -14,27 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.domain
+package com.nooblol.smartnoob.core.domain
 
 import android.util.Log
-import com.buzbuz.smartautoclicker.core.base.FILE_EXTENSION_PNG
+import com.nooblol.smartnoob.core.base.FILE_EXTENSION_PNG
 
-import com.buzbuz.smartautoclicker.core.base.extensions.mapList
-import com.buzbuz.smartautoclicker.core.base.identifier.Identifier
-import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
-import com.buzbuz.smartautoclicker.core.database.entity.CompleteScenario
-import com.buzbuz.smartautoclicker.core.domain.data.ScenarioDataSource
-import com.buzbuz.smartautoclicker.core.domain.model.action.Action
-import com.buzbuz.smartautoclicker.core.domain.model.action.toDomain
-import com.buzbuz.smartautoclicker.core.domain.model.condition.Condition
-import com.buzbuz.smartautoclicker.core.domain.model.condition.toDomain
-import com.buzbuz.smartautoclicker.core.domain.model.event.Event
-import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
-import com.buzbuz.smartautoclicker.core.domain.model.event.TriggerEvent
-import com.buzbuz.smartautoclicker.core.domain.model.event.toDomainImageEvent
-import com.buzbuz.smartautoclicker.core.domain.model.event.toDomainTriggerEvent
-import com.buzbuz.smartautoclicker.core.domain.model.scenario.Scenario
-import com.buzbuz.smartautoclicker.core.domain.model.scenario.toDomain
+import com.nooblol.smartnoob.core.base.extensions.mapList
+import com.nooblol.smartnoob.core.base.identifier.Identifier
+import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
+import com.nooblol.smartnoob.core.database.entity.CompleteScenario
+import com.nooblol.smartnoob.core.domain.data.ScenarioDataSource
+import com.nooblol.smartnoob.core.domain.model.action.Action
+import com.nooblol.smartnoob.core.domain.model.action.toDomain
+import com.nooblol.smartnoob.core.domain.model.condition.Condition
+import com.nooblol.smartnoob.core.domain.model.condition.toDomain
+import com.nooblol.smartnoob.core.domain.model.event.Event
+import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
+import com.nooblol.smartnoob.core.domain.model.event.TriggerEvent
+import com.nooblol.smartnoob.core.domain.model.event.toDomainImageEvent
+import com.nooblol.smartnoob.core.domain.model.event.toDomainTriggerEvent
+import com.nooblol.smartnoob.core.domain.model.scenario.Scenario
+import com.nooblol.smartnoob.core.domain.model.scenario.toDomain
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

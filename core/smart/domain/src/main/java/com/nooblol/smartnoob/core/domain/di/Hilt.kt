@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.domain.di
+package com.nooblol.smartnoob.core.domain.di
 
-import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
-import com.buzbuz.smartautoclicker.core.domain.IRepository
-import com.buzbuz.smartautoclicker.core.domain.Repository
-import com.buzbuz.smartautoclicker.core.domain.data.ScenarioDataSource
+import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
+import com.nooblol.smartnoob.core.domain.IRepository
+import com.nooblol.smartnoob.core.domain.Repository
+import com.nooblol.smartnoob.core.domain.data.ScenarioDataSource
 
 import dagger.Module
 import dagger.Provides

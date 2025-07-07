@@ -14,19 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.processing.tests.processor
+package com.nooblol.smartnoob.core.processing.tests.processor
 
 import android.graphics.Rect
-import com.buzbuz.smartautoclicker.core.detection.DetectionResult
-import com.buzbuz.smartautoclicker.core.detection.ImageDetector
-import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
-import com.buzbuz.smartautoclicker.core.domain.model.event.TriggerEvent
-import com.buzbuz.smartautoclicker.core.processing.data.processor.ConditionsResult
-import com.buzbuz.smartautoclicker.core.processing.data.scaling.ImageConditionScalingInfo
-import com.buzbuz.smartautoclicker.core.processing.data.scaling.ScalingManager
-import com.buzbuz.smartautoclicker.core.processing.domain.ScenarioProcessingListener
-import com.buzbuz.smartautoclicker.core.processing.tests.processor.ProcessingTests.BitmapSupplier
-import com.buzbuz.smartautoclicker.core.processing.utils.anyNotNull
+import com.nooblol.smartnoob.core.detection.DetectionResult
+import com.nooblol.smartnoob.core.detection.ImageDetector
+import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
+import com.nooblol.smartnoob.core.domain.model.event.TriggerEvent
+import com.nooblol.smartnoob.core.processing.data.processor.ConditionsResult
+import com.nooblol.smartnoob.core.processing.data.scaling.ImageConditionScalingInfo
+import com.nooblol.smartnoob.core.processing.data.scaling.ScalingManager
+import com.nooblol.smartnoob.core.processing.domain.ScenarioProcessingListener
+import com.nooblol.smartnoob.core.processing.tests.processor.ProcessingTests.BitmapSupplier
+import com.nooblol.smartnoob.core.processing.utils.anyNotNull
 import org.mockito.Mockito.times
 import org.mockito.Mockito.`when`
 import org.mockito.kotlin.any

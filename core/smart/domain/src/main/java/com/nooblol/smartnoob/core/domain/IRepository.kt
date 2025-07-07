@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.domain
+package com.nooblol.smartnoob.core.domain
 
-import com.buzbuz.smartautoclicker.core.base.identifier.Identifier
-import com.buzbuz.smartautoclicker.core.database.entity.CompleteScenario
-import com.buzbuz.smartautoclicker.core.domain.model.action.Action
-import com.buzbuz.smartautoclicker.core.domain.model.condition.Condition
-import com.buzbuz.smartautoclicker.core.domain.model.event.Event
-import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
-import com.buzbuz.smartautoclicker.core.domain.model.event.TriggerEvent
-import com.buzbuz.smartautoclicker.core.domain.model.scenario.Scenario
+import com.nooblol.smartnoob.core.base.identifier.Identifier
+import com.nooblol.smartnoob.core.database.entity.CompleteScenario
+import com.nooblol.smartnoob.core.domain.model.action.Action
+import com.nooblol.smartnoob.core.domain.model.condition.Condition
+import com.nooblol.smartnoob.core.domain.model.event.Event
+import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
+import com.nooblol.smartnoob.core.domain.model.event.TriggerEvent
+import com.nooblol.smartnoob.core.domain.model.scenario.Scenario
 
 import kotlinx.coroutines.flow.Flow
 

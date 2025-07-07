@@ -19,7 +19,7 @@ package com.nooblol.smartnoob.scenarios.list
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
+import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
 
 import com.nooblol.smartnoob.scenarios.list.model.ScenarioBackupSelection
 import com.nooblol.smartnoob.scenarios.list.model.ScenarioListUiState

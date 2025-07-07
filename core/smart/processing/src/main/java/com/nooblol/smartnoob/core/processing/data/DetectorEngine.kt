@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.processing.data
+package com.nooblol.smartnoob.core.processing.data
 
 import android.content.Context
 import android.content.Intent
@@ -23,21 +23,21 @@ import android.media.Image
 import android.media.projection.MediaProjectionManager
 import android.util.Log
 
-import com.buzbuz.smartautoclicker.core.base.data.AppComponentsProvider
-import com.buzbuz.smartautoclicker.core.base.di.Dispatcher
-import com.buzbuz.smartautoclicker.core.base.di.HiltCoroutineDispatchers.IO
-import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
-import com.buzbuz.smartautoclicker.core.display.recorder.DisplayRecorder
-import com.buzbuz.smartautoclicker.core.detection.ImageDetector
-import com.buzbuz.smartautoclicker.core.detection.NativeDetector
-import com.buzbuz.smartautoclicker.core.domain.model.SmartActionExecutor
-import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
-import com.buzbuz.smartautoclicker.core.domain.model.event.TriggerEvent
-import com.buzbuz.smartautoclicker.core.domain.model.scenario.Scenario
-import com.buzbuz.smartautoclicker.core.processing.domain.ScenarioProcessingListener
-import com.buzbuz.smartautoclicker.core.processing.data.processor.ScenarioProcessor
-import com.buzbuz.smartautoclicker.core.processing.data.scaling.ScalingManager
-import com.buzbuz.smartautoclicker.core.settings.SettingsRepository
+import com.nooblol.smartnoob.core.base.data.AppComponentsProvider
+import com.nooblol.smartnoob.core.base.di.Dispatcher
+import com.nooblol.smartnoob.core.base.di.HiltCoroutineDispatchers.IO
+import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
+import com.nooblol.smartnoob.core.display.recorder.DisplayRecorder
+import com.nooblol.smartnoob.core.detection.ImageDetector
+import com.nooblol.smartnoob.core.detection.NativeDetector
+import com.nooblol.smartnoob.core.domain.model.SmartActionExecutor
+import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
+import com.nooblol.smartnoob.core.domain.model.event.TriggerEvent
+import com.nooblol.smartnoob.core.domain.model.scenario.Scenario
+import com.nooblol.smartnoob.core.processing.domain.ScenarioProcessingListener
+import com.nooblol.smartnoob.core.processing.data.processor.ScenarioProcessor
+import com.nooblol.smartnoob.core.processing.data.scaling.ScalingManager
+import com.nooblol.smartnoob.core.settings.SettingsRepository
 import kotlinx.coroutines.CoroutineDispatcher
 
 import kotlinx.coroutines.CoroutineScope

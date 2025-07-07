@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.processing.data.processor
+package com.nooblol.smartnoob.core.processing.data.processor
 
 import android.graphics.Bitmap
 
-import com.buzbuz.smartautoclicker.core.detection.ImageDetector
-import com.buzbuz.smartautoclicker.core.domain.model.AND
-import com.buzbuz.smartautoclicker.core.domain.model.ConditionOperator
-import com.buzbuz.smartautoclicker.core.domain.model.CounterOperationValue
-import com.buzbuz.smartautoclicker.core.domain.model.OR
-import com.buzbuz.smartautoclicker.core.domain.model.condition.Condition
-import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
-import com.buzbuz.smartautoclicker.core.domain.model.condition.TriggerCondition
-import com.buzbuz.smartautoclicker.core.processing.data.processor.state.ProcessingState
-import com.buzbuz.smartautoclicker.core.processing.data.scaling.ScalingManager
-import com.buzbuz.smartautoclicker.core.processing.domain.ConditionResult
-import com.buzbuz.smartautoclicker.core.processing.domain.ScenarioProcessingListener
+import com.nooblol.smartnoob.core.detection.ImageDetector
+import com.nooblol.smartnoob.core.domain.model.AND
+import com.nooblol.smartnoob.core.domain.model.ConditionOperator
+import com.nooblol.smartnoob.core.domain.model.CounterOperationValue
+import com.nooblol.smartnoob.core.domain.model.OR
+import com.nooblol.smartnoob.core.domain.model.condition.Condition
+import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
+import com.nooblol.smartnoob.core.domain.model.condition.TriggerCondition
+import com.nooblol.smartnoob.core.processing.data.processor.state.ProcessingState
+import com.nooblol.smartnoob.core.processing.data.scaling.ScalingManager
+import com.nooblol.smartnoob.core.processing.domain.ConditionResult
+import com.nooblol.smartnoob.core.processing.domain.ScenarioProcessingListener
 
 import kotlinx.coroutines.yield
 

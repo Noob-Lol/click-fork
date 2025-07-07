@@ -28,14 +28,14 @@ using namespace smartautoclicker;
 
 extern "C" {
 
-    JNIEXPORT jlong JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_newDetector(
+    JNIEXPORT jlong JNICALL Java_com_nooblol_smartnoob_core_detection_NativeDetector_newDetector(
             JNIEnv *env,
             jobject self
     ) {
         return reinterpret_cast<jlong>(new Detector());
     }
 
-    JNIEXPORT void JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_setScreenImage(
+    JNIEXPORT void JNICALL Java_com_nooblol_smartnoob_core_detection_NativeDetector_setScreenImage(
             JNIEnv *env,
             jobject self,
             jobject screenBitmap,
@@ -83,7 +83,7 @@ extern "C" {
         releaseBitmapLock(env, conditionBitmap);
     }
 
-    JNIEXPORT void JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_releaseScreenImage(
+    JNIEXPORT void JNICALL Java_com_nooblol_smartnoob_core_detection_NativeDetector_releaseScreenImage(
             JNIEnv *env,
             jobject self,
             jobject screenBitmap
