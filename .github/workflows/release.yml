@@ -20,6 +20,32 @@ jobs:
         distribution: 'zulu'
         java-version: '21'
 
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle.kts', '**/settings.gradle.kts', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          gradle-${{ runner.os }}-
+
+    - name: Cache project .gradle directory
+      uses: actions/cache@v4
+      with:
+        path: smartautoclicker/.gradle
+        key: gradle-project-${{ runner.os }}-${{ hashFiles('**/*.gradle.kts', '**/settings.gradle.kts', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          gradle-project-${{ runner.os }}-
+
+    - name: Cache build output
+      uses: actions/cache@v4
+      with:
+        path: smartautoclicker/build
+        key: build-output-${{ runner.os }}-${{ github.ref_name }}
+        restore-keys: |
+          build-output-${{ runner.os }}-
+
     - name: Restore keystore
       run: |
         echo "${{ secrets.RELEASE_KEYSTORE }}" > smartautoclicker.jks.asc
@@ -33,21 +59,22 @@ jobs:
           -PsigningKeyPassword="${{ secrets.SIGNING_KEY_PASSWORD }}" \
           assembleFDroidRelease bundleFDroidRelease
 
-    - name: Upload APK artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: smartautoclicker-release
-        path: smartautoclicker/build/outputs/
-
-    - name: Rename APK with tag
+    - name: Rename APK with tag or branch
       run: |
-        TAG_NAME="${GITHUB_REF##*/}"
+        REF_NAME="${GITHUB_REF##*/}"
         mkdir release-apk
-        cp smartautoclicker/build/outputs/apk/fDroid/release/*.apk "release-apk/click-fork-${TAG_NAME}.apk"
+        cp smartautoclicker/build/outputs/apk/fDroid/release/*.apk "release-apk/click-fork-${REF_NAME}.apk"
 
     - name: Upload APK to GitHub Release
+      if: github.ref_type == 'tag'
       uses: softprops/action-gh-release@v2
       with:
         files: release-apk/*.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: Upload APK as Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: smartautoclicker-release
+        path: release-apk/*.apk
