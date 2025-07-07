@@ -20,31 +20,24 @@ jobs:
         distribution: 'zulu'
         java-version: '21'
 
-    - name: Cache Gradle dependencies
+    - name: Cache all .gradle folders in project
       uses: actions/cache@v4
       with:
         path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle.kts', '**/settings.gradle.kts', '**/gradle-wrapper.properties') }}
+          **/.gradle
+        key: project-gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle.kts', '**/settings.gradle.kts', '**/gradle-wrapper.properties') }}
         restore-keys: |
-          gradle-${{ runner.os }}-
+          project-gradle-${{ runner.os }}-
 
-    - name: Cache project .gradle directory
+    - name: Cache all build folders in project
       uses: actions/cache@v4
       with:
-        path: smartautoclicker/.gradle
-        key: gradle-project-${{ runner.os }}-${{ hashFiles('**/*.gradle.kts', '**/settings.gradle.kts', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          gradle-project-${{ runner.os }}-
-
-    - name: Cache build output
-      uses: actions/cache@v4
-      with:
-        path: smartautoclicker/build
+        path: |
+          **/build
         key: build-output-${{ runner.os }}-${{ github.ref_name }}
         restore-keys: |
           build-output-${{ runner.os }}-
+
 
     - name: Restore keystore
       run: |
