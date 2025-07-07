@@ -17,7 +17,7 @@
 package com.nooblol.smartnoob.core.processing.data.scaling
 
 import android.graphics.Rect
-import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
+import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
 
 internal data class ImageConditionScalingInfo(
     val imageCondition: ImageCondition,
