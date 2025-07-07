@@ -17,6 +17,7 @@
 package com.nooblol.smartnoob.core.bitmaps
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.core.graphics.createBitmap
 import com.nooblol.smartnoob.core.base.addDumpTabulationLvl
 import kotlinx.coroutines.runBlocking
@@ -30,17 +31,17 @@ internal class BitmapRepositoryImpl @Inject constructor(
 
     override suspend fun saveImageConditionBitmap(bitmap: Bitmap, prefix: String): String {
         val path = conditionBitmapsDataSource.saveBitmap(bitmap, prefix)
-        bitmapLRUCache.put(path, bitmap)
+        bitmapLRUCache.putImageConditionBitmap(path, bitmap.width, bitmap.height, bitmap)
         return path
     }
 
     override suspend fun getImageConditionBitmap(path: String, width: Int, height: Int): Bitmap? =
-        bitmapLRUCache.getOrDefault(path) {
+        bitmapLRUCache.getImageConditionBitmapOrDefault(path, width, height) {
             runBlocking { conditionBitmapsDataSource.loadBitmap(path, width, height) }
         }
 
     override fun getDisplayRecorderBitmap(width: Int, height: Int): Bitmap =
-        bitmapLRUCache.getOrDefault(getDisplayRecorderKey(width, height)) {
+        bitmapLRUCache.getDisplayRecorderBitmapOrDefault(width, height) {
             createBitmap(width, height)
         } ?: throw IllegalStateException("Can't create display recorder bitmap with size $width/$height")
 
@@ -48,7 +49,16 @@ internal class BitmapRepositoryImpl @Inject constructor(
         conditionBitmapsDataSource.deleteBitmaps(paths)
     }
 
-    override fun releaseCache() {
+    override suspend fun migrateImageConditionBitmap(path: String, width: Int, height: Int): String? {
+        Log.d(TAG, "Migrating legacy bitmap $path")
+
+        val legacyBitmap = conditionBitmapsDataSource.loadLegacyBitmap(path, width, height) ?: return null
+        conditionBitmapsDataSource.deleteBitmaps(listOf(path))
+
+        return conditionBitmapsDataSource.saveBitmap(legacyBitmap, CONDITION_FILE_PREFIX)
+    }
+
+    override fun clearCache() {
         bitmapLRUCache.evictAll()
     }
 
@@ -63,7 +73,6 @@ internal class BitmapRepositoryImpl @Inject constructor(
                 .println()
         }
     }
-
-    private fun getDisplayRecorderKey(width: Int, height: Int): String =
-        "key:DISPLAY_RECORDER:$width:$height"
 }
+
+private const val TAG = "BitmapRepository"

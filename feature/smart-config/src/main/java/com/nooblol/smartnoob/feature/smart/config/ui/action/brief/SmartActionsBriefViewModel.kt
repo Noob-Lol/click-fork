@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.feature.smart.config.ui.action.brief
+package com.buzbuz.smartautoclicker.feature.smart.config.ui.action.brief
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -25,32 +25,34 @@ import androidx.core.graphics.toPointF
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
-import com.nooblol.smartnoob.core.base.di.Dispatcher
-import com.nooblol.smartnoob.core.base.di.HiltCoroutineDispatchers.Main
-import com.nooblol.smartnoob.core.common.overlays.menu.implementation.brief.ItemBrief
-import com.nooblol.smartnoob.core.domain.IRepository
-import com.nooblol.smartnoob.core.domain.model.action.Action
-import com.nooblol.smartnoob.core.domain.model.action.Click
-import com.nooblol.smartnoob.core.domain.model.action.Pause
-import com.nooblol.smartnoob.core.domain.model.action.Swipe
-import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
-import com.nooblol.smartnoob.core.domain.model.event.Event
-import com.nooblol.smartnoob.core.processing.domain.DetectionRepository
-import com.nooblol.smartnoob.core.settings.SettingsRepository
-import com.nooblol.smartnoob.core.ui.monitoring.MonitoredViewType
-import com.nooblol.smartnoob.core.ui.monitoring.MonitoredViewsManager
-import com.nooblol.smartnoob.core.ui.monitoring.ViewPositioningType
-import com.nooblol.smartnoob.core.ui.views.itembrief.ItemBriefDescription
-import com.nooblol.smartnoob.core.ui.views.itembrief.renderers.ClickDescription
-import com.nooblol.smartnoob.core.ui.views.itembrief.renderers.DefaultDescription
-import com.nooblol.smartnoob.core.ui.views.itembrief.renderers.PauseDescription
-import com.nooblol.smartnoob.core.ui.views.itembrief.renderers.SwipeDescription
-import com.nooblol.smartnoob.feature.smart.config.domain.EditionRepository
-import com.nooblol.smartnoob.feature.smart.config.domain.model.EditedListState
-import com.nooblol.smartnoob.feature.smart.config.ui.action.selection.ActionTypeChoice
-import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.UiAction
-import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.getIconRes
-import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.toUiAction
+import com.buzbuz.smartautoclicker.core.base.di.Dispatcher
+import com.buzbuz.smartautoclicker.core.base.di.HiltCoroutineDispatchers.Main
+import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
+import com.buzbuz.smartautoclicker.core.common.overlays.menu.implementation.brief.ItemBrief
+import com.buzbuz.smartautoclicker.core.domain.IRepository
+import com.buzbuz.smartautoclicker.core.domain.ext.getConditionBitmap
+import com.buzbuz.smartautoclicker.core.domain.model.action.Action
+import com.buzbuz.smartautoclicker.core.domain.model.action.Click
+import com.buzbuz.smartautoclicker.core.domain.model.action.Pause
+import com.buzbuz.smartautoclicker.core.domain.model.action.Swipe
+import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
+import com.buzbuz.smartautoclicker.core.domain.model.event.Event
+import com.buzbuz.smartautoclicker.core.processing.domain.DetectionRepository
+import com.buzbuz.smartautoclicker.core.settings.SettingsRepository
+import com.buzbuz.smartautoclicker.core.ui.monitoring.MonitoredViewType
+import com.buzbuz.smartautoclicker.core.ui.monitoring.MonitoredViewsManager
+import com.buzbuz.smartautoclicker.core.ui.monitoring.ViewPositioningType
+import com.buzbuz.smartautoclicker.core.ui.views.itembrief.ItemBriefDescription
+import com.buzbuz.smartautoclicker.core.ui.views.itembrief.renderers.ClickDescription
+import com.buzbuz.smartautoclicker.core.ui.views.itembrief.renderers.DefaultDescription
+import com.buzbuz.smartautoclicker.core.ui.views.itembrief.renderers.PauseDescription
+import com.buzbuz.smartautoclicker.core.ui.views.itembrief.renderers.SwipeDescription
+import com.buzbuz.smartautoclicker.feature.smart.config.domain.EditionRepository
+import com.buzbuz.smartautoclicker.feature.smart.config.domain.model.EditedListState
+import com.buzbuz.smartautoclicker.feature.smart.config.ui.action.selection.ActionTypeChoice
+import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.action.UiAction
+import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.action.getIconRes
+import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.action.toUiAction
 
 import dagger.hilt.android.qualifiers.ApplicationContext
 
@@ -75,6 +77,7 @@ class SmartActionsBriefViewModel @Inject constructor(
     @ApplicationContext context: Context,
     @Dispatcher(Main) private val mainDispatcher: CoroutineDispatcher,
     private val repository: IRepository,
+    private val bitmapRepository: BitmapRepository,
     private val editionRepository: EditionRepository,
     private val detectionRepository: DetectionRepository,
     private val monitoredViewsManager: MonitoredViewsManager,
@@ -131,7 +134,7 @@ class SmartActionsBriefViewModel @Inject constructor(
         }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val isTutorialModeEnabled: Flow<Boolean> =
-        repository.isTutorialModeEnabledFlow()
+        repository.isTutorialModeEnabled
 
     fun startGestureCaptureState() {
         briefVisualizationState.value = briefVisualizationState.value
@@ -319,7 +322,7 @@ class SmartActionsBriefViewModel @Inject constructor(
 
         return editionRepository.editionState.getEditedEventConditions<ImageCondition>()
             ?.find { it.id == clickOnConditionId }
-            ?.let { repository.getConditionBitmap(it) }
+            ?.let { condition -> bitmapRepository.getConditionBitmap(condition) }
     }
 }
 

@@ -21,25 +21,14 @@
 using namespace smartautoclicker;
 
 
-void DetectionImage::processFullSizeBitmap(cv::Mat* screenMat, double scaleRatio) {
-    // Read bitmap to create full size color Mat
-    std::unique_ptr<cv::Mat> fullSizeMat = std::make_unique<cv::Mat>(*screenMat);
-
-    // Compute full and scaled sizes
-    roi.setFullSize(fullSizeMat.get(), scaleRatio);
-
-    // Convert to gray scale
-    cv::Mat fullSizeGray;
-    cv::cvtColor(*fullSizeMat, fullSizeGray, cv::COLOR_RGBA2GRAY);
-
-    // Resize and store result in scaledGray
-    std::unique_ptr<cv::Mat> scaledGrayMat = std::make_unique<cv::Mat>(cv::Size(0, 0), CV_8UC1);
-    cv::resize(fullSizeGray, *scaledGrayMat, roi.getScaled().size(), 0, 0, cv::INTER_AREA);
-
-    // Let implementation handles cache memory for the output
-    onNewImageLoaded(std::move(fullSizeMat), std::move(scaledGrayMat));
+const cv::Mat* DetectionImage::getColorMat() const {
+    return colorMat.get();
 }
 
-ScalableRoi DetectionImage::getRoi() const {
-    return roi;
+const cv::Mat* DetectionImage::getGrayMat() const {
+    return grayMat.get();
+}
+
+cv::Rect DetectionImage::getRoi() const {
+    return {0, 0, colorMat->cols, colorMat->rows};
 }

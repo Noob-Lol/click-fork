@@ -14,19 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.core.domain
+package com.buzbuz.smartautoclicker.core.domain
 
-import android.graphics.Bitmap
-
-import com.nooblol.smartnoob.core.base.identifier.Identifier
-import com.nooblol.smartnoob.core.database.entity.CompleteScenario
-import com.nooblol.smartnoob.core.domain.model.action.Action
-import com.nooblol.smartnoob.core.domain.model.condition.Condition
-import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
-import com.nooblol.smartnoob.core.domain.model.event.Event
-import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
-import com.nooblol.smartnoob.core.domain.model.event.TriggerEvent
-import com.nooblol.smartnoob.core.domain.model.scenario.Scenario
+import com.buzbuz.smartautoclicker.core.base.identifier.Identifier
+import com.buzbuz.smartautoclicker.core.database.entity.CompleteScenario
+import com.buzbuz.smartautoclicker.core.domain.model.action.Action
+import com.buzbuz.smartautoclicker.core.domain.model.condition.Condition
+import com.buzbuz.smartautoclicker.core.domain.model.event.Event
+import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
+import com.buzbuz.smartautoclicker.core.domain.model.event.TriggerEvent
+import com.buzbuz.smartautoclicker.core.domain.model.scenario.Scenario
 
 import kotlinx.coroutines.flow.Flow
 
@@ -36,6 +33,9 @@ import kotlinx.coroutines.flow.Flow
  * the application data folder.
  */
 interface IRepository {
+
+    /** Tells if we are using the tutorial data or not. */
+    val isTutorialModeEnabled: Flow<Boolean>
 
     /** The list of scenarios. */
     val scenarios: Flow<List<Scenario>>
@@ -47,6 +47,9 @@ interface IRepository {
     val allConditions: Flow<List<Condition>>
     /** All actions from all events. */
     val allActions: Flow<List<Action>>
+
+    /** Tells if there is image conditions that uses the legacy image format. */
+    val legacyConditionsCount: Flow<Int>
 
     /**
      * Add a new scenario.
@@ -155,34 +158,11 @@ interface IRepository {
      */
     fun getTriggerEventsFlow(scenarioId: Long): Flow<List<TriggerEvent>>
 
-
-    /**
-     * Save the provided bitmap into the persistent memory.
-     * If the bitmap is already saved, does nothing.
-     *
-     * @param bitmap the bitmap to be saved on the persistent memory.
-     *
-     * @return the path of the bitmap.
-     */
-    suspend fun saveConditionBitmap(bitmap: Bitmap): String
-
-    /**
-     * Get the bitmap for the given image condition.
-     * Bitmaps are automatically cached by the bitmap manager.
-     *
-     * @param condition the condition to get the bitmap from.
-     *
-     * @return the bitmap, or null if the path can't be found.
-     */
-    suspend fun getConditionBitmap(condition: ImageCondition): Bitmap?
-
-    suspend fun cleanupUnusedBitmaps(removedPath: List<String>)
-
     fun startTutorialMode()
 
     fun stopTutorialMode()
 
     fun isTutorialModeEnabled(): Boolean
 
-    fun isTutorialModeEnabledFlow(): Flow<Boolean>
+    suspend fun migrateLegacyImageConditions(): Boolean
 }

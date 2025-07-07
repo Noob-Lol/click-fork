@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.scenarios.list
+package com.buzbuz.smartautoclicker.scenarios.list
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -36,17 +36,20 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 
-import com.nooblol.smartnoob.R
-import com.nooblol.smartnoob.core.base.extensions.applySafeContentInsets
-import com.nooblol.smartnoob.databinding.FragmentScenariosBinding
-import com.nooblol.smartnoob.feature.backup.ui.BackupDialogFragment
-import com.nooblol.smartnoob.feature.backup.ui.BackupDialogFragment.Companion.FRAGMENT_TAG_BACKUP_DIALOG
-import com.nooblol.smartnoob.scenarios.creation.ScenarioCreationDialog
-import com.nooblol.smartnoob.scenarios.list.adapter.ScenarioAdapter
-import com.nooblol.smartnoob.scenarios.list.copy.ScenarioCopyDialog
-import com.nooblol.smartnoob.scenarios.list.copy.ScenarioCopyDialog.Companion.FRAGMENT_TAG_COPY_DIALOG
-import com.nooblol.smartnoob.scenarios.list.model.ScenarioListUiState
-import com.nooblol.smartnoob.settings.SettingsActivity
+import com.buzbuz.smartautoclicker.R
+import com.buzbuz.smartautoclicker.core.base.extensions.applySafeContentInsets
+import com.buzbuz.smartautoclicker.databinding.FragmentScenariosBinding
+import com.buzbuz.smartautoclicker.feature.backup.ui.BackupDialogFragment
+import com.buzbuz.smartautoclicker.feature.backup.ui.BackupDialogFragment.Companion.FRAGMENT_TAG_BACKUP_DIALOG
+import com.buzbuz.smartautoclicker.scenarios.migration.ConditionsMigrationFragment
+import com.buzbuz.smartautoclicker.scenarios.creation.ScenarioCreationDialog
+import com.buzbuz.smartautoclicker.scenarios.list.adapter.ScenarioAdapter
+import com.buzbuz.smartautoclicker.scenarios.list.copy.ScenarioCopyDialog
+import com.buzbuz.smartautoclicker.scenarios.list.copy.ScenarioCopyDialog.Companion.FRAGMENT_TAG_COPY_DIALOG
+import com.buzbuz.smartautoclicker.scenarios.list.model.ScenarioListUiState
+import com.buzbuz.smartautoclicker.scenarios.migration.ConditionsMigrationFragment.Companion.FRAGMENT_RESULT_KEY_COMPLETED
+import com.buzbuz.smartautoclicker.scenarios.migration.ConditionsMigrationFragment.Companion.FRAGMENT_TAG_CONDITION_MIGRATION_DIALOG
+import com.buzbuz.smartautoclicker.settings.SettingsActivity
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -125,6 +128,7 @@ class ScenarioListFragment : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { scenarioListViewModel.uiState.collect(::updateUiState) }
+                launch { scenarioListViewModel.needsConditionMigration.collect(::onConditionMigrationRequired) }
             }
         }
     }
@@ -220,6 +224,20 @@ class ScenarioListFragment : Fragment() {
         }
 
         scenariosAdapter.submitList(uiState.listContent)
+    }
+
+    private fun onConditionMigrationRequired(isRequired: Boolean) {
+        if (!isRequired) return
+        if (requireActivity().supportFragmentManager.findFragmentByTag(FRAGMENT_TAG_CONDITION_MIGRATION_DIALOG) != null)
+            return
+
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.setFragmentResultListener(FRAGMENT_RESULT_KEY_COMPLETED, this) { _, _ ->
+            scenarioListViewModel.refreshScenarioList()
+        }
+        ConditionsMigrationFragment
+            .newInstance()
+            .show(fragmentManager, FRAGMENT_TAG_CONDITION_MIGRATION_DIALOG)
     }
 
     /**

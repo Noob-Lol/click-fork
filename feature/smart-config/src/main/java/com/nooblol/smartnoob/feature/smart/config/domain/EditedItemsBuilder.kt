@@ -14,36 +14,40 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.feature.smart.config.domain
+package com.buzbuz.smartautoclicker.feature.smart.config.domain
 
 import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Rect
 
-import com.nooblol.smartnoob.core.base.identifier.Identifier
-import com.nooblol.smartnoob.core.base.identifier.IdentifierCreator
-import com.nooblol.smartnoob.core.domain.IRepository
-import com.nooblol.smartnoob.core.domain.model.CounterOperationValue
-import com.nooblol.smartnoob.core.domain.model.action.Action
-import com.nooblol.smartnoob.core.domain.model.action.ChangeCounter
-import com.nooblol.smartnoob.core.domain.model.action.Click
-import com.nooblol.smartnoob.core.domain.model.action.Click.PositionType
-import com.nooblol.smartnoob.core.domain.model.action.Intent
-import com.nooblol.smartnoob.core.domain.model.action.Notification
-import com.nooblol.smartnoob.core.domain.model.action.Pause
-import com.nooblol.smartnoob.core.domain.model.action.Swipe
-import com.nooblol.smartnoob.core.domain.model.action.ToggleEvent
-import com.nooblol.smartnoob.core.domain.model.action.toggleevent.EventToggle
-import com.nooblol.smartnoob.core.domain.model.action.intent.IntentExtra
-import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
-import com.nooblol.smartnoob.core.domain.model.condition.TriggerCondition
-import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
-import com.nooblol.smartnoob.core.domain.model.event.TriggerEvent
-import com.nooblol.smartnoob.feature.smart.config.data.ScenarioEditor
+import com.buzbuz.smartautoclicker.core.base.identifier.Identifier
+import com.buzbuz.smartautoclicker.core.base.identifier.IdentifierCreator
+import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
+import com.buzbuz.smartautoclicker.core.bitmaps.CONDITION_FILE_PREFIX
+import com.buzbuz.smartautoclicker.core.bitmaps.TUTORIAL_CONDITION_FILE_PREFIX
+import com.buzbuz.smartautoclicker.core.domain.IRepository
+import com.buzbuz.smartautoclicker.core.domain.model.CounterOperationValue
+import com.buzbuz.smartautoclicker.core.domain.model.action.Action
+import com.buzbuz.smartautoclicker.core.domain.model.action.ChangeCounter
+import com.buzbuz.smartautoclicker.core.domain.model.action.Click
+import com.buzbuz.smartautoclicker.core.domain.model.action.Click.PositionType
+import com.buzbuz.smartautoclicker.core.domain.model.action.Intent
+import com.buzbuz.smartautoclicker.core.domain.model.action.Notification
+import com.buzbuz.smartautoclicker.core.domain.model.action.Pause
+import com.buzbuz.smartautoclicker.core.domain.model.action.Swipe
+import com.buzbuz.smartautoclicker.core.domain.model.action.ToggleEvent
+import com.buzbuz.smartautoclicker.core.domain.model.action.toggleevent.EventToggle
+import com.buzbuz.smartautoclicker.core.domain.model.action.intent.IntentExtra
+import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
+import com.buzbuz.smartautoclicker.core.domain.model.condition.TriggerCondition
+import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
+import com.buzbuz.smartautoclicker.core.domain.model.event.TriggerEvent
+import com.buzbuz.smartautoclicker.feature.smart.config.data.ScenarioEditor
 
 class EditedItemsBuilder internal constructor(
     private val repository: IRepository,
+    private val bitmapRepository: BitmapRepository,
     private val editor: ScenarioEditor,
 ) {
 
@@ -131,7 +135,10 @@ class EditedItemsBuilder internal constructor(
 
     suspend fun createNewImageCondition(context: Context, area: Rect, bitmap: Bitmap): ImageCondition {
         val id = conditionsIdCreator.generateNewIdentifier()
-        val newPath = repository.saveConditionBitmap(bitmap)
+        val newPath = bitmapRepository.saveImageConditionBitmap(
+            bitmap = bitmap,
+            prefix = if (repository.isTutorialModeEnabled()) TUTORIAL_CONDITION_FILE_PREFIX else CONDITION_FILE_PREFIX,
+        )
         _newImageConditionsPaths.add(newPath)
 
         return ImageCondition(

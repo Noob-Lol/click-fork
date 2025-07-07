@@ -14,19 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.feature.smart.debugging.ui.report
+package com.buzbuz.smartautoclicker.feature.smart.debugging.ui.report
 
 import android.graphics.Bitmap
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
-import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
-import com.nooblol.smartnoob.core.domain.IRepository
-import com.nooblol.smartnoob.feature.smart.debugging.domain.ConditionProcessingDebugInfo
-import com.nooblol.smartnoob.feature.smart.debugging.domain.DebugReport
-import com.nooblol.smartnoob.feature.smart.debugging.domain.DebuggingRepository
-import com.nooblol.smartnoob.feature.smart.debugging.domain.ProcessingDebugInfo
+import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
+import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
+import com.buzbuz.smartautoclicker.core.domain.IRepository
+import com.buzbuz.smartautoclicker.feature.smart.debugging.domain.ConditionProcessingDebugInfo
+import com.buzbuz.smartautoclicker.feature.smart.debugging.domain.DebugReport
+import com.buzbuz.smartautoclicker.feature.smart.debugging.domain.DebuggingRepository
+import com.buzbuz.smartautoclicker.feature.smart.debugging.domain.ProcessingDebugInfo
 
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -41,7 +42,7 @@ import kotlin.time.Duration.Companion.milliseconds
 /** ViewModel for the [DebugReportDialog]. */
 class DebugReportModel @Inject constructor(
     debuggingRepository: DebuggingRepository,
-    private val repository: IRepository,
+    private val bitmapRepository: BitmapRepository,
 ) : ViewModel() {
 
     /** The debug report of the last detection session. */
@@ -80,7 +81,12 @@ class DebugReportModel @Inject constructor(
     fun getConditionBitmap(condition: ImageCondition, onBitmapLoaded: (Bitmap?) -> Unit): Job {
         return viewModelScope.launch(Dispatchers.IO) {
             try {
-                val bitmap = repository.getConditionBitmap(condition)
+                val bitmap = bitmapRepository.getImageConditionBitmap(
+                    path = condition.path,
+                    width = condition.area.width(),
+                    height = condition.area.height(),
+                )
+
                 withContext(Dispatchers.Main) {
                     onBitmapLoaded.invoke(bitmap)
                 }

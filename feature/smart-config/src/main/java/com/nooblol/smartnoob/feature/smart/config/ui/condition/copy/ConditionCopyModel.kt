@@ -14,26 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.feature.smart.config.ui.condition.copy
+package com.buzbuz.smartautoclicker.feature.smart.config.ui.condition.copy
 
 import android.content.Context
 import android.graphics.Bitmap
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
 
-import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
-import com.nooblol.smartnoob.core.domain.IRepository
-import com.nooblol.smartnoob.core.domain.model.condition.Condition
-import com.nooblol.smartnoob.core.domain.model.condition.TriggerCondition
-import com.nooblol.smartnoob.feature.smart.config.R
-import com.nooblol.smartnoob.feature.smart.config.domain.EditionRepository
-import com.nooblol.smartnoob.feature.smart.config.ui.common.model.condition.UiCondition
-import com.nooblol.smartnoob.feature.smart.config.ui.common.model.condition.UiImageCondition
-import com.nooblol.smartnoob.feature.smart.config.ui.common.model.condition.UiTriggerCondition
-import com.nooblol.smartnoob.feature.smart.config.ui.common.model.condition.toUiImageCondition
-import com.nooblol.smartnoob.feature.smart.config.ui.common.model.condition.toUiTriggerCondition
-import com.nooblol.smartnoob.feature.smart.config.utils.getImageConditionBitmap
+import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
+import com.buzbuz.smartautoclicker.core.domain.model.condition.Condition
+import com.buzbuz.smartautoclicker.core.domain.model.condition.TriggerCondition
+import com.buzbuz.smartautoclicker.feature.smart.config.R
+import com.buzbuz.smartautoclicker.feature.smart.config.domain.EditionRepository
+import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.condition.UiCondition
+import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.condition.UiImageCondition
+import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.condition.UiTriggerCondition
+import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.condition.toUiImageCondition
+import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.condition.toUiTriggerCondition
+import com.buzbuz.smartautoclicker.feature.smart.config.utils.getImageConditionBitmap
 import dagger.hilt.android.qualifiers.ApplicationContext
 
 import kotlinx.coroutines.Job
@@ -45,7 +45,7 @@ import javax.inject.Inject
 /** View model for the [ConditionCopyDialog]. */
 class ConditionCopyModel @Inject constructor(
     @ApplicationContext context: Context,
-    private val repository: IRepository,
+    private val bitmapRepository: BitmapRepository,
     editionRepository: EditionRepository,
 ) : ViewModel() {
 
@@ -100,7 +100,7 @@ class ConditionCopyModel @Inject constructor(
      * @param onBitmapLoaded the callback notified upon completion.
      */
     fun getConditionBitmap(condition: ImageCondition, onBitmapLoaded: (Bitmap?) -> Unit): Job =
-        getImageConditionBitmap(repository, condition, onBitmapLoaded)
+        getImageConditionBitmap(bitmapRepository, condition, onBitmapLoaded)
 
     /** */
     private fun List<Condition>.toCopyItems(context: Context) = map { condition ->

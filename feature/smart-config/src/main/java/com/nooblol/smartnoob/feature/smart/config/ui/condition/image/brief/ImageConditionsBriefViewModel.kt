@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.feature.smart.config.ui.condition.image.brief
+package com.buzbuz.smartautoclicker.feature.smart.config.ui.condition.image.brief
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -24,25 +24,27 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
-import com.nooblol.smartnoob.core.base.di.Dispatcher
-import com.nooblol.smartnoob.core.base.di.HiltCoroutineDispatchers.IO
-import com.nooblol.smartnoob.core.common.overlays.menu.implementation.brief.ItemBrief
-import com.nooblol.smartnoob.core.display.config.DisplayConfigManager
-import com.nooblol.smartnoob.core.domain.IRepository
-import com.nooblol.smartnoob.core.domain.model.EXACT
-import com.nooblol.smartnoob.core.domain.model.IN_AREA
-import com.nooblol.smartnoob.core.domain.model.WHOLE_SCREEN
-import com.nooblol.smartnoob.core.domain.model.condition.Condition
-import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
-import com.nooblol.smartnoob.core.domain.model.scenario.Scenario
-import com.nooblol.smartnoob.core.ui.monitoring.MonitoredViewType
-import com.nooblol.smartnoob.core.ui.monitoring.MonitoredViewsManager
-import com.nooblol.smartnoob.core.ui.monitoring.ViewPositioningType
-import com.nooblol.smartnoob.core.ui.views.itembrief.renderers.ImageConditionBriefRenderingType
-import com.nooblol.smartnoob.core.ui.views.itembrief.renderers.ImageConditionDescription
-import com.nooblol.smartnoob.feature.smart.config.domain.EditionRepository
-import com.nooblol.smartnoob.feature.smart.config.domain.model.EditedListState
-import com.nooblol.smartnoob.feature.smart.config.ui.common.model.condition.toUiImageCondition
+import com.buzbuz.smartautoclicker.core.base.di.Dispatcher
+import com.buzbuz.smartautoclicker.core.base.di.HiltCoroutineDispatchers.IO
+import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
+import com.buzbuz.smartautoclicker.core.common.overlays.menu.implementation.brief.ItemBrief
+import com.buzbuz.smartautoclicker.core.display.config.DisplayConfigManager
+import com.buzbuz.smartautoclicker.core.domain.ext.getConditionBitmap
+import com.buzbuz.smartautoclicker.core.domain.IRepository
+import com.buzbuz.smartautoclicker.core.domain.model.EXACT
+import com.buzbuz.smartautoclicker.core.domain.model.IN_AREA
+import com.buzbuz.smartautoclicker.core.domain.model.WHOLE_SCREEN
+import com.buzbuz.smartautoclicker.core.domain.model.condition.Condition
+import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
+import com.buzbuz.smartautoclicker.core.domain.model.scenario.Scenario
+import com.buzbuz.smartautoclicker.core.ui.monitoring.MonitoredViewType
+import com.buzbuz.smartautoclicker.core.ui.monitoring.MonitoredViewsManager
+import com.buzbuz.smartautoclicker.core.ui.monitoring.ViewPositioningType
+import com.buzbuz.smartautoclicker.core.ui.views.itembrief.renderers.ImageConditionBriefRenderingType
+import com.buzbuz.smartautoclicker.core.ui.views.itembrief.renderers.ImageConditionDescription
+import com.buzbuz.smartautoclicker.feature.smart.config.domain.EditionRepository
+import com.buzbuz.smartautoclicker.feature.smart.config.domain.model.EditedListState
+import com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.condition.toUiImageCondition
 
 import dagger.hilt.android.qualifiers.ApplicationContext
 
@@ -64,7 +66,8 @@ class ImageConditionsBriefViewModel @Inject constructor(
     @ApplicationContext context: Context,
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
     private val displayConfigManager: DisplayConfigManager,
-    private val repository: IRepository,
+    repository: IRepository,
+    bitmapRepository: BitmapRepository,
     private val editionRepository: EditionRepository,
     private val monitoredViewsManager: MonitoredViewsManager,
 ) : ViewModel() {
@@ -79,7 +82,7 @@ class ImageConditionsBriefViewModel @Inject constructor(
             if (focusedIndex !in conditionList.indices) return@combine null
 
             val condition = conditionList[focusedIndex]
-            condition to repository.getConditionBitmap(condition)
+            condition to bitmapRepository.getConditionBitmap(condition)
         }.flowOn(ioDispatcher).stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     val conditionVisualization: Flow<ImageConditionDescription?> = focusedCondition.map { focusedCondition ->
@@ -97,7 +100,7 @@ class ImageConditionsBriefViewModel @Inject constructor(
     }
 
     val isTutorialModeEnabled: Flow<Boolean> =
-        repository.isTutorialModeEnabledFlow()
+        repository.isTutorialModeEnabled
 
     fun setFocusedItemIndex(index: Int) {
         currentFocusItemIndex.value = index

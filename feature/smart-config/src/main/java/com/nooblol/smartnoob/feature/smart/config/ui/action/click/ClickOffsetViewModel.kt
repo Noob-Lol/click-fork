@@ -14,20 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.feature.smart.config.ui.action.click
+package com.buzbuz.smartautoclicker.feature.smart.config.ui.action.click
 
 import android.graphics.Bitmap
 import android.graphics.Point
 import androidx.lifecycle.ViewModel
-import com.nooblol.smartnoob.core.base.identifier.Identifier
-import com.nooblol.smartnoob.core.display.config.DisplayConfigManager
-import com.nooblol.smartnoob.core.domain.IRepository
-import com.nooblol.smartnoob.core.domain.model.AND
-import com.nooblol.smartnoob.core.domain.model.ConditionOperator
-import com.nooblol.smartnoob.core.domain.model.action.Click
-import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
-import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
-import com.nooblol.smartnoob.feature.smart.config.domain.EditionRepository
+
+import com.buzbuz.smartautoclicker.core.base.identifier.Identifier
+import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
+import com.buzbuz.smartautoclicker.core.display.config.DisplayConfigManager
+import com.buzbuz.smartautoclicker.core.domain.ext.getConditionBitmap
+import com.buzbuz.smartautoclicker.core.domain.model.AND
+import com.buzbuz.smartautoclicker.core.domain.model.ConditionOperator
+import com.buzbuz.smartautoclicker.core.domain.model.action.Click
+import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
+import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
+import com.buzbuz.smartautoclicker.feature.smart.config.domain.EditionRepository
+
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -38,7 +41,7 @@ import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 
 class ClickOffsetViewModel @Inject constructor(
-    private val repository: IRepository,
+    private val bitmapRepository: BitmapRepository,
     private val editionRepository: EditionRepository,
     private val displayConfigManager: DisplayConfigManager,
 ) : ViewModel() {
@@ -77,7 +80,7 @@ class ClickOffsetViewModel @Inject constructor(
     }
 
     val conditionImage: Flow<Bitmap?> = conditionToShow
-        .map { imageCondition -> imageCondition?.let { repository.getConditionBitmap(it) } }
+        .map { imageCondition -> imageCondition?.let { bitmapRepository.getConditionBitmap(it) } }
 
     fun getOffsetMaxBoundsX(): IntRange =
         displayConfigManager.displayConfig.let { displayConfig ->

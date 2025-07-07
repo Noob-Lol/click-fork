@@ -19,6 +19,7 @@ package com.nooblol.smartnoob.scenarios.list
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
 
 import com.nooblol.smartnoob.scenarios.list.model.ScenarioBackupSelection
 import com.nooblol.smartnoob.scenarios.list.model.ScenarioListUiState
@@ -38,10 +39,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -51,6 +54,7 @@ import javax.inject.Inject
 class ScenarioListViewModel @Inject constructor(
     private val filteredScenarioListUseCase: FilteredScenarioListUseCase,
     private val sortConfigRepository: ScenarioSortConfigRepository,
+    private val bitmapRepository: BitmapRepository,
     private val smartRepository: IRepository,
     private val dumbRepository: IDumbRepository,
 ) : ViewModel() {
@@ -81,6 +85,9 @@ class ScenarioListViewModel @Inject constructor(
         SharingStarted.WhileSubscribed(5_000),
         null,
     )
+
+    val needsConditionMigration: Flow<Boolean> =
+        smartRepository.legacyConditionsCount.map { it != 0 }
 
     /**
      * Change the ui state type.
@@ -123,6 +130,12 @@ class ScenarioListViewModel @Inject constructor(
     fun updateSmartVisible(show: Boolean) {
         viewModelScope.launch {
             sortConfigRepository.setShowSmart(show)
+        }
+    }
+
+    fun refreshScenarioList() {
+        viewModelScope.launch {
+            filteredScenarioListUseCase.refresh()
         }
     }
 
@@ -199,7 +212,7 @@ class ScenarioListViewModel @Inject constructor(
      * @param onBitmapLoaded the callback notified upon completion.
      */
     fun getConditionBitmap(condition: ImageCondition, onBitmapLoaded: (Bitmap?) -> Unit): Job =
-        getImageConditionBitmap(smartRepository, condition, onBitmapLoaded)
+        getImageConditionBitmap(bitmapRepository, condition, onBitmapLoaded)
 
     private fun ScenarioListUiState.Type.toMenuUiState(
         scenarioItems: List<ScenarioListUiState.Item>,

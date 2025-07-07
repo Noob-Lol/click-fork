@@ -19,59 +19,65 @@ package com.nooblol.smartnoob.core.domain.data
 import android.util.Log
 import androidx.room.withTransaction
 
-import com.nooblol.smartnoob.core.base.DatabaseListUpdater
-import com.nooblol.smartnoob.core.base.identifier.DATABASE_ID_INSERTION
-import com.nooblol.smartnoob.core.base.identifier.Identifier
-import com.nooblol.smartnoob.core.base.interfaces.areComplete
-import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
-import com.nooblol.smartnoob.core.database.ScenarioDatabase
-import com.nooblol.smartnoob.core.database.dao.ActionDao
-import com.nooblol.smartnoob.core.database.dao.ConditionDao
-import com.nooblol.smartnoob.core.database.dao.EventDao
-import com.nooblol.smartnoob.core.database.dao.ScenarioDao
-import com.nooblol.smartnoob.core.database.entity.ActionEntity
-import com.nooblol.smartnoob.core.database.entity.CompleteActionEntity
-import com.nooblol.smartnoob.core.database.entity.CompleteEventEntity
-import com.nooblol.smartnoob.core.database.entity.CompleteScenario
-import com.nooblol.smartnoob.core.database.entity.ConditionEntity
-import com.nooblol.smartnoob.core.database.entity.EventEntity
-import com.nooblol.smartnoob.core.database.entity.EventToggleEntity
-import com.nooblol.smartnoob.core.database.entity.IntentExtraEntity
-import com.nooblol.smartnoob.core.database.entity.ScenarioStatsEntity
-import com.nooblol.smartnoob.core.database.entity.ScenarioWithEvents
-import com.nooblol.smartnoob.core.domain.model.action.Action
-import com.nooblol.smartnoob.core.domain.model.action.Intent
-import com.nooblol.smartnoob.core.domain.model.action.ToggleEvent
-import com.nooblol.smartnoob.core.domain.model.action.toggleevent.EventToggle
-import com.nooblol.smartnoob.core.domain.model.action.intent.IntentExtra
-import com.nooblol.smartnoob.core.domain.model.action.intent.toEntity
-import com.nooblol.smartnoob.core.domain.model.action.toEntity
-import com.nooblol.smartnoob.core.domain.model.action.toggleevent.toEntity
-import com.nooblol.smartnoob.core.domain.model.condition.Condition
-import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
-import com.nooblol.smartnoob.core.domain.model.condition.toEntity
-import com.nooblol.smartnoob.core.domain.model.event.toEntity
-import com.nooblol.smartnoob.core.domain.model.scenario.Scenario
-import com.nooblol.smartnoob.core.domain.model.scenario.toEntity
-import com.nooblol.smartnoob.core.domain.model.condition.TriggerCondition
-import com.nooblol.smartnoob.core.domain.model.event.Event
+import com.buzbuz.smartautoclicker.core.base.DatabaseListUpdater
+import com.buzbuz.smartautoclicker.core.base.identifier.DATABASE_ID_INSERTION
+import com.buzbuz.smartautoclicker.core.base.identifier.Identifier
+import com.buzbuz.smartautoclicker.core.base.interfaces.areComplete
+import com.buzbuz.smartautoclicker.core.database.ClickDatabase
+import com.buzbuz.smartautoclicker.core.database.ScenarioDatabase
+import com.buzbuz.smartautoclicker.core.database.TutorialDatabase
+import com.buzbuz.smartautoclicker.core.database.dao.ActionDao
+import com.buzbuz.smartautoclicker.core.database.dao.ConditionDao
+import com.buzbuz.smartautoclicker.core.database.dao.EventDao
+import com.buzbuz.smartautoclicker.core.database.dao.ScenarioDao
+import com.buzbuz.smartautoclicker.core.database.entity.ActionEntity
+import com.buzbuz.smartautoclicker.core.database.entity.CompleteActionEntity
+import com.buzbuz.smartautoclicker.core.database.entity.CompleteEventEntity
+import com.buzbuz.smartautoclicker.core.database.entity.CompleteScenario
+import com.buzbuz.smartautoclicker.core.database.entity.ConditionEntity
+import com.buzbuz.smartautoclicker.core.database.entity.EventEntity
+import com.buzbuz.smartautoclicker.core.database.entity.EventToggleEntity
+import com.buzbuz.smartautoclicker.core.database.entity.IntentExtraEntity
+import com.buzbuz.smartautoclicker.core.database.entity.ScenarioStatsEntity
+import com.buzbuz.smartautoclicker.core.database.entity.ScenarioWithEvents
+import com.buzbuz.smartautoclicker.core.domain.model.action.Action
+import com.buzbuz.smartautoclicker.core.domain.model.action.Intent
+import com.buzbuz.smartautoclicker.core.domain.model.action.ToggleEvent
+import com.buzbuz.smartautoclicker.core.domain.model.action.toggleevent.EventToggle
+import com.buzbuz.smartautoclicker.core.domain.model.action.intent.IntentExtra
+import com.buzbuz.smartautoclicker.core.domain.model.action.intent.toEntity
+import com.buzbuz.smartautoclicker.core.domain.model.action.toEntity
+import com.buzbuz.smartautoclicker.core.domain.model.action.toggleevent.toEntity
+import com.buzbuz.smartautoclicker.core.domain.model.condition.Condition
+import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
+import com.buzbuz.smartautoclicker.core.domain.model.condition.toEntity
+import com.buzbuz.smartautoclicker.core.domain.model.event.toEntity
+import com.buzbuz.smartautoclicker.core.domain.model.scenario.Scenario
+import com.buzbuz.smartautoclicker.core.domain.model.scenario.toEntity
+import com.buzbuz.smartautoclicker.core.domain.model.condition.TriggerCondition
+import com.buzbuz.smartautoclicker.core.domain.model.event.Event
+import com.buzbuz.smartautoclicker.core.domain.model.event.ImageEvent
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 import java.lang.Exception
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class ScenarioDataSource(
-    defaultDatabase: ScenarioDatabase,
-    private val bitmapManager: BitmapRepository,
+@Singleton
+internal class ScenarioDataSource @Inject constructor(
+    private val normalDatabase: ClickDatabase,
+    private val tutorialDatabase: TutorialDatabase,
 ) {
 
     /** The database currently in use. */
-    var currentDatabase: MutableStateFlow<ScenarioDatabase> = MutableStateFlow(defaultDatabase)
+    private val currentDatabase: MutableStateFlow<ScenarioDatabase> = MutableStateFlow(normalDatabase)
 
     /** The Dao for accessing the scenario. */
     private val scenarioDaoFlow: Flow<ScenarioDao> = currentDatabase.map { it.scenarioDao() }
@@ -85,6 +91,9 @@ internal class ScenarioDataSource(
     /** State of scenario during an update, to keep track of ids mapping. */
     private val scenarioUpdateState = ScenarioUpdateState()
 
+    val isTutorialModeEnabled: Flow<Boolean> =
+        currentDatabase.map { it == tutorialDatabase }
+
     val scenarios: Flow<List<ScenarioWithEvents>> =
         scenarioDaoFlow.flatMapLatest { it.getScenariosWithEvents() }
 
@@ -93,6 +102,19 @@ internal class ScenarioDataSource(
 
     val allImageEvents: Flow<List<CompleteEventEntity>> =
         eventDaoFlow.flatMapLatest { it.getAllImageEventsFlow() }
+
+
+    fun useTutorialDatabase() {
+        currentDatabase.value = tutorialDatabase
+    }
+
+    fun useNormalDatabase() {
+        currentDatabase.value = normalDatabase
+    }
+
+    fun isUsingTutorialDatabase(): Boolean =
+        currentDatabase.value == tutorialDatabase
+
 
     suspend fun getScenario(scenarioId: Long): ScenarioWithEvents? =
         currentDatabase.value.scenarioDao().getScenario(scenarioId)
@@ -121,12 +143,15 @@ internal class ScenarioDataSource(
     fun getAllActions(): Flow<List<CompleteActionEntity>> =
         actionDaoFlow.flatMapLatest { it.getAllActions() }
 
+    suspend fun getImageConditionPathUsageCount(path: String): Int =
+        currentDatabase.value.conditionDao().getValidPathCount(path)
+
     suspend fun addScenario(scenario: Scenario): Long {
         Log.d(TAG, "Add scenario to the database: ${scenario.id}")
         return currentDatabase.value.scenarioDao().add(scenario.toEntity())
     }
 
-    suspend fun deleteScenario(scenarioId: Identifier) {
+    suspend fun deleteScenario(scenarioId: Identifier, onImageConditionsRemoved: suspend (List<String>) -> Unit) {
         Log.d(TAG, "Delete scenario from the database: $scenarioId")
 
         val removedConditionsPath = mutableListOf<String>()
@@ -137,10 +162,14 @@ internal class ScenarioDataSource(
         }
 
         currentDatabase.value.scenarioDao().delete(scenarioId.databaseId)
-        clearRemovedConditionsBitmaps(removedConditionsPath)
+        onImageConditionsRemoved(removedConditionsPath)
     }
 
-    suspend fun addCompleteScenario(scenario: Scenario, events: List<Event>): Long? {
+    suspend fun addCompleteScenario(
+        scenario: Scenario,
+        events: List<Event>,
+        onImageConditionsRemoved: suspend (List<String>) -> Unit,
+    ): Long? {
         Log.d(TAG, "Add scenario copy to the database: ${scenario.id}")
 
         // Check the events correctness
@@ -157,6 +186,7 @@ internal class ScenarioDataSource(
                 updateEvents(
                     scenarioDbId = scenarioId.databaseId,
                     events = events,
+                    onImageConditionsRemoved = onImageConditionsRemoved,
                 )
 
                 scenarioId.databaseId
@@ -167,7 +197,11 @@ internal class ScenarioDataSource(
         }
     }
 
-    suspend fun updateScenario(scenario: Scenario, events: List<Event>): Boolean {
+    suspend fun updateScenario(
+        scenario: Scenario,
+        events: List<Event>,
+        onImageConditionsRemoved: suspend (List<String>) -> Unit,
+    ): Boolean {
         Log.d(TAG, "Update scenario in the database: ${scenario.id}")
 
         return try {
@@ -178,6 +212,7 @@ internal class ScenarioDataSource(
                 updateEvents(
                     scenarioDbId = scenario.id.databaseId,
                     events = events,
+                    onImageConditionsRemoved = onImageConditionsRemoved,
                 )
             }
 
@@ -211,7 +246,28 @@ internal class ScenarioDataSource(
         }
     }
 
-    private suspend fun updateEvents(scenarioDbId: Long, events: List<Event>) {
+    suspend fun getLegacyImageConditions(forTutorial: Boolean): List<ConditionEntity> =
+        if (forTutorial) tutorialDatabase.conditionDao().getLegacyImageConditions()
+        else normalDatabase.conditionDao().getLegacyImageConditions()
+
+    fun getLegacyImageConditionsFlow(): Flow<List<ConditionEntity>> =
+        combine(
+            normalDatabase.conditionDao().getLegacyImageConditionsFlow(),
+            tutorialDatabase.conditionDao().getLegacyImageConditionsFlow(),
+        ) { normalLegacy, tutorialLegacy -> normalLegacy + tutorialLegacy }
+
+    suspend fun updateLegacyImageCondition(condition: ConditionEntity, newPath: String, forTutorial: Boolean) {
+        val updatedCondition = condition.copy(path = newPath)
+
+        if (forTutorial) tutorialDatabase.conditionDao().updateCondition(updatedCondition)
+        else normalDatabase.conditionDao().updateCondition(updatedCondition)
+    }
+
+    private suspend fun updateEvents(
+        scenarioDbId: Long,
+        events: List<Event>,
+        onImageConditionsRemoved: suspend (List<String>) -> Unit,
+    ) {
         scenarioUpdateState.initUpdateState()
         val updater = DatabaseListUpdater<Event, EventEntity>()
 
@@ -237,23 +293,30 @@ internal class ScenarioDataSource(
                         scenarioUpdateState.addEventIdMapping(domainId, dbId)
                     }
 
-                    updateEventsChildren(buildList {
-                        addAll(added)
-                        addAll(updated)
-                    })
+                    updateEventsChildren(
+                        events = buildList {
+                            addAll(added)
+                            addAll(updated)
+                        },
+                        onImageConditionsRemoved = onImageConditionsRemoved,
+                    )
 
-                    if (removed.isNotEmpty()) clearRemovedEventsBitmaps(removed)
+                    if (removed.isNotEmpty()) onImageConditionsRemoved(events.getRemovedConditionsPath(removed))
                 }
             )
         }
     }
 
-    private suspend fun updateEventsChildren(events: List<Event>) {
+    private suspend fun updateEventsChildren(
+        events: List<Event>,
+        onImageConditionsRemoved: suspend (List<String>) -> Unit,
+    ) {
         // Actions can reference a condition, do them all first
         events.forEach { event ->
             updateConditions(
                 eventDbId = scenarioUpdateState.getEventDbId(event.id),
                 newConditions = event.conditions,
+                onImageConditionsRemoved = onImageConditionsRemoved,
             )
         }
 
@@ -266,7 +329,11 @@ internal class ScenarioDataSource(
         }
     }
 
-    private suspend fun updateConditions(eventDbId: Long, newConditions: List<Condition>) {
+    private suspend fun updateConditions(
+        eventDbId: Long,
+        newConditions: List<Condition>,
+        onImageConditionsRemoved: suspend (List<String>) -> Unit,
+    ) {
         val updater = DatabaseListUpdater<Condition, ConditionEntity>()
 
         Log.d(TAG, "Updating conditions in the database for event $eventDbId")
@@ -294,7 +361,7 @@ internal class ScenarioDataSource(
                         scenarioUpdateState.addConditionIdMapping(domainId, dbId)
                     }
 
-                    if (removed.isNotEmpty()) clearRemovedConditionsBitmaps(removed.mapNotNull { it.path })
+                    if (removed.isNotEmpty()) onImageConditionsRemoved(removed.mapNotNull { it.path })
                 }
             )
         }
@@ -408,35 +475,19 @@ internal class ScenarioDataSource(
         }
     }
 
-    /**
-     * Remove bitmaps from the application data folder.
-     * @param removedEvents the list of events for the bitmaps to be removed.
-     */
-    private suspend fun clearRemovedEventsBitmaps(removedEvents: List<EventEntity>) {
-        val deletedPaths = buildSet {
-            removedEvents.forEach { event ->
-                currentDatabase.value.conditionDao().getConditionsPaths(event.id).forEach { path ->
-                    add(path)
-                }
+    private fun List<Event>.getRemovedConditionsPath(removedEntities: List<EventEntity>): List<String> =
+        buildList {
+            removedEntities.forEach { removedEntity ->
+                // Find the deleted domain event, get its image conditions list and map to their path
+                val removedEvent = this@getRemovedConditionsPath
+                    .find { event -> event is ImageEvent && event.id.databaseId == removedEntity.id }
+                    ?.conditions?.filterIsInstance<ImageCondition>()
+                    ?.map { condition -> condition.path }
+                    ?: return@forEach
+
+                addAll(removedEvent)
             }
         }
-
-        clearRemovedConditionsBitmaps(deletedPaths.toList())
-    }
-
-    /**
-     * Remove bitmaps from the application data folder.
-     * @param removedPath the list of path for the bitmaps to be removed.
-     */
-    internal suspend fun clearRemovedConditionsBitmaps(removedPath: List<String>) {
-        Log.d(TAG, "Clearing removed conditions bitmaps: $removedPath")
-        val deletedPaths = removedPath.filter { path ->
-            path.isNotEmpty() && currentDatabase.value.conditionDao().getValidPathCount(path) == 0
-        }
-
-        Log.d(TAG, "Removed conditions count: ${removedPath.size}; Unused bitmaps after removal: ${deletedPaths.size}")
-        if (deletedPaths.isNotEmpty()) bitmapManager.deleteImageConditionBitmaps(deletedPaths)
-    }
 }
 
 /** Tag for logs. */

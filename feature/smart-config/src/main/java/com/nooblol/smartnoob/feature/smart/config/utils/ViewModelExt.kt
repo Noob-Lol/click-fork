@@ -14,14 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.feature.smart.config.utils
+package com.buzbuz.smartautoclicker.feature.smart.config.utils
 
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.buzbuz.smartautoclicker.core.bitmaps.BitmapRepository
+import com.buzbuz.smartautoclicker.core.domain.ext.getConditionBitmap
 
-import com.nooblol.smartnoob.core.domain.IRepository
-import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
+import com.buzbuz.smartautoclicker.core.domain.model.condition.ImageCondition
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,7 +31,7 @@ import kotlinx.coroutines.withContext
 import kotlin.coroutines.cancellation.CancellationException
 
 
-fun ViewModel.getImageConditionBitmap(repository: IRepository, condition: ImageCondition, onCompleted: (Bitmap?) -> Unit): Job =
+fun ViewModel.getImageConditionBitmap(repository: BitmapRepository, condition: ImageCondition, onCompleted: (Bitmap?) -> Unit): Job =
     viewModelScope.launch(Dispatchers.IO) {
         try {
             val bitmap = repository.getConditionBitmap(condition)

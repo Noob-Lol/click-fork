@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Kevin Buzeau
+ * Copyright (C) 2025 Kevin Buzeau
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ interface BitmapRepository : Dumpable {
      *
      * @return the path of the bitmap.
      */
-    suspend fun saveImageConditionBitmap(bitmap: Bitmap, prefix: String = CONDITION_FILE_PREFIX) : String
+    suspend fun saveImageConditionBitmap(bitmap: Bitmap, prefix: String) : String
 
     /**
      * Load a bitmap.
@@ -62,8 +62,19 @@ interface BitmapRepository : Dumpable {
      */
     suspend fun deleteImageConditionBitmaps(paths: List<String>)
 
-    /** Release the cache of bitmaps. */
-    fun releaseCache()
+    /**
+     * Migrate the provided legacy bitmap into the new format.
+     *
+     * @param path the path of the bitmap to be migrated.
+     * @param width the width of the bitmap.
+     * @param height the height of the bitmap.
+     *
+     * @return true if the migration was successful, false otherwise.
+     */
+    suspend fun migrateImageConditionBitmap(path: String, width: Int, height: Int): String?
+
+    /** Clear the cache of bitmaps. */
+    fun clearCache()
 }
 
 /** The prefix appended to all bitmap file names. */

@@ -131,9 +131,9 @@ class DetectionRepository @Inject constructor(
     fun isRunning(): Boolean =
         detectorEngine.state.value == DetectorState.DETECTING
 
-    fun startScreenRecord(context: Context, resultCode: Int, data: Intent) {
+    fun startScreenRecord(resultCode: Int, data: Intent) {
         actionExecutor?.let { executor ->
-            detectorEngine.startScreenRecord(context, resultCode, data, executor) {
+            detectorEngine.startScreenRecord(resultCode, data, executor) {
                 coroutineScopeMain.launch { projectionErrorHandler?.invoke() }
             }
         }
@@ -150,7 +150,6 @@ class DetectionRepository @Inject constructor(
             scenario = scenario,
             imageEvents = events,
             triggerEvents = triggerEvents,
-            bitmapSupplier = scenarioRepository::getConditionBitmap,
             progressListener = progressListener,
         )
 
@@ -219,7 +218,6 @@ class DetectionRepository @Inject constructor(
             scenario = elementTry.scenario,
             imageEvents = elementTry.imageEvents,
             triggerEvents = elementTry.triggerEvents,
-            bitmapSupplier = scenarioRepository::getConditionBitmap,
             progressListener = listener,
         )
     }
