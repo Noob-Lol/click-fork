@@ -24,18 +24,18 @@ jobs:
         with:
           path: |
             **/.gradle
-          key: project-gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle.kts', '**/settings.gradle.kts', '**/gradle-wrapper.properties') }}
+          key: gradle-test-${{ runner.os }}-${{ hashFiles('**/*.gradle.kts', '**/settings.gradle.kts', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            project-gradle-${{ runner.os }}-
+            gradle-test-${{ runner.os }}-
   
       - name: Cache all build folders in project
         uses: actions/cache@v4
         with:
           path: |
             **/build
-          key: build-output-${{ runner.os }}-${{ github.ref_name }}
+          key: build-test-${{ runner.os }}-${{ github.ref_name }}
           restore-keys: |
-            build-output-${{ runner.os }}-
+            build-test-${{ runner.os }}-
       - name: Local unit tests with Gradle
         run: ./gradlew testDebugUnitTest
       - name: Upload tests results
