@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Kevin Buzeau
+ * Copyright (C) 2025 Kevin Buzeau
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,23 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-plugins {
-    alias(libs.plugins.buzbuz.androidLibrary)
-    alias(libs.plugins.buzbuz.flavour)
-    alias(libs.plugins.buzbuz.hilt)
-}
+package com.buzbuz.smartautoclicker.core.base.extensions
 
-android {
-    namespace = "com.nooblol.smartnoob.core.common.permissions"
-    buildFeatures.viewBinding = true
-}
+import android.util.Log
 
-dependencies {
-    implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.google.material)
 
-    implementation(project(":core:common:base"))
-    implementation(project(":core:common:overlays"))
-    implementation(project(":core:common:ui"))
+fun Exception.throwWithKeys(keys: Map<String, String>) {
+    keys.entries.forEach { (key, value) ->
+        Log.e("Exception", "Crash key $key = $value")
+    }
+    throw this
 }

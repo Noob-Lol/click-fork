@@ -37,10 +37,10 @@ jobs:
           restore-keys: |
             build-test-${{ runner.os }}-
       - name: Local unit tests with Gradle
-        run: ./gradlew testDebugUnitTest
+        run: ./gradlew testFDroidDebugUnitTest
       - name: Upload tests results
         uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: test-results
-          path: ./**/testDebugUnitTest/TEST-*.xml
+          path: ./**/testFDroidDebugUnitTest/TEST-*.xml

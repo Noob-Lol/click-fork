@@ -19,14 +19,17 @@ package com.nooblol.smartnoob.feature.backup.data.smart
 import android.graphics.Point
 import android.util.Log
 
-import com.nooblol.smartnoob.core.bitmaps.CONDITION_FILE_PREFIX
 import com.nooblol.smartnoob.core.database.CLICK_DATABASE_VERSION
 import com.nooblol.smartnoob.core.database.entity.CompleteScenario
 import com.nooblol.smartnoob.core.database.entity.ConditionType
 import com.nooblol.smartnoob.core.database.entity.EventType
-import com.nooblol.smartnoob.feature.backup.data.base.SCENARIO_BACKUP_EXTENSION
+import com.nooblol.smartnoob.feature.backup.data.base.CONDITION_BACKUP_MATCH_REGEX
+import com.nooblol.smartnoob.feature.backup.data.base.LEGACY_CONDITION_BACKUP_MATCH_REGEX
+import com.nooblol.smartnoob.feature.backup.data.base.SMART_SCENARIO_BACKUP_MATCH_REGEX
 import com.nooblol.smartnoob.feature.backup.data.base.ScenarioBackupDataSource
 import com.nooblol.smartnoob.feature.backup.data.base.ScenarioBackupSerializer
+import com.nooblol.smartnoob.feature.backup.data.base.backupFolderName
+import com.nooblol.smartnoob.feature.backup.data.base.scenarioBackupFileName
 
 import java.io.File
 
@@ -34,23 +37,12 @@ internal class SmartBackupDataSource(
     private val appDataDir: File,
 ): ScenarioBackupDataSource<ScenarioBackup, CompleteScenario>(appDataDir) {
 
-    /**
-     * Regex matching a scenario json file into its folder in a backup archive.
-     * Will match any file like "scenarioId/Condition_randomNumber".
-     *
-     * You can try it out here: https://regex101.com
-     */
-    private val scenarioUnzipMatchRegex = """[0-9]+/[0-9]+$SCENARIO_BACKUP_EXTENSION"""
-        .toRegex()
-
-    /**
-     * Regex matching a condition file into its folder in a backup archive.
-     * Will match any file like "scenarioId/Condition_randomNumber".
-     *
-     * You can try it out here: https://regex101.com
-     */
-    private val conditionUnzipMatchRegex = """[0-9]+/$CONDITION_FILE_PREFIX-?[0-9]+"""
-        .toRegex()
+    /** Regex matching a scenario json file into its folder in a backup archive. */
+    private val scenarioUnzipMatchRegex = SMART_SCENARIO_BACKUP_MATCH_REGEX.toRegex()
+    /** Regex matching a condition file (png) into its folder in a backup archive. */
+    private val conditionUnzipMatchRegex = CONDITION_BACKUP_MATCH_REGEX.toRegex()
+    /** Regex matching a legacy condition file (raw pixels) into its folder in a backup archive. */
+    private val legacyConditionUnzipMatchRegex = LEGACY_CONDITION_BACKUP_MATCH_REGEX.toRegex()
 
     var screenCompatWarning = false
         private set
@@ -61,7 +53,7 @@ internal class SmartBackupDataSource(
         fileName.matches(scenarioUnzipMatchRegex)
 
     override fun isScenarioBackupAdditionalFileZipEntry(fileName: String): Boolean =
-        fileName.matches(conditionUnzipMatchRegex)
+        fileName.matches(conditionUnzipMatchRegex) || fileName.matches(legacyConditionUnzipMatchRegex)
 
     override fun getBackupAdditionalFilesPaths(scenario: CompleteScenario): Set<String> =
         buildSet {
@@ -75,10 +67,10 @@ internal class SmartBackupDataSource(
         }
 
     override fun getBackupZipFolderName(scenario: CompleteScenario): String =
-        "${scenario.scenario.id}"
+        scenario.backupFolderName()
 
     override fun getBackupFileName(scenario: CompleteScenario): String =
-        "${scenario.scenario.id}$SCENARIO_BACKUP_EXTENSION"
+        scenario.scenarioBackupFileName()
 
     override fun createBackupFromScenario(scenario: CompleteScenario, screenSize: Point): ScenarioBackup =
         ScenarioBackup(
