@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.feature.backup.data.base
+package com.nooblol.smartnoob.feature.backup.data.base
 
-import com.buzbuz.smartautoclicker.core.base.FILE_EXTENSION_JSON
-import com.buzbuz.smartautoclicker.core.bitmaps.CONDITION_FILE_EXTENSION
-import com.buzbuz.smartautoclicker.core.bitmaps.CONDITION_FILE_PREFIX
-import com.buzbuz.smartautoclicker.core.database.entity.CompleteScenario
-import com.buzbuz.smartautoclicker.core.dumb.data.database.DumbScenarioWithActions
+import com.nooblol.smartnoob.core.base.FILE_EXTENSION_JSON
+import com.nooblol.smartnoob.core.bitmaps.CONDITION_FILE_EXTENSION
+import com.nooblol.smartnoob.core.bitmaps.CONDITION_FILE_PREFIX
+import com.nooblol.smartnoob.core.database.entity.CompleteScenario
+import com.nooblol.smartnoob.core.dumb.data.database.DumbScenarioWithActions
 
 
 /** File extension for all scenario backup files. */

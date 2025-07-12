@@ -20,7 +20,7 @@ import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.Rect
 import androidx.annotation.Keep
-import com.buzbuz.smartautoclicker.core.base.extensions.throwWithKeys
+import com.nooblol.smartnoob.core.base.extensions.throwWithKeys
 
 /**
  * Native implementation of the image detector.
