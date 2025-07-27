@@ -18,7 +18,6 @@ package com.nooblol.smartnoob.core.processing.data
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Point
 import android.media.Image
 import android.media.projection.MediaProjectionManager
 import android.util.Log
@@ -30,6 +29,7 @@ import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
 import com.nooblol.smartnoob.core.display.recorder.DisplayRecorder
 import com.nooblol.smartnoob.core.detection.ImageDetector
 import com.nooblol.smartnoob.core.detection.NativeDetector
+import com.nooblol.smartnoob.core.display.config.DisplayConfigManager
 import com.nooblol.smartnoob.core.domain.model.SmartActionExecutor
 import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
 import com.nooblol.smartnoob.core.domain.model.event.TriggerEvent
@@ -64,6 +64,7 @@ import javax.inject.Singleton
 @Singleton
 class DetectorEngine @Inject constructor(
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
+    private val displayConfigManager: DisplayConfigManager,
     private val bitmapRepository: BitmapRepository,
     private val scalingManager: ScalingManager,
     private val displayRecorder: DisplayRecorder,
@@ -84,6 +85,8 @@ class DetectorEngine @Inject constructor(
     private var processingJob: Job? = null
     /** Coroutine job for the cleaning of the detection once stopped. */
     private var processingShutdownJob: Job? = null
+
+    private val screenOrientationListener: (Context) -> Unit = { onScreenOrientationChanged() }
 
     /** Backing property for [state].*/
     private val _state = MutableStateFlow(DetectorState.CREATED)
@@ -124,13 +127,21 @@ class DetectorEngine @Inject constructor(
             Log.w(TAG, "startScreenRecord: Screen record is already started")
             return
         }
+
+        val displaySize = displayConfigManager.displayConfig.sizePx
+        if (displaySize.x <= 0 || displaySize.y <= 0) {
+            Log.w(TAG, "startScreenRecord: Invalid display size $displaySize")
+            return
+        }
+
         _state.value = DetectorState.TRANSITIONING
 
         Log.i(TAG, "startScreenRecord")
 
         this.androidExecutor = androidExecutor
         processingScope = CoroutineScope(ioDispatcher)
-        scalingManager.init(onDisplaySizeChanged = ::onDeviceScreenSizeChanged)
+
+        displayConfigManager.addOrientationListener(screenOrientationListener)
 
         processingScope?.launch {
             displayRecorder.apply {
@@ -139,7 +150,7 @@ class DetectorEngine @Inject constructor(
                     this@DetectorEngine.stopScreenRecord()
                     onRecordingStopped?.invoke()
                 }
-                startScreenRecord(scalingManager.scaledScreenSize)
+                startScreenRecord(displaySize)
             }
 
             _state.emit(DetectorState.RECORDING)
@@ -183,13 +194,15 @@ class DetectorEngine @Inject constructor(
         processingScope?.launchProcessingJob {
             // Clear image cache and compute scaling info for detection
             bitmapRepository.clearCache()
-            scalingManager.startScaling(
-                quality = scenario.detectionQuality.toDouble(),
-                screenEvents = imageEvents,
-            )
+
 
             // Set the display projection to the scaled size
-            displayRecorder.resizeDisplay(scalingManager.scaledScreenSize)
+            displayRecorder.resizeDisplay(
+                displaySize = scalingManager.startScaling(
+                    quality = scenario.detectionQuality.toDouble(),
+                    screenEvents = imageEvents,
+                )
+            )
 
             // Setup native detector
             imageDetector = detector
@@ -204,7 +217,6 @@ class DetectorEngine @Inject constructor(
                 processingTag = appComponentsProvider.originalAppId,
                 imageDetector = detector,
                 scalingManager = scalingManager,
-                detectionQuality = scenario.detectionQuality,
                 randomize = scenario.randomize,
                 imageEvents = imageEvents,
                 triggerEvents = triggerEvents,
@@ -224,7 +236,7 @@ class DetectorEngine @Inject constructor(
      * Called when the orientation of the screen changes.
      * As we now have different screen metrics, we need to stop and start the virtual display with the correct one.
      */
-    private fun onDeviceScreenSizeChanged(newSize: Point) {
+    private fun onScreenOrientationChanged() {
         if (_state.value != DetectorState.DETECTING && _state.value != DetectorState.RECORDING) return
 
         Log.d(TAG, "onOrientationChanged")
@@ -232,10 +244,13 @@ class DetectorEngine @Inject constructor(
         processingScope?.launch {
             if (_state.value == DetectorState.DETECTING) {
                 processingJob?.cancelAndJoin()
+                detectionProgressListener?.onImageEventProcessingCancelled()
             }
 
-            detectionProgressListener?.onImageEventProcessingCancelled()
-            displayRecorder.resizeDisplay(newSize)
+
+            displayRecorder.resizeDisplay(
+                displaySize = scalingManager.refreshScaling(),
+            )
 
             if (_state.value == DetectorState.DETECTING) {
                 processingScope?.launchProcessingJob {
@@ -272,7 +287,7 @@ class DetectorEngine @Inject constructor(
             detectionProgressListener = null
 
             scalingManager.stopScaling()
-            displayRecorder.resizeDisplay(scalingManager.scaledScreenSize)
+            displayRecorder.resizeDisplay(displayConfigManager.displayConfig.sizePx)
 
             _state.emit(DetectorState.RECORDING)
             processingShutdownJob = null
@@ -301,7 +316,7 @@ class DetectorEngine @Inject constructor(
         processingScope?.launch {
             processingShutdownJob?.join()
 
-            scalingManager.stopScaling()
+            displayConfigManager.removeOrientationListener(screenOrientationListener)
             displayRecorder.stopProjection()
             androidExecutor = null
             _state.emit(DetectorState.CREATED)
