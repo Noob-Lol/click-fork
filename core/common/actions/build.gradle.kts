@@ -21,7 +21,7 @@ plugins {
 }
 
 android {
-    namespace = "com.buzbuz.smartautoclicker.core.common.actions"
+    namespace = "com.nooblol.smartnoob.core.common.actions"
 }
 
 dependencies {
