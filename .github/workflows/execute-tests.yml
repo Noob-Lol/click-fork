@@ -19,23 +19,6 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '21'
-      - name: Cache all .gradle folders in project
-        uses: actions/cache@v4
-        with:
-          path: |
-            **/.gradle
-          key: gradle-test-${{ runner.os }}-${{ hashFiles('**/*.gradle.kts', '**/settings.gradle.kts', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-test-${{ runner.os }}-
-  
-      - name: Cache all build folders in project
-        uses: actions/cache@v4
-        with:
-          path: |
-            **/build
-          key: build-test-${{ runner.os }}-${{ github.ref_name }}
-          restore-keys: |
-            build-test-${{ runner.os }}-
       - name: Local unit tests with Gradle
         run: ./gradlew testFDroidDebugUnitTest
       - name: Upload tests results
