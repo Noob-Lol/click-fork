@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.feature.notifications.ui
+package com.nooblol.smartnoob.feature.notifications.ui
 
 import android.content.Context
 import androidx.core.app.NotificationCompat
-import com.buzbuz.smartautoclicker.core.base.data.AppComponentsProvider
-import com.buzbuz.smartautoclicker.feature.notifications.model.ServiceNotificationState
+import com.nooblol.smartnoob.core.base.data.AppComponentsProvider
+import com.nooblol.smartnoob.feature.notifications.model.ServiceNotificationState
 
 
 internal abstract class ServiceNotificationBuilder(
