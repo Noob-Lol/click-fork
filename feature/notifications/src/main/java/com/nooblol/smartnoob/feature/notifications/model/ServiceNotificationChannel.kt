@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.feature.notifications.model
+package com.nooblol.smartnoob.feature.notifications.model
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.buzbuz.smartautoclicker.feature.notifications.R
+import com.nooblol.smartnoob.feature.notifications.R
 
 @RequiresApi(Build.VERSION_CODES.O)
 internal fun createKlickrServiceNotificationChannel(context: Context): NotificationChannel =

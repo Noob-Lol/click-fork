@@ -14,13 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.core.ui.utils
+package com.nooblol.smartnoob.core.common.actions.di
 
-import android.os.Build
-import androidx.annotation.DrawableRes
-import com.nooblol.smartnoob.core.ui.R
+import com.nooblol.smartnoob.core.common.actions.AndroidActionExecutor
+import com.nooblol.smartnoob.core.common.actions.AndroidActionExecutorImpl
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-@DrawableRes
-fun notificationIconResId(): Int =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) R.drawable.ic_notification_vector
-    else R.drawable.ic_action_notification
+@Module
+@InstallIn(SingletonComponent::class)
+object ActionHiltModule {
+
+    @Provides
+    @Singleton
+    internal fun providesActionExecutor(actionExecutor: AndroidActionExecutorImpl): AndroidActionExecutor =
+        actionExecutor
+
+}

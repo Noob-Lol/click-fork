@@ -14,11 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/ServiceNotificationController.kt
-package com.nooblol.smartnoob.feature.notifications.service
-========
-package com.buzbuz.smartautoclicker.feature.notifications
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/ServiceNotificationController.kt
+package com.nooblol.smartnoob.feature.notifications
 
 import android.annotation.SuppressLint
 import android.app.Notification
@@ -29,29 +25,16 @@ import android.util.Log
 import androidx.core.app.NotificationManagerCompat
 import com.nooblol.smartnoob.core.base.data.AppComponentsProvider
 
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/ServiceNotificationController.kt
 import com.nooblol.smartnoob.core.common.permissions.model.PermissionPostNotification
 import com.nooblol.smartnoob.core.settings.SettingsRepository
-import com.nooblol.smartnoob.feature.notifications.common.NotificationIds
-import com.nooblol.smartnoob.feature.notifications.common.SERVICE_CHANNEL_ID
-import com.nooblol.smartnoob.feature.notifications.common.createKlickrServiceNotificationChannel
-import com.nooblol.smartnoob.feature.notifications.service.model.ServiceNotificationState
-import com.nooblol.smartnoob.feature.notifications.service.receivers.NightModeReceiver
-import com.nooblol.smartnoob.feature.notifications.service.receivers.NotificationActionsReceiver
-import com.nooblol.smartnoob.feature.notifications.service.ui.ServiceNotificationBuilder
-import com.nooblol.smartnoob.feature.notifications.service.ui.newServiceNotificationBuilder
-========
-import com.buzbuz.smartautoclicker.core.common.permissions.model.PermissionPostNotification
-import com.buzbuz.smartautoclicker.core.settings.SettingsRepository
-import com.buzbuz.smartautoclicker.core.base.notifications.NotificationIds
-import com.buzbuz.smartautoclicker.feature.notifications.model.SERVICE_CHANNEL_ID
-import com.buzbuz.smartautoclicker.feature.notifications.model.ServiceNotificationState
-import com.buzbuz.smartautoclicker.feature.notifications.model.createKlickrServiceNotificationChannel
-import com.buzbuz.smartautoclicker.feature.notifications.receivers.NightModeReceiver
-import com.buzbuz.smartautoclicker.feature.notifications.receivers.NotificationActionsReceiver
-import com.buzbuz.smartautoclicker.feature.notifications.ui.ServiceNotificationBuilder
-import com.buzbuz.smartautoclicker.feature.notifications.ui.newServiceNotificationBuilder
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/ServiceNotificationController.kt
+import com.nooblol.smartnoob.core.base.notifications.NotificationIds
+import com.nooblol.smartnoob.feature.notifications.model.SERVICE_CHANNEL_ID
+import com.nooblol.smartnoob.feature.notifications.model.ServiceNotificationState
+import com.nooblol.smartnoob.feature.notifications.model.createKlickrServiceNotificationChannel
+import com.nooblol.smartnoob.feature.notifications.receivers.NightModeReceiver
+import com.nooblol.smartnoob.feature.notifications.receivers.NotificationActionsReceiver
+import com.nooblol.smartnoob.feature.notifications.ui.ServiceNotificationBuilder
+import com.nooblol.smartnoob.feature.notifications.ui.newServiceNotificationBuilder
 
 
 class ServiceNotificationController(

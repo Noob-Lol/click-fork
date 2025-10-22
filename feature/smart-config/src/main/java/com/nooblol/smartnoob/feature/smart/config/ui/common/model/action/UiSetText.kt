@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.feature.smart.config.ui.common.model.action
+package com.nooblol.smartnoob.feature.smart.config.ui.common.model.action
 
 import android.content.Context
 import androidx.annotation.DrawableRes
-import com.buzbuz.smartautoclicker.core.domain.model.action.SetText
-import com.buzbuz.smartautoclicker.feature.smart.config.R
+import com.nooblol.smartnoob.core.domain.model.action.SetText
+import com.nooblol.smartnoob.feature.smart.config.R
 
 @DrawableRes
 internal fun getSetTextIconRes(): Int = R.drawable.ic_action_set_text

@@ -14,11 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/receivers/NightModeReceiver.kt
-package com.nooblol.smartnoob.feature.notifications.service.receivers
-========
-package com.buzbuz.smartautoclicker.feature.notifications.receivers
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/receivers/NightModeReceiver.kt
+package com.nooblol.smartnoob.feature.notifications.receivers
 
 import android.content.Context
 import android.content.Intent

@@ -14,11 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/model/ServiceNotificationState.kt
-package com.nooblol.smartnoob.feature.notifications.service.model
-========
-package com.buzbuz.smartautoclicker.feature.notifications.model
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/model/ServiceNotificationState.kt
+package com.nooblol.smartnoob.feature.notifications.model
 
 internal data class ServiceNotificationState(
     val scenarioName: String,

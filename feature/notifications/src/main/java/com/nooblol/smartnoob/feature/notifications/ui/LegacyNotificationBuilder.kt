@@ -14,30 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/ui/LegacyNotificationBuilder.kt
-package com.nooblol.smartnoob.feature.notifications.service.ui
-========
-package com.buzbuz.smartautoclicker.feature.notifications.ui
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/ui/LegacyNotificationBuilder.kt
+package com.nooblol.smartnoob.feature.notifications.ui
 
 import android.app.Notification
 import android.content.Context
 
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/ui/LegacyNotificationBuilder.kt
 import com.nooblol.smartnoob.core.base.data.AppComponentsProvider
 import com.nooblol.smartnoob.feature.notifications.R
-import com.nooblol.smartnoob.feature.notifications.common.notificationIconResId
-import com.nooblol.smartnoob.feature.notifications.service.model.ServiceNotificationAction
-import com.nooblol.smartnoob.feature.notifications.service.model.ServiceNotificationState
-import com.nooblol.smartnoob.feature.notifications.service.model.getPendingIntent
-========
-import com.buzbuz.smartautoclicker.core.base.data.AppComponentsProvider
-import com.buzbuz.smartautoclicker.feature.notifications.R
-import com.buzbuz.smartautoclicker.core.ui.utils.notificationIconResId
-import com.buzbuz.smartautoclicker.feature.notifications.model.ServiceNotificationAction
-import com.buzbuz.smartautoclicker.feature.notifications.model.ServiceNotificationState
-import com.buzbuz.smartautoclicker.feature.notifications.model.getPendingIntent
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/ui/LegacyNotificationBuilder.kt
+import com.nooblol.smartnoob.core.ui.utils.notificationIconResId
+import com.nooblol.smartnoob.feature.notifications.model.ServiceNotificationAction
+import com.nooblol.smartnoob.feature.notifications.model.ServiceNotificationState
+import com.nooblol.smartnoob.feature.notifications.model.getPendingIntent
 
 internal class LegacyNotificationBuilder(
     context: Context,
@@ -82,5 +69,3 @@ internal class LegacyNotificationBuilder(
             action.getPendingIntent(context, appComponentsProvider),
         )
 }
-
-

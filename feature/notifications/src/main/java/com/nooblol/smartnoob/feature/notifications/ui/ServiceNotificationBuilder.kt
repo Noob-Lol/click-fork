@@ -14,21 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/ui/ServiceNotificationBuilder.kt
-package com.nooblol.smartnoob.feature.notifications.service.ui
-
-import android.content.Context
-import androidx.core.app.NotificationCompat
-import com.nooblol.smartnoob.core.base.data.AppComponentsProvider
-import com.nooblol.smartnoob.feature.notifications.service.model.ServiceNotificationState
-========
 package com.buzbuz.smartautoclicker.feature.notifications.ui
 
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import com.buzbuz.smartautoclicker.core.base.data.AppComponentsProvider
 import com.buzbuz.smartautoclicker.feature.notifications.model.ServiceNotificationState
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/ui/ServiceNotificationBuilder.kt
 
 
 internal abstract class ServiceNotificationBuilder(
@@ -54,4 +45,3 @@ internal fun Context.newServiceNotificationBuilder(
         LegacyNotificationBuilder(this, channelId, initialState, appComponentsProvider)
     }
 }
-

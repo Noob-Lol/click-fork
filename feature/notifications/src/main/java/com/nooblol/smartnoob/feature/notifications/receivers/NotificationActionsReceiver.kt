@@ -14,27 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/receivers/NotificationActionsReceiver.kt
-package com.nooblol.smartnoob.feature.notifications.service.receivers
-========
-package com.buzbuz.smartautoclicker.feature.notifications.receivers
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/receivers/NotificationActionsReceiver.kt
+package com.nooblol.smartnoob.feature.notifications.receivers
 
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/receivers/NotificationActionsReceiver.kt
 import com.nooblol.smartnoob.core.base.SafeBroadcastReceiver
-import com.nooblol.smartnoob.feature.notifications.service.model.ServiceNotificationAction
-import com.nooblol.smartnoob.feature.notifications.service.model.getAllActionsBroadcastIntentFilter
-import com.nooblol.smartnoob.feature.notifications.service.model.toServiceNotificationAction
-========
-import com.buzbuz.smartautoclicker.core.base.SafeBroadcastReceiver
-import com.buzbuz.smartautoclicker.feature.notifications.model.ServiceNotificationAction
-import com.buzbuz.smartautoclicker.feature.notifications.model.getAllActionsBroadcastIntentFilter
-import com.buzbuz.smartautoclicker.feature.notifications.model.toServiceNotificationAction
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/receivers/NotificationActionsReceiver.kt
+import com.nooblol.smartnoob.feature.notifications.model.ServiceNotificationAction
+import com.nooblol.smartnoob.feature.notifications.model.getAllActionsBroadcastIntentFilter
+import com.nooblol.smartnoob.feature.notifications.model.toServiceNotificationAction
 
 
 internal class NotificationActionsReceiver(

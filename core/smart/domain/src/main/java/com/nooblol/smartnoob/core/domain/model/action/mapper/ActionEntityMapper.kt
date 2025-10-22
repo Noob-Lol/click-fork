@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.domain.model.action.mapper
+package com.nooblol.smartnoob.core.domain.model.action.mapper
 
-import com.buzbuz.smartautoclicker.core.database.entity.ActionEntity
-import com.buzbuz.smartautoclicker.core.database.entity.ActionType
-import com.buzbuz.smartautoclicker.core.database.entity.CounterOperationValueType
-import com.buzbuz.smartautoclicker.core.domain.model.CounterOperationValue
-import com.buzbuz.smartautoclicker.core.domain.model.action.Action
-import com.buzbuz.smartautoclicker.core.domain.model.action.ChangeCounter
-import com.buzbuz.smartautoclicker.core.domain.model.action.Click
-import com.buzbuz.smartautoclicker.core.domain.model.action.Intent
-import com.buzbuz.smartautoclicker.core.domain.model.action.Notification
-import com.buzbuz.smartautoclicker.core.domain.model.action.Pause
-import com.buzbuz.smartautoclicker.core.domain.model.action.SetText
-import com.buzbuz.smartautoclicker.core.domain.model.action.Swipe
-import com.buzbuz.smartautoclicker.core.domain.model.action.SystemAction
-import com.buzbuz.smartautoclicker.core.domain.model.action.ToggleEvent
+import com.nooblol.smartnoob.core.database.entity.ActionEntity
+import com.nooblol.smartnoob.core.database.entity.ActionType
+import com.nooblol.smartnoob.core.database.entity.CounterOperationValueType
+import com.nooblol.smartnoob.core.domain.model.CounterOperationValue
+import com.nooblol.smartnoob.core.domain.model.action.Action
+import com.nooblol.smartnoob.core.domain.model.action.ChangeCounter
+import com.nooblol.smartnoob.core.domain.model.action.Click
+import com.nooblol.smartnoob.core.domain.model.action.Intent
+import com.nooblol.smartnoob.core.domain.model.action.Notification
+import com.nooblol.smartnoob.core.domain.model.action.Pause
+import com.nooblol.smartnoob.core.domain.model.action.SetText
+import com.nooblol.smartnoob.core.domain.model.action.Swipe
+import com.nooblol.smartnoob.core.domain.model.action.SystemAction
+import com.nooblol.smartnoob.core.domain.model.action.ToggleEvent
 
 
 internal fun Action.toEntity(): ActionEntity {

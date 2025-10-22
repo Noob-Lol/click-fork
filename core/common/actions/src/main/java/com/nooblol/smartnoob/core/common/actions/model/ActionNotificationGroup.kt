@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.core.ui.utils
+package com.nooblol.smartnoob.core.common.actions.model
 
-import android.os.Build
-import androidx.annotation.DrawableRes
-import com.nooblol.smartnoob.core.ui.R
+import androidx.core.app.NotificationCompat
 
-@DrawableRes
-fun notificationIconResId(): Int =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) R.drawable.ic_notification_vector
-    else R.drawable.ic_action_notification
+data class ActionNotificationGroup(
+    val groupName: String,
+    val summaryId: Int,
+    val summaryBuilder: NotificationCompat.Builder,
+)

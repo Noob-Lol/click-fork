@@ -31,7 +31,9 @@ import com.nooblol.smartnoob.feature.smart.config.ui.action.intent.extras.ExtraC
 import com.nooblol.smartnoob.feature.smart.config.ui.action.intent.flags.FlagsSelectionViewModel
 import com.nooblol.smartnoob.feature.smart.config.ui.action.notification.NotificationViewModel
 import com.nooblol.smartnoob.feature.smart.config.ui.action.pause.PauseViewModel
+import com.nooblol.smartnoob.feature.smart.config.ui.action.settext.SetTextViewModel
 import com.nooblol.smartnoob.feature.smart.config.ui.action.swipe.SwipeViewModel
+import com.nooblol.smartnoob.feature.smart.config.ui.action.system.SystemActionViewModel
 import com.nooblol.smartnoob.feature.smart.config.ui.action.toggleevent.EventTogglesViewModel
 import com.nooblol.smartnoob.feature.smart.config.ui.action.toggleevent.ToggleEventViewModel
 import com.nooblol.smartnoob.feature.smart.config.ui.common.dialogs.counter.CounterNameSelectionViewModel
@@ -89,6 +91,8 @@ interface ScenarioConfigViewModelsEntryPoint {
     fun pauseViewModel(): PauseViewModel
     fun scenarioConfigViewModel(): ScenarioConfigViewModel
     fun scenarioDialogViewModel(): ScenarioDialogViewModel
+    fun setTextViewModel(): SetTextViewModel
+    fun systemActionViewModel(): SystemActionViewModel
     fun smartActionsBriefViewModel(): SmartActionsBriefViewModel
     fun swipeViewModel(): SwipeViewModel
     fun timerReachedConditionViewModel(): TimerReachedConditionViewModel

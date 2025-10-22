@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.buzbuz.smartautoclicker.core.domain.model.action
+package com.nooblol.smartnoob.core.domain.model.action
 
-import com.buzbuz.smartautoclicker.core.base.identifier.Identifier
+import com.nooblol.smartnoob.core.base.identifier.Identifier
 
 data class SetText(
     override val id: Identifier,

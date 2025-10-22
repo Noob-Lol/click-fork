@@ -14,13 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.core.ui.utils
+package com.nooblol.smartnoob.core.common.actions.utils
 
-import android.os.Build
-import androidx.annotation.DrawableRes
-import com.nooblol.smartnoob.core.ui.R
+import com.nooblol.smartnoob.core.common.actions.GESTURE_DURATION_MAX_VALUE
 
-@DrawableRes
-fun notificationIconResId(): Int =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) R.drawable.ic_notification_vector
-    else R.drawable.ic_action_notification
+internal const val MINIMUM_STROKE_DURATION_MS = 1L
+internal const val MAXIMUM_STROKE_DURATION_MS = GESTURE_DURATION_MAX_VALUE
+internal const val RANDOMIZATION_POSITION_MAX_OFFSET_PX = 5
+internal const val RANDOMIZATION_DURATION_MAX_OFFSET_MS = 5L

@@ -14,13 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.nooblol.smartnoob.core.ui.utils
+package com.nooblol.smartnoob.core.common.actions.utils
 
-import android.os.Build
-import androidx.annotation.DrawableRes
-import com.nooblol.smartnoob.core.ui.R
+import com.nooblol.smartnoob.core.base.extensions.nextLongInOffset
+import kotlin.random.Random
 
-@DrawableRes
-fun notificationIconResId(): Int =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) R.drawable.ic_notification_vector
-    else R.drawable.ic_action_notification
+fun Long.getPauseDurationMs(random: Random?): Long =
+    random?.nextLongInOffset(this, RANDOMIZATION_DURATION_MAX_OFFSET_MS) ?: this

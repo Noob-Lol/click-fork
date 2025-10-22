@@ -14,15 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/ServiceNotificationListener.kt
-package com.nooblol.smartnoob.feature.notifications.service
+package com.nooblol.smartnoob.feature.notifications
 
-import com.nooblol.smartnoob.feature.notifications.service.model.ServiceNotificationAction
-========
-package com.buzbuz.smartautoclicker.feature.notifications
-
-import com.buzbuz.smartautoclicker.feature.notifications.model.ServiceNotificationAction
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/ServiceNotificationListener.kt
+import com.nooblol.smartnoob.feature.notifications.model.ServiceNotificationAction
 
 interface ServiceNotificationListener {
     fun onPlay(): Unit?

@@ -14,11 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-<<<<<<<< HEAD:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/service/model/ServiceNotificationAction.kt
-package com.nooblol.smartnoob.feature.notifications.service.model
-========
-package com.buzbuz.smartautoclicker.feature.notifications.model
->>>>>>>> upstream/master:feature/notifications/src/main/java/com/nooblol/smartnoob/feature/notifications/model/ServiceNotificationAction.kt
+package com.nooblol.smartnoob.feature.notifications.model
 
 import android.app.PendingIntent
 import android.content.ComponentName

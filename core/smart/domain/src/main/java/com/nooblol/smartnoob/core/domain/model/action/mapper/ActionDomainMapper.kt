@@ -1,64 +1,28 @@
-<<<<<<<< HEAD:core/smart/domain/src/main/java/com/nooblol/smartnoob/core/domain/model/action/ActionMapper.kt
-/*
- * Copyright (C) 2024 Kevin Buzeau
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.nooblol.smartnoob.core.domain.model.action
+package com.nooblol.smartnoob.core.domain.model.action.mapper
 
 import android.content.ComponentName
 import android.graphics.Point
-
-import com.nooblol.smartnoob.core.database.entity.ActionEntity
+import com.nooblol.smartnoob.core.base.identifier.Identifier
 import com.nooblol.smartnoob.core.database.entity.ActionType
+import com.nooblol.smartnoob.core.database.entity.ChangeCounterOperationType
 import com.nooblol.smartnoob.core.database.entity.ClickPositionType
 import com.nooblol.smartnoob.core.database.entity.CompleteActionEntity
 import com.nooblol.smartnoob.core.database.entity.EventToggleType
-import com.nooblol.smartnoob.core.base.identifier.Identifier
-import com.nooblol.smartnoob.core.database.entity.ChangeCounterOperationType
-import com.nooblol.smartnoob.core.database.entity.CounterOperationValueType
 import com.nooblol.smartnoob.core.database.entity.NotificationMessageType
+import com.nooblol.smartnoob.core.database.entity.SystemActionType
 import com.nooblol.smartnoob.core.domain.model.CounterOperationValue
+import com.nooblol.smartnoob.core.domain.model.action.Action
+import com.nooblol.smartnoob.core.domain.model.action.ChangeCounter
+import com.nooblol.smartnoob.core.domain.model.action.Click
+import com.nooblol.smartnoob.core.domain.model.action.Intent
+import com.nooblol.smartnoob.core.domain.model.action.Notification
+import com.nooblol.smartnoob.core.domain.model.action.Pause
+import com.nooblol.smartnoob.core.domain.model.action.SetText
+import com.nooblol.smartnoob.core.domain.model.action.Swipe
+import com.nooblol.smartnoob.core.domain.model.action.SystemAction
+import com.nooblol.smartnoob.core.domain.model.action.ToggleEvent
 import com.nooblol.smartnoob.core.domain.model.action.intent.toDomainIntentExtra
 import com.nooblol.smartnoob.core.domain.model.action.toggleevent.toDomain
-========
-package com.buzbuz.smartautoclicker.core.domain.model.action.mapper
-
-import android.content.ComponentName
-import android.graphics.Point
-import com.buzbuz.smartautoclicker.core.base.identifier.Identifier
-import com.buzbuz.smartautoclicker.core.database.entity.ActionType
-import com.buzbuz.smartautoclicker.core.database.entity.ChangeCounterOperationType
-import com.buzbuz.smartautoclicker.core.database.entity.ClickPositionType
-import com.buzbuz.smartautoclicker.core.database.entity.CompleteActionEntity
-import com.buzbuz.smartautoclicker.core.database.entity.EventToggleType
-import com.buzbuz.smartautoclicker.core.database.entity.NotificationMessageType
-import com.buzbuz.smartautoclicker.core.database.entity.SystemActionType
-import com.buzbuz.smartautoclicker.core.domain.model.CounterOperationValue
-import com.buzbuz.smartautoclicker.core.domain.model.action.Action
-import com.buzbuz.smartautoclicker.core.domain.model.action.ChangeCounter
-import com.buzbuz.smartautoclicker.core.domain.model.action.Click
-import com.buzbuz.smartautoclicker.core.domain.model.action.Intent
-import com.buzbuz.smartautoclicker.core.domain.model.action.Notification
-import com.buzbuz.smartautoclicker.core.domain.model.action.Pause
-import com.buzbuz.smartautoclicker.core.domain.model.action.SetText
-import com.buzbuz.smartautoclicker.core.domain.model.action.Swipe
-import com.buzbuz.smartautoclicker.core.domain.model.action.SystemAction
-import com.buzbuz.smartautoclicker.core.domain.model.action.ToggleEvent
-import com.buzbuz.smartautoclicker.core.domain.model.action.intent.toDomainIntentExtra
-import com.buzbuz.smartautoclicker.core.domain.model.action.toggleevent.toDomain
->>>>>>>> upstream/master:core/smart/domain/src/main/java/com/nooblol/smartnoob/core/domain/model/action/mapper/ActionDomainMapper.kt
 
 /** Convert an Action entity into a Domain Action. */
 internal fun CompleteActionEntity.toDomain(cleanIds: Boolean = false): Action = when (action.type) {
