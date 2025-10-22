@@ -46,7 +46,7 @@ import com.nooblol.smartnoob.core.domain.model.action.ToggleEvent
 import com.nooblol.smartnoob.core.domain.model.action.toggleevent.EventToggle
 import com.nooblol.smartnoob.core.domain.model.action.intent.IntentExtra
 import com.nooblol.smartnoob.core.domain.model.action.intent.toEntity
-import com.nooblol.smartnoob.core.domain.model.action.toEntity
+import com.nooblol.smartnoob.core.domain.model.action.mapper.toEntity
 import com.nooblol.smartnoob.core.domain.model.action.toggleevent.toEntity
 import com.nooblol.smartnoob.core.domain.model.condition.Condition
 import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition

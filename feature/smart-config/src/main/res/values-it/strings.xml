@@ -236,8 +236,8 @@
     <string name="field_event_state_desc_disabled">Questo evento avrà bisogno di essere abilitato da un\'azione per essere interpretato quando esegui lo scenario</string>
 
     <string name="field_event_keep_detecting_title">Continuare a eseguire</string>
-    <string name="field_event_keep_detecting_desc_enabled">Quando questo evento viene attivato, l\'esecuzione continua a partire dall\'evento successivo dell\'elenco.</string>
-    <string name="field_event_keep_detecting_desc_disabled">Quando questo evento viene attivato, riavvia l\'esecuzione dal primo evento dell\'elenco.</string>
+    <string name="field_event_keep_detecting_desc_enabled">Quando questo evento viene attivato, l\'esecuzione continua dal prossimo evento nell\'elenco.</string>
+    <string name="field_event_keep_detecting_desc_disabled">Quando questo evento viene attivato, l\'esecuzione ricomincia dal primo evento nell\'elenco.</string>
 
     <!-- Dropdown field for selecting the conditions operator -->
     <string name="field_operator_title">Condizioni</string>
@@ -273,6 +273,9 @@
     <string name="dropdown_counter_operation_label">Operazione</string>
     <string name="field_detection_type_desc_area">Rilevamento su un\'area selezionata</string>
 
+    <string name="field_scenario_keep_screen_on_title">Mantenere lo schermo acceso</string>
+    <string name="field_scenario_keep_screen_on_enabled">Mantenere lo schermo del dispositivo acceso durante il rilevamento.</string>
+    <string name="field_scenario_keep_screen_on_disabled">Utilizzare il normale comportamento dello schermo del dispositivo.</string>
 
     <!-- Scenario Items ============================================================================================ -->
 
@@ -305,6 +308,40 @@
     <string name="button_notification_config">Aprire le impostazioni</string>
     <string name="message_notification_config">Il comportamento delle notifiche dipende dal sistema operativo del dispositivo.
         È possibile configurare la gestione delle notifiche nelle impostazioni del dispositivo.</string>
+
+
+    <!-- Scenario Items ============================================================================================ -->
+
+    <string name="item_system_action_title">Azione del sistema</string>
+    <string name="item_system_action_desc">Utilizza un\'azione del sistema Android (indietro, home o app recenti)</string>
+    <string name="item_system_action_details_text">%1$s</string>
+
+    <string name="item_set_text_title">Scrivi testo</string>
+    <string name="item_set_text_desc">Scrivi un testo nella vista attualmente selezionata</string>
+    <string name="item_set_text_details_text">%1$s</string>
+    <string name="item_set_text_details_text_empty">Clear text</string>
+
+
+    <!-- Dialogs Action System ===================================================================================== -->
+
+    <string name="dialog_title_system_action">Azione del sistema</string>
+
+    <string name="field_dropdown_system_action_type_title">Tipo</string>
+    <string name="field_dropdown_system_action_type_back">Indietro</string>
+    <string name="field_dropdown_system_action_type_home">Home</string>
+    <string name="field_dropdown_system_action_type_recent_apps">App recenti</string>
+
+
+    <!-- Dialogs Action WriteText ================================================================================== -->
+
+    <string name="dialog_title_set_text_action">Scrivi testo</string>
+
+    <string name="field_input_set_text_text_to_write_title">Texto</string>
+    <string name="field_set_text_validate_title">Convalida testo</string>
+    <string name="field_set_text_validate_desc_enabled">Premere Invio dopo aver scritto il testo</string>
+    <string name="field_set_text_validate_desc_disabled">Just write the text</string>
+    <string name="message_set_text_focus">Per scrivere il testo nel punto desiderato, è necessario prima selezionare il campo di testo cliccandoci sopra. Si prega di notare che, a seconda dell\'applicazione, potrebbe essere necessario attendere qualche istante dopo aver cliccato, altrimenti il testo verrà scritto troppo presto. Inoltre, questa funzione potrebbe non funzionare su applicazioni che non supportano la scrittura di testo standard, quindi è consigliabile testare sempre l\'azione prima di procedere!</string>
+
 
     <!--
       - Content description texts.

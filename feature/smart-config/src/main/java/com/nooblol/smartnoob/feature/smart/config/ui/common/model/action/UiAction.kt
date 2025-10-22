@@ -24,13 +24,15 @@ import com.nooblol.smartnoob.core.domain.model.action.Click
 import com.nooblol.smartnoob.core.domain.model.action.Intent
 import com.nooblol.smartnoob.core.domain.model.action.Notification
 import com.nooblol.smartnoob.core.domain.model.action.Pause
+import com.nooblol.smartnoob.core.domain.model.action.SetText
 import com.nooblol.smartnoob.core.domain.model.action.Swipe
+import com.nooblol.smartnoob.core.domain.model.action.SystemAction
 import com.nooblol.smartnoob.core.domain.model.action.ToggleEvent
 import com.nooblol.smartnoob.core.domain.model.event.Event
 
 
 data class UiAction(
-    @DrawableRes val icon: Int,
+    @param:DrawableRes val icon: Int,
     val name: String,
     val description: String,
     val action: Action,
@@ -55,7 +57,8 @@ internal fun Action.getIconRes(): Int = when (this) {
     is ToggleEvent -> getToggleEventIconRes()
     is ChangeCounter -> getChangeCounterIconRes()
     is Notification -> getNotificationIconRes()
-    else -> throw IllegalArgumentException("Not yet supported")
+    is SystemAction -> getSystemActionIconRes()
+    is SetText -> getSetTextIconRes()
 }
 
 internal fun Action.getActionDescription(context: Context, parent: Event, inError: Boolean): String = when (this) {
@@ -66,5 +69,6 @@ internal fun Action.getActionDescription(context: Context, parent: Event, inErro
     is ToggleEvent -> getDescription(context, inError)
     is ChangeCounter -> getDescription(context, inError)
     is Notification -> getDescription(context, inError)
-    else -> throw IllegalArgumentException("Not yet supported")
+    is SystemAction -> getDescription(context, inError)
+    is SetText -> getDescription(context, inError)
 }

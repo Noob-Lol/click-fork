@@ -39,7 +39,7 @@ import javax.inject.Inject
 import kotlin.math.min
 
 internal class BillingServiceConnection @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     @Dispatcher(Main) dispatcherMain: CoroutineDispatcher,
 ) {
 
@@ -78,7 +78,7 @@ internal class BillingServiceConnection @Inject constructor(
         try {
             clientProxy?.client?.endConnection()
         } catch (ex: Exception) {
-            Log.e(TAG, "Can't end connection with current client.")
+            Log.e(TAG, "Can't end connection with current client.", ex)
         }
 
         clientProxy = BillingClientProxy(context, productId, clientListener)

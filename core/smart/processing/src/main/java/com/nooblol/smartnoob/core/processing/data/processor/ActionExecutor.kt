@@ -16,22 +16,25 @@
  */
 package com.nooblol.smartnoob.core.processing.data.processor
 
+import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.GestureDescription
 import android.content.Intent as AndroidIntent
 import android.graphics.Path
 import android.graphics.Point
 import android.util.Log
 
-import com.nooblol.smartnoob.core.base.extensions.buildSingleStroke
-import com.nooblol.smartnoob.core.base.extensions.nextIntInOffset
-import com.nooblol.smartnoob.core.base.extensions.nextLongInOffset
-import com.nooblol.smartnoob.core.base.extensions.safeLineTo
-import com.nooblol.smartnoob.core.base.extensions.safeMoveTo
 import com.nooblol.smartnoob.core.base.workarounds.UnblockGestureScheduler
 import com.nooblol.smartnoob.core.base.workarounds.buildUnblockGesture
+import com.nooblol.smartnoob.core.common.actions.AndroidActionExecutor
+import com.nooblol.smartnoob.core.common.actions.gesture.buildSingleStroke
+import com.nooblol.smartnoob.core.common.actions.gesture.line
+import com.nooblol.smartnoob.core.common.actions.gesture.moveTo
+import com.nooblol.smartnoob.core.common.actions.model.ActionNotificationRequest
+import com.nooblol.smartnoob.core.common.actions.text.findCounterReferences
+import com.nooblol.smartnoob.core.common.actions.text.replaceCounterReferences
+import com.nooblol.smartnoob.core.common.actions.utils.getPauseDurationMs
 import com.nooblol.smartnoob.core.domain.model.CounterOperationValue
 import com.nooblol.smartnoob.core.domain.model.OR
-import com.nooblol.smartnoob.core.domain.model.SmartActionExecutor
 import com.nooblol.smartnoob.core.domain.model.action.Intent
 import com.nooblol.smartnoob.core.domain.model.action.Click
 import com.nooblol.smartnoob.core.domain.model.action.Pause
@@ -39,11 +42,12 @@ import com.nooblol.smartnoob.core.domain.model.action.Swipe
 import com.nooblol.smartnoob.core.domain.model.action.ToggleEvent
 import com.nooblol.smartnoob.core.domain.model.action.ChangeCounter
 import com.nooblol.smartnoob.core.domain.model.action.Notification
+import com.nooblol.smartnoob.core.domain.model.action.SetText
 import com.nooblol.smartnoob.core.domain.model.action.intent.putDomainExtra
 import com.nooblol.smartnoob.core.domain.model.event.Event
 import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
 import com.nooblol.smartnoob.core.processing.data.processor.state.ProcessingState
-import com.nooblol.smartnoob.core.domain.model.NotificationRequest
+import com.nooblol.smartnoob.core.domain.model.action.SystemAction
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -58,13 +62,13 @@ import kotlin.random.Random
  * @param randomize true to randomize the actions values a bit (positions, timers...), false to be precise.
  */
 internal class ActionExecutor(
-    private val androidExecutor: SmartActionExecutor,
+    private val androidExecutor: AndroidActionExecutor,
     private val processingState: ProcessingState,
     randomize: Boolean,
     unblockWorkaroundEnabled: Boolean = false,
 ) {
 
-    init { androidExecutor.clearState() }
+    init { androidExecutor.resetState() }
 
     private val random: Random? =
         if (randomize) Random(System.currentTimeMillis()) else null
@@ -78,7 +82,7 @@ internal class ActionExecutor(
         if (unblockGestureScheduler?.shouldTrigger() == true) {
             withContext(Dispatchers.Main) {
                 Log.i(TAG, "Injecting unblock gesture")
-                androidExecutor.executeGesture(
+                androidExecutor.dispatchGesture(
                     GestureDescription.Builder().buildUnblockGesture()
                 )
             }
@@ -95,6 +99,8 @@ internal class ActionExecutor(
                 is ToggleEvent -> executeToggleEvent(action)
                 is ChangeCounter -> executeChangeCounter(action)
                 is Notification -> executeNotification(event, action)
+                is SystemAction -> executeSystemAction(action)
+                is SetText -> executeSetText(action)
             }
         }
     }
@@ -103,7 +109,7 @@ internal class ActionExecutor(
         val clickPath = when (click.positionType) {
             Click.PositionType.USER_SELECTED -> {
                 click.position?.let { position ->
-                    Path().apply { moveTo(position) }
+                    Path().apply { moveTo(position, random) }
                 }
             }
 
@@ -112,11 +118,13 @@ internal class ActionExecutor(
         } ?: return
 
         val clickGesture = GestureDescription.Builder().buildSingleStroke(
-            clickPath, random.nextLongInOffsetIfNeeded(click.pressDuration!!, RANDOMIZATION_DURATION_MAX_OFFSET_MS)
+            path = clickPath,
+            durationMs = click.pressDuration!!,
+            random = random,
         )
 
         withContext(Dispatchers.Main) {
-            androidExecutor.executeGesture(clickGesture)
+            androidExecutor.dispatchGesture(clickGesture)
         }
     }
 
@@ -136,10 +144,11 @@ internal class ActionExecutor(
 
         return Path().apply {
             moveTo(
-                Point(
+                position = Point(
                     result.position.x + (click.clickOffset?.x ?: 0),
                     result.position.y + (click.clickOffset?.y ?: 0),
-                )
+                ),
+                random = random,
             )
         }
     }
@@ -152,12 +161,13 @@ internal class ActionExecutor(
         val swipeGesture = GestureDescription.Builder().buildSingleStroke(
             path =
                 if (swipe.from == null || swipe.to == null) return
-                else Path().apply { line(swipe.from, swipe.to) },
-            durationMs = random.nextLongInOffsetIfNeeded(swipe.swipeDuration!!, RANDOMIZATION_DURATION_MAX_OFFSET_MS),
+                else Path().apply { line(swipe.from, swipe.to, random) },
+            durationMs = swipe.swipeDuration!!,
+            random = random,
         )
 
         withContext(Dispatchers.Main) {
-            androidExecutor.executeGesture(swipeGesture)
+            androidExecutor.dispatchGesture(swipeGesture)
         }
     }
 
@@ -166,7 +176,7 @@ internal class ActionExecutor(
      * @param pause the pause to be executed.
      */
     private suspend fun executePause(pause: Pause) {
-        delay(random.nextLongInOffsetIfNeeded(pause.pauseDuration!!, RANDOMIZATION_DURATION_MAX_OFFSET_MS))
+        delay(pause.pauseDuration!!.getPauseDurationMs(random))
     }
 
     /**
@@ -187,12 +197,12 @@ internal class ActionExecutor(
 
         if (intent.isBroadcast) {
             withContext(Dispatchers.Main) {
-                androidExecutor.executeSendBroadcast(androidIntent)
+                androidExecutor.sendBroadcast(androidIntent)
             }
             delay(INTENT_BROADCAST_DELAY)
         } else {
             withContext(Dispatchers.Main) {
-                androidExecutor.executeStartActivity(androidIntent)
+                androidExecutor.startActivity(androidIntent)
             }
             delay(INTENT_START_ACTIVITY_DELAY)
         }
@@ -254,8 +264,8 @@ internal class ActionExecutor(
             }
         }
 
-        androidExecutor.executeNotification(
-            NotificationRequest(
+        androidExecutor.postNotification(
+            ActionNotificationRequest(
                 actionId = notification.id.databaseId,
                 title = notification.name ?: "Klick'r",
                 message = message,
@@ -266,32 +276,34 @@ internal class ActionExecutor(
         )
     }
 
+    private suspend fun executeSystemAction(action: SystemAction) {
+        val globalAction = when (action.type) {
+            SystemAction.Type.BACK -> AccessibilityService.GLOBAL_ACTION_BACK
+            SystemAction.Type.HOME -> AccessibilityService.GLOBAL_ACTION_HOME
+            SystemAction.Type.RECENT_APPS -> AccessibilityService.GLOBAL_ACTION_RECENTS
+        }
 
-    private fun Path.moveTo(position: Point) {
-        if (random == null) safeMoveTo(position.x, position.y)
-        else safeMoveTo(
-            random.nextIntInOffset(position.x, RANDOMIZATION_POSITION_MAX_OFFSET_PX),
-            random.nextIntInOffset(position.y, RANDOMIZATION_POSITION_MAX_OFFSET_PX),
-        )
+        withContext(Dispatchers.Main) {
+            androidExecutor.performGlobalAction(globalAction)
+        }
     }
 
-    private fun Path.line(from: Point?, to: Point?) {
-        if (from == null || to == null) return
+    private suspend fun executeSetText(action: SetText) {
+        val counters = buildMap {
+            action.text.findCounterReferences().forEach { counterName ->
+                processingState.getCounterValue(counterName)?.let { counterValue ->
+                    put(counterName, counterValue)
+                }
+            }
+        }
 
-        moveTo(from)
-        lineTo(to)
+        withContext(Dispatchers.Main) {
+            androidExecutor.writeTextOnFocusedItem(
+                text = action.text.replaceCounterReferences(counters),
+                validate = action.validateInput,
+            )
+        }
     }
-
-    private fun Path.lineTo(position: Point) {
-        if (random == null) safeLineTo(position.x, position.y)
-        else safeLineTo(
-            random.nextIntInOffset(position.x, RANDOMIZATION_POSITION_MAX_OFFSET_PX),
-            random.nextIntInOffset(position.y, RANDOMIZATION_POSITION_MAX_OFFSET_PX),
-        )
-    }
-
-    private fun Random?.nextLongInOffsetIfNeeded(value: Long, offset: Long): Long =
-        this?.nextLongInOffset(value, offset) ?: value
 }
 
 /** Tag for logs. */
@@ -300,6 +312,3 @@ private const val TAG = "ActionExecutor"
 private const val INTENT_START_ACTIVITY_DELAY = 1000L
 /** Waiting delay after a broadcast to avoid overflowing the system. */
 private const val INTENT_BROADCAST_DELAY = 100L
-
-private const val RANDOMIZATION_POSITION_MAX_OFFSET_PX = 5
-private const val RANDOMIZATION_DURATION_MAX_OFFSET_MS = 5L

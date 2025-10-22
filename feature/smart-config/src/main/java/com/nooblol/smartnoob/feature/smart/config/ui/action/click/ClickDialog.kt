@@ -29,7 +29,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 
-import com.nooblol.smartnoob.core.base.GESTURE_DURATION_MAX_VALUE
+import com.nooblol.smartnoob.core.common.actions.GESTURE_DURATION_MAX_VALUE
 import com.nooblol.smartnoob.core.domain.model.action.Action
 import com.nooblol.smartnoob.core.common.overlays.base.viewModels
 import com.nooblol.smartnoob.core.common.overlays.dialog.OverlayDialog

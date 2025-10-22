@@ -30,7 +30,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 
-import com.nooblol.smartnoob.core.base.GESTURE_DURATION_MAX_VALUE
+import com.nooblol.smartnoob.core.common.actions.GESTURE_DURATION_MAX_VALUE
 import com.nooblol.smartnoob.core.ui.bindings.dialogs.setButtonEnabledState
 import com.nooblol.smartnoob.core.ui.bindings.fields.setLabel
 import com.nooblol.smartnoob.core.ui.bindings.fields.setOnTextChangedListener

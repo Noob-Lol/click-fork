@@ -24,7 +24,6 @@ import android.view.KeyEvent
 
 import com.nooblol.smartnoob.core.base.data.AppComponentsProvider
 import com.nooblol.smartnoob.core.common.overlays.manager.OverlayManager
-import com.nooblol.smartnoob.core.domain.model.SmartActionExecutor
 import com.nooblol.smartnoob.core.domain.model.scenario.Scenario
 import com.nooblol.smartnoob.core.dumb.domain.model.DumbScenario
 import com.nooblol.smartnoob.core.dumb.engine.DumbEngine
@@ -33,8 +32,8 @@ import com.nooblol.smartnoob.core.processing.domain.DetectionState
 import com.nooblol.smartnoob.core.settings.SettingsRepository
 import com.nooblol.smartnoob.feature.smart.config.ui.MainMenu
 import com.nooblol.smartnoob.feature.dumb.config.ui.DumbMainMenu
-import com.nooblol.smartnoob.feature.notifications.service.ServiceNotificationController
-import com.nooblol.smartnoob.feature.notifications.service.ServiceNotificationListener
+import com.nooblol.smartnoob.feature.notifications.ServiceNotificationController
+import com.nooblol.smartnoob.feature.notifications.ServiceNotificationListener
 import com.nooblol.smartnoob.feature.revenue.IRevenueRepository
 import com.nooblol.smartnoob.feature.revenue.UserBillingState
 import com.nooblol.smartnoob.feature.smart.debugging.domain.DebuggingRepository
@@ -59,7 +58,6 @@ class LocalService(
     private val dumbEngine: DumbEngine,
     private val revenueRepository: IRevenueRepository,
     private val debugRepository: DebuggingRepository,
-    private val androidExecutor: SmartActionExecutor,
     private val onStart: (scenarioId: Long, isSmart: Boolean, foregroundNotification: Notification?) -> Unit,
     private val onStop: () -> Unit,
 ) : ILocalService {
@@ -117,7 +115,7 @@ class LocalService(
         startJob = serviceScope.launch {
             delay(500)
 
-            dumbEngine.init(androidExecutor, dumbScenario)
+            dumbEngine.init(dumbScenario)
 
             overlayManager.navigateTo(
                 context = context,
@@ -160,7 +158,6 @@ class LocalService(
 
             detectionRepository.apply {
                 setScenarioId(scenario.id, markAsUsed = true)
-                setExecutor(androidExecutor)
                 setProjectionErrorHandler { mainMenu.onMediaProjectionLost() }
             }
 

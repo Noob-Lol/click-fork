@@ -17,14 +17,12 @@
 package com.nooblol.smartnoob
 
 import android.accessibilityservice.AccessibilityService
-import android.accessibilityservice.GestureDescription
 import android.app.Notification
 import android.content.Intent
 import android.util.Log
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 
-import com.nooblol.smartnoob.actions.ServiceActionExecutor
 import com.nooblol.smartnoob.core.base.Dumpable
 import com.nooblol.smartnoob.core.base.data.AppComponentsProvider
 import com.nooblol.smartnoob.core.base.extensions.requestFilterKeyEvents
@@ -34,15 +32,13 @@ import com.nooblol.smartnoob.core.common.overlays.manager.OverlayManager
 import com.nooblol.smartnoob.core.common.quality.domain.QualityMetricsMonitor
 import com.nooblol.smartnoob.core.common.quality.domain.QualityRepository
 import com.nooblol.smartnoob.core.display.config.DisplayConfigManager
-import com.nooblol.smartnoob.core.domain.model.SmartActionExecutor
 import com.nooblol.smartnoob.core.domain.model.scenario.Scenario
 import com.nooblol.smartnoob.core.dumb.domain.model.DumbScenario
 import com.nooblol.smartnoob.core.dumb.engine.DumbEngine
 import com.nooblol.smartnoob.core.processing.domain.DetectionRepository
-import com.nooblol.smartnoob.core.domain.model.NotificationRequest
 import com.nooblol.smartnoob.core.settings.SettingsRepository
-import com.nooblol.smartnoob.feature.notifications.common.NotificationIds
-import com.nooblol.smartnoob.feature.notifications.user.UserNotificationsController
+import com.nooblol.smartnoob.core.base.notifications.NotificationIds
+import com.nooblol.smartnoob.core.common.actions.AndroidActionExecutor
 import com.nooblol.smartnoob.feature.qstile.domain.QSTileActionHandler
 import com.nooblol.smartnoob.feature.qstile.domain.QSTileRepository
 import com.nooblol.smartnoob.feature.revenue.IRevenueRepository
@@ -71,7 +67,7 @@ import javax.inject.Inject
  * been detected.
  */
 @AndroidEntryPoint
-class NoobService : AccessibilityService(), SmartActionExecutor {
+class NoobService : AccessibilityService() {
 
     private val localServiceProvider = LocalServiceProvider
 
@@ -89,17 +85,15 @@ class NoobService : AccessibilityService(), SmartActionExecutor {
     @Inject lateinit var revenueRepository: IRevenueRepository
     @Inject lateinit var tileRepository: QSTileRepository
     @Inject lateinit var debugRepository: DebuggingRepository
-    @Inject lateinit var userNotificationsController: UserNotificationsController
     @Inject lateinit var reviewRepository: ReviewRepository
     @Inject lateinit var appComponentsProvider: AppComponentsProvider
-
-    private var serviceActionExecutor: ServiceActionExecutor? = null
+    @Inject lateinit var actionExecutor: AndroidActionExecutor
 
     override fun onServiceConnected() {
         super.onServiceConnected()
 
         qualityMetricsMonitor.onServiceConnected()
-        serviceActionExecutor = ServiceActionExecutor(this)
+        actionExecutor.init(this)
 
         tileRepository.setTileActionHandler(
             object : QSTileActionHandler {
@@ -126,7 +120,6 @@ class NoobService : AccessibilityService(), SmartActionExecutor {
                 debugRepository = debugRepository,
                 revenueRepository = revenueRepository,
                 settingsRepository = settingsRepository,
-                androidExecutor = this,
                 onStart = ::onLocalServiceStarted,
                 onStop = ::onLocalServiceStopped,
             )
@@ -141,14 +134,13 @@ class NoobService : AccessibilityService(), SmartActionExecutor {
         localServiceProvider.setLocalService(null)
 
         qualityMetricsMonitor.onServiceUnbind()
-        serviceActionExecutor = null
+        actionExecutor.clear()
         return super.onUnbind(intent)
     }
 
     private fun onLocalServiceStarted(scenarioId: Long, isSmart: Boolean, serviceNotification: Notification?) {
         reviewRepository.onUserSessionStarted()
         qualityMetricsMonitor.onServiceForegroundStart()
-        serviceActionExecutor?.reset()
 
         serviceNotification?.let {
             startForegroundMediaProjectionServiceCompat(NotificationIds.FOREGROUND_SERVICE_NOTIFICATION_ID, it)
@@ -162,6 +154,7 @@ class NoobService : AccessibilityService(), SmartActionExecutor {
     private fun onLocalServiceStopped() {
         qualityMetricsMonitor.onServiceForegroundEnd()
         reviewRepository.onUserSessionStopped()
+        actionExecutor.resetState()
 
         if (reviewRepository.isUserCandidateForReview()) {
             Log.i(TAG, "User is candidate for review, ")
@@ -182,26 +175,6 @@ class NoobService : AccessibilityService(), SmartActionExecutor {
     override fun onKeyEvent(event: KeyEvent?): Boolean =
         localService?.onKeyEvent(event) ?: super.onKeyEvent(event)
 
-    override suspend fun executeGesture(gestureDescription: GestureDescription) {
-        serviceActionExecutor?.safeDispatchGesture(gestureDescription)
-    }
-
-    override fun executeStartActivity(intent: Intent) {
-        serviceActionExecutor?.safeStartActivity(intent)
-    }
-
-    override fun executeSendBroadcast(intent: Intent) {
-        serviceActionExecutor?.safeSendBroadcast(intent)
-    }
-
-    override fun executeNotification(notification: NotificationRequest) {
-        userNotificationsController.showNotification(this, notification)
-    }
-
-    override fun clearState() {
-        userNotificationsController.clearAll()
-    }
-
     /**
      * Dump the state of the service via adb.
      * adb shell "dumpsys activity service com.nooblol.smartnoob"
@@ -219,7 +192,7 @@ class NoobService : AccessibilityService(), SmartActionExecutor {
         overlayManager.dump(writer)
         detectionRepository.dump(writer)
         dumbEngine.dump(writer)
-        serviceActionExecutor?.dump(writer)
+        actionExecutor.dump(writer)
         qualityRepository.dump(writer)
 
         revenueRepository.dump(writer)

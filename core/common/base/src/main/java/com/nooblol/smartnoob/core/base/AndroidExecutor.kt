@@ -23,7 +23,8 @@ interface AndroidExecutor {
 
     /** Execute the provided gesture. */
     suspend fun executeGesture(gestureDescription: GestureDescription)
+
+    /** Execute the provided accessibility global action. */
+    fun executeGlobalAction(globalAction: Int)
 }
 
-/** The maximum supported duration for a gesture. This limitation comes from Android GestureStroke API.  */
-const val GESTURE_DURATION_MAX_VALUE = 59_999L

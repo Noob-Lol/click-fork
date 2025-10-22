@@ -41,8 +41,6 @@ import com.nooblol.smartnoob.feature.tutorial.R
 import com.nooblol.smartnoob.feature.tutorial.databinding.FragmentTutorialGameBinding
 import com.nooblol.smartnoob.feature.tutorial.domain.model.game.TutorialGame
 import com.nooblol.smartnoob.feature.tutorial.domain.model.game.TutorialGameTargetType
-import com.nooblol.smartnoob.feature.tutorial.ui.game.bindings.setHeaderInfo
-import com.nooblol.smartnoob.feature.tutorial.ui.game.bindings.setScore
 import com.nooblol.smartnoob.feature.tutorial.ui.overlay.TutorialFullscreenOverlay
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -110,7 +108,10 @@ class TutorialGameFragment : Fragment() {
 
     private fun onGameUpdated(tutorialGame: TutorialGame?) {
         tutorialGame ?: return
-        viewBinding.header.setHeaderInfo(tutorialGame.instructionsResId, tutorialGame.highScore)
+        viewBinding.apply {
+            textInstructions.setText(tutorialGame.instructionsResId)
+            textHighScore.text = root.context.getString(R.string.message_high_score, tutorialGame.highScore)
+        }
     }
 
     private fun onGameStartedUpdated(isStarted: Boolean) {
@@ -128,7 +129,7 @@ class TutorialGameFragment : Fragment() {
     }
 
     private fun onScoreUpdated(score: Int) {
-        viewBinding.header.setScore(score)
+        viewBinding.textScore.text = requireContext().getString(R.string.message_score, score)
     }
 
     private fun onPlayRetryButtonStateUpdated(isVisible: Boolean) {

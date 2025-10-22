@@ -75,8 +75,8 @@ import javax.inject.Inject
 
 class SmartActionsBriefViewModel @Inject constructor(
     @ApplicationContext context: Context,
-    @Dispatcher(Main) private val mainDispatcher: CoroutineDispatcher,
-    private val repository: IRepository,
+    @param:Dispatcher(Main) private val mainDispatcher: CoroutineDispatcher,
+    repository: IRepository,
     private val bitmapRepository: BitmapRepository,
     private val editionRepository: EditionRepository,
     private val detectionRepository: DetectionRepository,
@@ -126,6 +126,8 @@ class SmartActionsBriefViewModel @Inject constructor(
                 add(ActionTypeChoice.Click)
                 add(ActionTypeChoice.Swipe)
                 add(ActionTypeChoice.Pause)
+                add(ActionTypeChoice.SetText)
+                add(ActionTypeChoice.System)
                 add(ActionTypeChoice.ChangeCounter)
                 add(ActionTypeChoice.ToggleEvent)
                 add(ActionTypeChoice.Notification)
@@ -172,6 +174,8 @@ class SmartActionsBriefViewModel @Inject constructor(
         ActionTypeChoice.ToggleEvent -> editionRepository.editedItemsBuilder.createNewToggleEvent(context)
         ActionTypeChoice.ChangeCounter -> editionRepository.editedItemsBuilder.createNewChangeCounter(context)
         ActionTypeChoice.Notification -> editionRepository.editedItemsBuilder.createNewNotification(context)
+        ActionTypeChoice.System -> editionRepository.editedItemsBuilder.createNewSystemAction(context)
+        ActionTypeChoice.SetText -> editionRepository.editedItemsBuilder.createNewSetText(context)
         ActionTypeChoice.Copy -> throw IllegalArgumentException("Unsupported action type for creation $choice")
     }
 

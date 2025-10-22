@@ -23,7 +23,9 @@ import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.getClic
 import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.getIntentIconRes
 import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.getNotificationIconRes
 import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.getPauseIconRes
+import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.getSetTextIconRes
 import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.getSwipeIconRes
+import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.getSystemActionIconRes
 import com.nooblol.smartnoob.feature.smart.config.ui.common.model.action.getToggleEventIconRes
 
 
@@ -87,5 +89,19 @@ sealed class ActionTypeChoice(
         R.string.item_notification_title,
         R.string.item_notification_desc,
         getNotificationIconRes(),
+    )
+
+    /** System Action choice (back, home...). */
+    data object System : ActionTypeChoice(
+        R.string.item_system_action_title,
+        R.string.item_system_action_desc,
+        getSystemActionIconRes(),
+    )
+
+    /** System Action choice (back, home...). */
+    data object SetText : ActionTypeChoice(
+        R.string.item_set_text_title,
+        R.string.item_set_text_desc,
+        getSetTextIconRes(),
     )
 }

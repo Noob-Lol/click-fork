@@ -25,7 +25,7 @@ import com.nooblol.smartnoob.core.bitmaps.BitmapRepository
 import com.nooblol.smartnoob.core.database.entity.CompleteScenario
 import com.nooblol.smartnoob.core.domain.data.ScenarioDataSource
 import com.nooblol.smartnoob.core.domain.model.action.Action
-import com.nooblol.smartnoob.core.domain.model.action.toDomain
+import com.nooblol.smartnoob.core.domain.model.action.mapper.toDomain
 import com.nooblol.smartnoob.core.domain.model.condition.Condition
 import com.nooblol.smartnoob.core.domain.model.condition.toDomain
 import com.nooblol.smartnoob.core.domain.model.event.Event

@@ -35,7 +35,9 @@ import com.nooblol.smartnoob.core.domain.model.action.Click.PositionType
 import com.nooblol.smartnoob.core.domain.model.action.Intent
 import com.nooblol.smartnoob.core.domain.model.action.Notification
 import com.nooblol.smartnoob.core.domain.model.action.Pause
+import com.nooblol.smartnoob.core.domain.model.action.SetText
 import com.nooblol.smartnoob.core.domain.model.action.Swipe
+import com.nooblol.smartnoob.core.domain.model.action.SystemAction
 import com.nooblol.smartnoob.core.domain.model.action.ToggleEvent
 import com.nooblol.smartnoob.core.domain.model.action.toggleevent.EventToggle
 import com.nooblol.smartnoob.core.domain.model.action.intent.IntentExtra
@@ -310,6 +312,25 @@ class EditedItemsBuilder internal constructor(
             priority = 0,
         )
 
+    fun createNewSystemAction(context: Context): SystemAction =
+        SystemAction(
+            id = actionsIdCreator.generateNewIdentifier(),
+            eventId = getEditedEventIdOrThrow(),
+            name = defaultValues.systemActionName(context),
+            type = SystemAction.Type.BACK,
+            priority = 0,
+        )
+
+    fun createNewSetText(context: Context): SetText =
+        SetText(
+            id = actionsIdCreator.generateNewIdentifier(),
+            eventId = getEditedEventIdOrThrow(),
+            name = defaultValues.setTextName(context),
+            text = "",
+            validateInput = false,
+            priority = 0,
+        )
+
     fun createNewActionFrom(from: Action, eventId: Identifier = getEditedEventIdOrThrow()): Action = when (from) {
         is Click -> createNewClickFrom(from, eventId)
         is Swipe -> createNewSwipeFrom(from, eventId)
@@ -318,6 +339,8 @@ class EditedItemsBuilder internal constructor(
         is ToggleEvent -> createNewToggleEventFrom(from, eventId)
         is ChangeCounter -> createNewChangeCounterFrom(from, eventId)
         is Notification -> createNewNotificationFrom(from, eventId)
+        is SystemAction -> createNewSystemActionFrom(from, eventId)
+        is SetText -> createNewSetTextFrom(from, eventId)
     }
 
     private fun createNewClickFrom(from: Click, eventId: Identifier): Click {
@@ -413,6 +436,29 @@ class EditedItemsBuilder internal constructor(
             name = "" + from.name,
             messageText = "" + from.messageText,
             messageCounterName = "" + from.messageCounterName,
+        )
+    }
+
+    private fun createNewSystemActionFrom(from: SystemAction, eventId: Identifier): SystemAction {
+        val actionId = actionsIdCreator.generateNewIdentifier()
+
+        return from.copy(
+            id = actionId,
+            eventId = eventId,
+            name = "" + from.name,
+            type = from.type,
+        )
+    }
+
+    private fun createNewSetTextFrom(from: SetText, eventId: Identifier): SetText {
+        val actionId = actionsIdCreator.generateNewIdentifier()
+
+        return from.copy(
+            id = actionId,
+            eventId = eventId,
+            name = "" + from.name,
+            text = from.text,
+            validateInput = from.validateInput,
         )
     }
 

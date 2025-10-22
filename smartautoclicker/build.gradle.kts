@@ -15,6 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.buzbuz.gradle.convention.model.KlickrBuildType
+import com.buzbuz.gradle.convention.model.KlickrFlavour
+import com.buzbuz.gradle.convention.extensions.isBuildForVariant
 import com.buzbuz.gradle.obfuscation.getExtraActualApplicationId
 
 plugins {
@@ -37,8 +40,8 @@ obfuscationConfig {
     setup(
         applicationId = "com.nooblol.smartnoob",
         appNameResId = "@string/app_name",
-        shouldRandomize = buildParameters["randomizeAppId"].asBoolean() &&
-                buildParameters.isBuildForVariant("fDroid"),
+        shouldRandomize = buildParameters.randomizeAppId.typedValue &&
+                project.isBuildForVariant(KlickrFlavour.F_DROID),
     )
 }
 
@@ -53,11 +56,11 @@ android {
     defaultConfig {
         applicationId = getExtraActualApplicationId()
 
-        versionCode = 78
-        versionName = "3.3.10"
+        versionCode = 80
+        versionName = "3.4.0"
     }
 
-    if (buildParameters.isBuildForVariant("fDroidDebug")) {
+    if (project.isBuildForVariant(KlickrFlavour.F_DROID, KlickrBuildType.DEBUG)) {
         buildTypes {
             debug {
                 applicationIdSuffix = ".debug"
@@ -66,11 +69,11 @@ android {
     }
 
     signingConfigs {
-        create("release") {
+        create(KlickrBuildType.RELEASE.buildTypeName) {
             storeFile = file("./smartautoclicker.jks")
-            storePassword = buildParameters["signingStorePassword"].asString()
-            keyAlias = buildParameters["signingKeyAlias"].asString()
-            keyPassword = buildParameters["signingKeyPassword"].asString()
+            storePassword = buildParameters.signingStorePassword.typedValue
+            keyAlias = buildParameters.signingKeyAlias.typedValue
+            keyPassword = buildParameters.signingKeyPassword.typedValue
         }
     }
 }
@@ -79,7 +82,7 @@ android {
 apply { plugin(libs.plugins.buzbuz.androidSigning.get().pluginId) }
 
 // Only apply gms/firebase plugins if we are building for the play store
-if (buildParameters.isBuildForVariant("playStoreRelease")) {
+if (project.isBuildForVariant(KlickrFlavour.PLAY_STORE, KlickrBuildType.RELEASE)) {
     apply { plugin(libs.plugins.buzbuz.crashlytics.get().pluginId) }
 }
 
@@ -102,6 +105,7 @@ dependencies {
     implementation(libs.airbnb.lottie)
     implementation(libs.google.material)
 
+    implementation(project(":core:common:actions"))
     implementation(project(":core:common:base"))
     implementation(project(":core:common:bitmaps"))
     implementation(project(":core:common:display"))

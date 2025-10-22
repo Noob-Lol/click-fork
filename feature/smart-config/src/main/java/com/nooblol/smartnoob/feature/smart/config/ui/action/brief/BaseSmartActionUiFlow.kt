@@ -19,14 +19,15 @@ package com.nooblol.smartnoob.feature.smart.config.ui.action.brief
 import android.content.Context
 import com.nooblol.smartnoob.core.common.overlays.base.BaseOverlay
 import com.nooblol.smartnoob.core.common.permissions.model.PermissionPostNotification
-import com.nooblol.smartnoob.feature.smart.config.ui.common.starters.RequestNotificationPermissionActivity
 import com.nooblol.smartnoob.core.domain.model.action.Action
 import com.nooblol.smartnoob.core.domain.model.action.ChangeCounter
 import com.nooblol.smartnoob.core.domain.model.action.Click
 import com.nooblol.smartnoob.core.domain.model.action.Intent
 import com.nooblol.smartnoob.core.domain.model.action.Notification
 import com.nooblol.smartnoob.core.domain.model.action.Pause
+import com.nooblol.smartnoob.core.domain.model.action.SetText
 import com.nooblol.smartnoob.core.domain.model.action.Swipe
+import com.nooblol.smartnoob.core.domain.model.action.SystemAction
 import com.nooblol.smartnoob.core.domain.model.action.ToggleEvent
 import com.nooblol.smartnoob.feature.smart.config.ui.action.OnActionConfigCompleteListener
 import com.nooblol.smartnoob.feature.smart.config.ui.action.changecounter.ChangeCounterDialog
@@ -37,7 +38,9 @@ import com.nooblol.smartnoob.feature.smart.config.ui.action.notification.Notific
 import com.nooblol.smartnoob.feature.smart.config.ui.action.pause.PauseDialog
 import com.nooblol.smartnoob.feature.smart.config.ui.action.selection.ActionTypeChoice
 import com.nooblol.smartnoob.feature.smart.config.ui.action.selection.ActionTypeSelectionDialog
+import com.nooblol.smartnoob.feature.smart.config.ui.action.settext.SetTextDialog
 import com.nooblol.smartnoob.feature.smart.config.ui.action.swipe.SwipeDialog
+import com.nooblol.smartnoob.feature.smart.config.ui.action.system.SystemActionDialog
 import com.nooblol.smartnoob.feature.smart.config.ui.action.toggleevent.ToggleEventDialog
 import com.nooblol.smartnoob.feature.smart.config.ui.common.starters.newNotificationPermissionStarterOverlay
 
@@ -96,13 +99,14 @@ internal fun BaseOverlay.showActionConfigDialog(configurator: ActionConfigurator
         is Swipe -> SwipeDialog(actionConfigDialogListener)
         is Pause -> PauseDialog(actionConfigDialogListener)
         is Intent -> IntentDialog(actionConfigDialogListener)
+        is SystemAction -> SystemActionDialog(actionConfigDialogListener)
         is ToggleEvent -> ToggleEventDialog(actionConfigDialogListener)
         is ChangeCounter -> ChangeCounterDialog(actionConfigDialogListener)
+        is SetText -> SetTextDialog(actionConfigDialogListener)
         is Notification -> {
             if (PermissionPostNotification().checkIfGranted(context)) NotificationDialog(actionConfigDialogListener)
             else newNotificationPermissionStarterOverlay(context)
         }
-        else -> throw IllegalArgumentException("Not yet supported")
     }
 
 

@@ -21,7 +21,7 @@ import com.nooblol.smartnoob.core.database.entity.EventEntity
 import com.nooblol.smartnoob.core.base.identifier.Identifier
 import com.nooblol.smartnoob.core.base.interfaces.sortedByPriority
 import com.nooblol.smartnoob.core.database.entity.EventType
-import com.nooblol.smartnoob.core.domain.model.action.toDomain
+import com.nooblol.smartnoob.core.domain.model.action.mapper.toDomain
 import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
 import com.nooblol.smartnoob.core.domain.model.condition.TriggerCondition
 import com.nooblol.smartnoob.core.domain.model.condition.toDomain

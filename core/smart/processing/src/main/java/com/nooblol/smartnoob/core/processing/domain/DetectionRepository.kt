@@ -16,8 +16,10 @@
  */
 package com.nooblol.smartnoob.core.processing.domain
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.PowerManager
 import android.util.Log
 
 import com.nooblol.smartnoob.core.base.Dumpable
@@ -28,7 +30,6 @@ import com.nooblol.smartnoob.core.base.di.HiltCoroutineDispatchers.Main
 import com.nooblol.smartnoob.core.base.dumpWithTimeout
 import com.nooblol.smartnoob.core.base.identifier.Identifier
 import com.nooblol.smartnoob.core.domain.IRepository
-import com.nooblol.smartnoob.core.domain.model.SmartActionExecutor
 import com.nooblol.smartnoob.core.domain.model.action.Action
 import com.nooblol.smartnoob.core.domain.model.condition.ImageCondition
 import com.nooblol.smartnoob.core.domain.model.event.ImageEvent
@@ -42,9 +43,11 @@ import com.nooblol.smartnoob.core.processing.domain.trying.ImageConditionTry
 import com.nooblol.smartnoob.core.processing.domain.trying.ImageEventProcessingTryListener
 import com.nooblol.smartnoob.core.processing.domain.trying.ImageEventTry
 import com.nooblol.smartnoob.core.processing.domain.trying.ScenarioTry
+
+import dagger.hilt.android.qualifiers.ApplicationContext
+
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -53,9 +56,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 import java.io.PrintWriter
@@ -66,6 +72,7 @@ import kotlin.time.Duration
 @OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
 class DetectionRepository @Inject constructor(
+    @ApplicationContext context: Context,
     @Dispatcher(Main) mainDispatcher: CoroutineDispatcher,
     @Dispatcher(IO) ioDispatcher: CoroutineDispatcher,
     private val scenarioRepository: IRepository,
@@ -77,8 +84,13 @@ class DetectionRepository @Inject constructor(
     private val coroutineScopeIo: CoroutineScope =
         CoroutineScope(SupervisorJob() + ioDispatcher)
 
-    /** Interacts with the OS to execute the actions */
-    private var actionExecutor: SmartActionExecutor? = null
+    private val wakeLock: PowerManager.WakeLock =
+        (context.getSystemService(Context.POWER_SERVICE) as PowerManager).let { powerManager ->
+            @Suppress("DEPRECATION") // Deprecated except for use case without a layout
+            powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "Klickr::Detection").apply {
+                setReferenceCounted(false)
+            }
+        }
 
     private var projectionErrorHandler: (() -> Unit)? = null
 
@@ -92,6 +104,15 @@ class DetectionRepository @Inject constructor(
     /** The state of the scenario processing. */
     val detectionState: Flow<DetectionState> = detectorEngine.state
         .mapNotNull { it.toDetectionState() }
+
+    private val shouldKeepScreenOn: Flow<Boolean> = _scenarioId
+        .combine(detectionState) { id, state ->
+            id ?: return@combine false
+            val scenario = scenarioRepository.getScenario(id.databaseId) ?: return@combine false
+
+            state == DetectionState.DETECTING && scenario.keepScreenOn
+        }
+        .distinctUntilChanged()
 
     /**
      * Tells if the detection can be started or not.
@@ -110,16 +131,17 @@ class DetectionRepository @Inject constructor(
             false
         }
 
+
+    init {
+        shouldKeepScreenOn.onEach(::updateWakeLockState).launchIn(coroutineScopeIo)
+    }
+
     fun setScenarioId(identifier: Identifier, markAsUsed: Boolean = false) {
         _scenarioId.value = identifier
 
         if (markAsUsed) {
             coroutineScopeIo.launch { scenarioRepository.markAsUsed(identifier) }
         }
-    }
-
-    fun setExecutor(androidExecutor: SmartActionExecutor) {
-        actionExecutor = androidExecutor
     }
 
     fun setProjectionErrorHandler(handler: () -> Unit) {
@@ -132,10 +154,8 @@ class DetectionRepository @Inject constructor(
         detectorEngine.state.value == DetectorState.DETECTING
 
     fun startScreenRecord(resultCode: Int, data: Intent) {
-        actionExecutor?.let { executor ->
-            detectorEngine.startScreenRecord(resultCode, data, executor) {
-                coroutineScopeMain.launch { projectionErrorHandler?.invoke() }
-            }
+        detectorEngine.startScreenRecord(resultCode, data) {
+            coroutineScopeMain.launch { projectionErrorHandler?.invoke() }
         }
     }
 
@@ -176,7 +196,6 @@ class DetectionRepository @Inject constructor(
             clear()
         }
 
-        actionExecutor = null
         _scenarioId.value = null
     }
 
@@ -220,6 +239,13 @@ class DetectionRepository @Inject constructor(
             triggerEvents = elementTry.triggerEvents,
             progressListener = listener,
         )
+    }
+
+    @SuppressLint("WakelockTimeout")
+    private fun updateWakeLockState(keepScreenOn: Boolean) {
+        Log.i(TAG, "updateWakeLockState: keepScreenOn=$keepScreenOn")
+        if (keepScreenOn) wakeLock.acquire()
+        else wakeLock.release()
     }
 
     override fun dump(writer: PrintWriter, prefix: CharSequence) {

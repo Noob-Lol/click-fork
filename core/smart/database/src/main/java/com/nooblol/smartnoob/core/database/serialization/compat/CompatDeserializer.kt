@@ -48,6 +48,7 @@ import com.nooblol.smartnoob.core.database.entity.IntentExtraEntity
 import com.nooblol.smartnoob.core.database.entity.IntentExtraType
 import com.nooblol.smartnoob.core.database.entity.NotificationMessageType
 import com.nooblol.smartnoob.core.database.entity.ScenarioEntity
+import com.nooblol.smartnoob.core.database.entity.SystemActionType
 import com.nooblol.smartnoob.core.database.serialization.Deserializer
 
 import kotlinx.serialization.json.JsonArray
@@ -194,6 +195,7 @@ internal open class CompatDeserializer : Deserializer {
             name = jsonScenario.getString("name") ?: "",
             detectionQuality = detectionQuality,
             randomize = jsonScenario.getBoolean("randomize") ?: false,
+            keepScreenOn = jsonScenario.getBoolean("keepScreenOn") ?: false,
         )
     }
 
@@ -364,6 +366,8 @@ internal open class CompatDeserializer : Deserializer {
             ActionType.TOGGLE_EVENT -> deserializeActionToggleEvent(jsonAction)
             ActionType.CHANGE_COUNTER -> deserializeActionChangeCounter(jsonAction)
             ActionType.NOTIFICATION -> deserializeActionNotification(jsonAction)
+            ActionType.SYSTEM -> deserializeActionSystem(jsonAction)
+            ActionType.TEXT -> deserializeActionSetText(jsonAction)
             null -> null
         }
 
@@ -547,6 +551,38 @@ internal open class CompatDeserializer : Deserializer {
             notificationMessageType = notificationMessageType,
             notificationMessageText = jsonNotification.getString("notificationMessageText") ?: "",
             notificationMessageCounterName = jsonNotification.getString("notificationMessageCounterName") ?: "",
+        )
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    open fun deserializeActionSystem(jsonSystem: JsonObject): ActionEntity? {
+        val id = jsonSystem.getLong("id", true) ?: return null
+        val eventId = jsonSystem.getLong("eventId", true) ?: return null
+        val type = jsonSystem.getEnum<SystemActionType>("systemActionType") ?: return null
+
+        return ActionEntity(
+            id = id,
+            eventId = eventId,
+            name = jsonSystem.getString("name") ?: "",
+            priority = jsonSystem.getInt("priority")?.coerceAtLeast(0) ?: 0,
+            type = ActionType.SYSTEM,
+            systemActionType = type,
+        )
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    open fun deserializeActionSetText(jsonSetText: JsonObject): ActionEntity? {
+        val id = jsonSetText.getLong("id", true) ?: return null
+        val eventId = jsonSetText.getLong("eventId", true) ?: return null
+
+        return ActionEntity(
+            id = id,
+            eventId = eventId,
+            name = jsonSetText.getString("name") ?: "",
+            priority = jsonSetText.getInt("priority")?.coerceAtLeast(0) ?: 0,
+            type = ActionType.TEXT,
+            textValue = jsonSetText.getString("textValue") ?: "",
+            textValidateInput = jsonSetText.getBoolean("textValidateInput") ?: false,
         )
     }
 
