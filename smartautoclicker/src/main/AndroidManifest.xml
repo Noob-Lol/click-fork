@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-* Copyright (C) 2022 Kevin Buzeau
+* Copyright (C) 2025 Kevin Buzeau
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:localeConfig="@xml/locales_config"
         android:name="${noobApplication}"
         android:allowBackup="false"
         android:icon="@mipmap/ic_smart_auto_clicker"
